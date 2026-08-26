@@ -43,36 +43,43 @@ class User extends Authenticatable
         ];
     }
 
+    /** @return HasMany<Movie, $this> */
     public function movies(): HasMany
     {
         return $this->hasMany(Movie::class);
     }
 
+    /** @return HasMany<Quote, $this> */
     public function quotes(): HasMany
     {
         return $this->hasMany(Quote::class);
     }
 
+    /** @return HasMany<QuoteComment, $this> */
     public function comments(): HasMany
     {
         return $this->hasMany(QuoteComment::class);
     }
 
+    /** @return HasMany<QuoteLike, $this> */
     public function likes(): HasMany
     {
         return $this->hasMany(QuoteLike::class);
     }
 
+    /** @return BelongsToMany<Quote, $this> */
     public function likedQuotes(): BelongsToMany
     {
         return $this->belongsToMany(Quote::class, 'quote_likes')->withTimestamps();
     }
 
+    /** @return HasMany<Notification, $this> */
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'user_id');
     }
 
+    /** @return HasMany<Notification, $this> */
     public function actionsTriggered(): HasMany
     {
         return $this->hasMany(Notification::class, 'actor_id');
