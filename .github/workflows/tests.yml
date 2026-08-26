@@ -56,5 +56,8 @@ jobs:
           DB_USERNAME: root
           DB_PASSWORD: password
 
+      - name: Build frontend assets
+        run: npm run build
+
       - name: Run CI Checks
         run: composer ci:check
