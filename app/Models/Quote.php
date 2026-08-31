@@ -4,20 +4,29 @@ namespace App\Models;
 
 use Database\Factories\QuoteFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @use HasFactory<QuoteFactory>
  */
-#[Fillable(['user_id', 'movie_id', 'quote_en', 'quote_ka', 'image_url'])]
+#[Fillable(['user_id', 'movie_id', 'quote', 'image_url'])]
+#[Hidden('created_at', 'updated_at')]
+
 class Quote extends Model
 {
     /** @use HasFactory<QuoteFactory> */
     use HasFactory;
+
+    use HasTranslations;
+
+    /** @var array<int, string> */
+    public array $translatable = ['quote'];
 
     /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
