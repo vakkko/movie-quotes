@@ -7,6 +7,8 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -21,7 +23,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['username', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -39,5 +41,47 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /** @return HasMany<Movie, $this> */
+    public function movies(): HasMany
+    {
+        return $this->hasMany(Movie::class);
+    }
+
+    /** @return HasMany<Quote, $this> */
+    public function quotes(): HasMany
+    {
+        return $this->hasMany(Quote::class);
+    }
+
+    /** @return HasMany<QuoteComment, $this> */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(QuoteComment::class);
+    }
+
+    /** @return HasMany<QuoteLike, $this> */
+    public function likes(): HasMany
+    {
+        return $this->hasMany(QuoteLike::class);
+    }
+
+    /** @return BelongsToMany<Quote, $this> */
+    public function likedQuotes(): BelongsToMany
+    {
+        return $this->belongsToMany(Quote::class, 'quote_likes')->withTimestamps();
+    }
+
+    /** @return HasMany<Notification, $this> */
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
+
+    /** @return HasMany<Notification, $this> */
+    public function actionsTriggered(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'actor_id');
     }
 }
