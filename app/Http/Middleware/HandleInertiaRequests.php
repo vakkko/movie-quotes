@@ -46,6 +46,10 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'verified' => fn () => session('verified', false),
+            'verifyExpired' => fn () => session('verify_expired', false),
+            'verificationSent' => fn () => session('verification_sent', false),
+            'verifiedUser' => fn () => session('verified_user'),
+            'passwordReset' => fn () => session('password_reset', false),
         ];
     }
 
