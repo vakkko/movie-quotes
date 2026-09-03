@@ -5,7 +5,126 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Helvetica Neue', 'Helvetica', Arial, ui-sans-serif, system-ui,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+    --font-montserrat:
+        'Montserrat', 'Helvetica Neue', 'Helvetica', Arial, ui-sans-serif,
+        system-ui, sans-serif;
+    --color-cream: #ddccaa;
+    --color-primary-red: #e31221;
+    --color-light-gray: #d9d9d9;
+    --color-dark-navy: #222030;
+    --color-silver-gray: #ced4da;
+    --color-slate-gray: #6c757d;
+    --color-light-ash: #e9ecef;
+    --color-bootstrap-green: #198754;
+    --color-focus-shadow: rgba(13, 110, 253, 0.25);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-cream: #ddccaa;
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.145 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.985 0 0);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --header-gradient: linear-gradient(
+        187.16deg,
+        #181623 0.07%,
+        #191725 52.03%,
+        #0d0b14 99.49%
+    );
+}
+
+@layer base {
+    * {
+        border-color: var(--border);
+    }
+    body {
+        background-color: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-sans);
+        font-size: 1.6rem;
+    }
+}
+
+html {
+    font-size: 62.5%;
+}
+
+input {
+    outline: none;
+}
+
+@utility font-500-size-16 {
+    @apply text-[1.6rem] font-medium;
+}
+
+@utility font-500-size-32 {
+    @apply text-[3.2rem] font-medium;
+}
+
+@utility font-700-size-60 {
+    @apply text-[6rem] font-bold;
+}
+
+@utility font-700-size-50 {
+    @apply text-[5rem] font-bold;
+}
+
+@utility font-700-size-30 {
+    @apply text-[3rem] font-bold;
+}
+
+@utility flex-items-center {
+    @apply flex items-center;
+}
+
+@utility flex-column {
+    @apply flex flex-col;
+}
+
+@utility button-primary-red-background {
+    @apply cursor-pointer rounded-[0.4rem] border border-primary-red bg-primary-red px-[2.5rem] py-[0.7rem] text-white;
+}
+
+@utility button-transparent-background-white-border {
+    @apply cursor-pointer rounded-[0.4rem] border border-white px-[2.5rem] py-[0.7rem] text-white;
 }
