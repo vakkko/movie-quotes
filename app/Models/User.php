@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\EmailVerificationNotification;
 use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,16 +20,22 @@ use Illuminate\Support\Carbon;
  * @property string $email
  * @property Carbon|null $email_verified_at
  * @property string $password
+ * @property string|null $avatar_url
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['username', 'email', 'password'])]
+#[Fillable(['username', 'email', 'password', 'email_verified_at', 'avatar_url'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new EmailVerificationNotification);
+    }
 
     /**
      * Get the attributes that should be cast.
