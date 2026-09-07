@@ -35,7 +35,7 @@ const LanguageDropDown = () => {
                 {locale === 'ka' ? 'Geo' : 'Eng'} <DropDownArrow />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="[background-image:var(--header-gradient)]">
-                <DropdownMenuGroup className="">
+                <DropdownMenuGroup>
                     <DropdownMenuItem
                         className="cursor-pointer text-[1.4rem] text-white"
                         onSelect={() => switchLocale('en')}
