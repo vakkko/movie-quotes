@@ -1,45 +1,105 @@
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
+
 import StyledAnchor from '@/components/StyledAnchor';
 import Verified from '@/components/svgs/Verified';
-import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog';
+import Warning from '@/components/svgs/Warning';
 import { useTranslation } from '@/hooks/useTranslation';
+import DefaultLayout from '@/layouts/DefaultLayout';
+import { send as resendVerification } from '@/routes/verification';
 import type { Quote } from '@/types';
 import type { SharedPageProps } from '@/types/global';
-import Header from './components/Header/Header';
+
+import StatusModal from './components/StatusModal/StatusModal';
 import StickyQuotes from './components/StickyQuotes/StickyQuotes';
 
 type LandingProps = SharedPageProps & { quotes: Quote[] };
 
-const Landing = ({ verified, quotes }: LandingProps) => {
+const Landing = ({
+    verifyExpired,
+    verificationSent,
+    unverifiedEmail,
+    unverifiedEmailAddress,
+    quotes,
+}: LandingProps) => {
     const { t } = useTranslation();
 
-    const [showSignedModal, setShowSignedModal] = useState(verified);
+    const [showExpiredModal, setShowExpiredModal] = useState(verifyExpired);
+    const [showSentModal, setShowSentModal] = useState(verificationSent);
+    const [prevUnverifiedEmail, setPrevUnverifiedEmail] =
+        useState(unverifiedEmail);
+    const [showUnverifiedModal, setShowUnverifiedModal] =
+        useState(unverifiedEmail);
+
+    if (prevUnverifiedEmail !== unverifiedEmail) {
+        setPrevUnverifiedEmail(unverifiedEmail);
+
+        if (unverifiedEmail) {
+            setShowUnverifiedModal(true);
+        }
+    }
+
+    const handleResendVerification = () => {
+        router.post(
+            resendVerification.url(),
+            { email: unverifiedEmailAddress as string },
+            {
+                onSuccess: () => {
+                    setShowExpiredModal(false);
+                    setShowUnverifiedModal(false);
+                },
+            },
+        );
+    };
 
     return (
         <>
-            <Header />
+            <div className="mx-auto flex-column w-[36.6%] items-center gap-[2.4rem] pt-[28rem] pb-[21rem] max-lg:w-[65%]">
+                <h1 className="text-center font-montserrat font-700-size-60 leading-[150%] text-cream max-sm:text-[2.4rem]">
+                    {t('hero_title')}
+                </h1>
+                <StyledAnchor href="/news" redBackground>
+                    {t('get_started')}
+                </StyledAnchor>
+            </div>
             <StickyQuotes quotes={quotes} />
-            <Dialog open={showSignedModal} onOpenChange={setShowSignedModal}>
-                <DialogContent
-                    className="border-none bg-dark-navy px-[9rem] py-[6rem] text-white sm:max-w-3xl"
-                    showCloseButton={false}
-                >
-                    <DialogHeader className="items-center">
-                        <Verified />
-                    </DialogHeader>
-                    <div className="my-[3.9rem] text-center">
-                        <h2 className="font-500-size-32 leading-[120%]">
-                            Thank you!
-                        </h2>
-                        <p> {t('email_activated')}</p>
-                    </div>
-                    <StyledAnchor href="/news" redBackground>
-                        Go to my news feed
-                    </StyledAnchor>
-                </DialogContent>
-            </Dialog>
+            <StatusModal
+                showModal={showExpiredModal}
+                setShowModal={setShowExpiredModal}
+                header={t('link_expired')}
+                infotext={t('verify_link_expired')}
+                anchorText={t('request_new_link')}
+                onAction={handleResendVerification}
+            >
+                <Warning />
+            </StatusModal>
+            <StatusModal
+                showModal={showSentModal}
+                setShowModal={setShowSentModal}
+                header={t('thank_you')}
+                infotext={t('email_activated')}
+                anchorText={t('go_to_news')}
+                href="/"
+            >
+                <Verified />
+            </StatusModal>
+            <StatusModal
+                showModal={showUnverifiedModal}
+                setShowModal={setShowUnverifiedModal}
+                header={t('email_not_verified')}
+                infotext={t('verify_email_warning')}
+                anchorText={t('request_new_link')}
+                onAction={handleResendVerification}
+                closeStatusModal={() => setShowUnverifiedModal(false)}
+            >
+                <Warning />
+            </StatusModal>
         </>
     );
 };
+
+Landing.layout = (page: React.ReactNode) => (
+    <DefaultLayout>{page}</DefaultLayout>
+);
 
 export default Landing;
