@@ -6,48 +6,49 @@ import type { SharedPageProps } from '@/types/global';
 
 import CreatePasswordModal from './Header/components/AuthOptions/LoginContent/CreatePasswordModal/CreatePasswordModal';
 import Header from './Header/Header';
+import type { HeaderProps } from './Header/Header';
 
-const DefaultLayout = ({ children, className }: PropsWithChildren<{ className?: string }>) => {
+export type ActiveModal =
+    | 'login'
+    | 'register'
+    | 'verify-email'
+    | 'create-password'
+    | 'success'
+    | null;
+
+const DefaultLayout = ({
+    children,
+    className,
+}: PropsWithChildren<{ className?: string }>) => {
     const { verifyUserFromEmailRedirection } = usePage<SharedPageProps>().props;
 
     const [localVerifiedUser] = useState(verifyUserFromEmailRedirection);
 
-    const [loginOpen, setLoginOpen] = useState(false);
-    const [registerOpen, setRegisterOpen] = useState(false);
-    const [verifyEmailOpen, setVerifyEmailOpen] = useState(false);
-    const [showCreatePassword, setShowCreatePassword] = useState(
-        !!verifyUserFromEmailRedirection,
+    const [activeModal, setActiveModal] = useState<ActiveModal>(
+        verifyUserFromEmailRedirection ? 'create-password' : null,
     );
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-    const switchToLogin = () => {
-        setLoginOpen(true);
-        setRegisterOpen(false);
-        setVerifyEmailOpen(false);
-        setShowSuccessModal(false);
+    const headerProps: HeaderProps = {
+        activeModal,
+        setActiveModal,
     };
 
     return (
         <>
-            <Header
-                loginOpen={loginOpen}
-                setLoginOpen={setLoginOpen}
-                registerOpen={registerOpen}
-                setRegisterOpen={setRegisterOpen}
-                verifyEmailOpen={verifyEmailOpen}
-                setVerifyEmailOpen={setVerifyEmailOpen}
-                switchToLogin={switchToLogin}
-                setShowSuccessModal={setShowSuccessModal}
-            />
+            <Header {...headerProps} />
             <main className={className}>{children}</main>
             {localVerifiedUser && (
                 <CreatePasswordModal
-                    open={showCreatePassword}
-                    onOpenChange={setShowCreatePassword}
+                    open={
+                        activeModal === 'create-password' ||
+                        activeModal === 'success'
+                    }
+                    onOpenChange={(open: boolean) =>
+                        setActiveModal(open ? 'create-password' : null)
+                    }
                     user={localVerifiedUser}
-                    switchToLogin={switchToLogin}
-                    showSuccessModal={showSuccessModal}
-                    setShowSuccessModal={setShowSuccessModal}
+                    activeModal={activeModal}
+                    setActiveModal={setActiveModal}
                 />
             )}
         </>

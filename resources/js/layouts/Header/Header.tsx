@@ -1,32 +1,18 @@
 import { Link, router, usePage } from '@inertiajs/react';
 import type { Dispatch, SetStateAction } from 'react';
 
+import type { ActiveModal } from '@/layouts/DefaultLayout';
 import type { SharedPageProps } from '@/types/global';
 
 import AuthOptions from './components/AuthOptions/AuthOptions';
 import LanguageDropDown from './components/LanguageDropDown';
 
 export type HeaderProps = {
-    loginOpen: boolean;
-    setLoginOpen: Dispatch<SetStateAction<boolean>>;
-    registerOpen: boolean;
-    setRegisterOpen: Dispatch<SetStateAction<boolean>>;
-    verifyEmailOpen: boolean;
-    setVerifyEmailOpen: Dispatch<SetStateAction<boolean>>;
-    switchToLogin: () => void;
-    setShowSuccessModal: Dispatch<SetStateAction<boolean>>;
+    activeModal: ActiveModal;
+    setActiveModal: Dispatch<SetStateAction<ActiveModal>>;
 };
 
-const Header = ({
-    loginOpen,
-    registerOpen,
-    setLoginOpen,
-    setRegisterOpen,
-    setVerifyEmailOpen,
-    switchToLogin,
-    verifyEmailOpen,
-    setShowSuccessModal,
-}: HeaderProps) => {
+const Header = ({ activeModal, setActiveModal }: HeaderProps) => {
     const { props } = usePage<SharedPageProps>();
     const { user } = props;
     const { url } = usePage();
@@ -49,14 +35,8 @@ const Header = ({
                 <AuthOptions
                     isLoggedIn={isLoggedIn}
                     handleLogout={handleLogout}
-                    loginOpen={loginOpen}
-                    setLoginOpen={setLoginOpen}
-                    registerOpen={registerOpen}
-                    setRegisterOpen={setRegisterOpen}
-                    verifyEmailOpen={verifyEmailOpen}
-                    setVerifyEmailOpen={setVerifyEmailOpen}
-                    switchToLogin={switchToLogin}
-                    setShowSuccessModal={setShowSuccessModal}
+                    activeModal={activeModal}
+                    setActiveModal={setActiveModal}
                 />
             </div>
         </header>
