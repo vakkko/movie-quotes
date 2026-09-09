@@ -3,17 +3,25 @@ import Google from '@/components/svgs/Google';
 import { DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { Field, FieldGroup } from '@/components/ui/field';
 
+type Footer = {
+    text: string;
+    action: string;
+    onActionClick?: () => void;
+};
+
+type GoogleAuth = {
+    text: string;
+    onClick: () => void;
+};
+
 type AuthContentProps = PropsWithChildren & {
     header: string;
     subHeader: string;
     button: string;
     handleSubmit: (e: ChangeEvent) => void;
     processing: boolean;
-    footerText?: string;
-    footerAction?: string;
-    onFooterActionClick?: () => void;
-    googleAuthText?: string;
-    onGoogleAuthClick?: () => void;
+    footer?: Footer;
+    googleAuth?: GoogleAuth;
     backToLogin?: boolean;
 };
 
@@ -24,11 +32,8 @@ const AuthContent = ({
     button,
     handleSubmit,
     processing,
-    footerText,
-    footerAction,
-    onFooterActionClick,
-    googleAuthText,
-    onGoogleAuthClick,
+    footer,
+    googleAuth,
 }: AuthContentProps) => {
     return (
         <DialogContent
@@ -58,26 +63,26 @@ const AuthContent = ({
                 </FieldGroup>
             </form>
             <div className="flex-column items-center">
-                {googleAuthText && (
+                {googleAuth && (
                     <button
                         type="button"
-                        onClick={onGoogleAuthClick}
+                        onClick={googleAuth.onClick}
                         className="flex-items-center w-full button-transparent-background-white-border justify-center gap-[0.8rem]"
                     >
                         <Google />
-                        {googleAuthText}
+                        {googleAuth.text}
                     </button>
                 )}
 
-                {footerText && footerAction && onFooterActionClick && (
+                {footer && (
                     <p className="mt-[2rem] text-center text-[1.4rem] text-slate-gray">
-                        {footerText}
+                        {footer.text}
                         <button
                             type="button"
-                            onClick={onFooterActionClick}
+                            onClick={footer.onActionClick}
                             className="text-blue-underline"
                         >
-                            {footerAction}
+                            {footer.action}
                         </button>
                     </p>
                 )}

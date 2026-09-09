@@ -27,11 +27,15 @@ const RegisterContent = ({ onSwitchToLogin }: RegisterContentProps) => {
             handleSubmit={handleSubmit}
             processing={processing}
             button={t('create_account')}
-            footerText={t('already_have_account')}
-            footerAction={t('log_in')}
-            onFooterActionClick={onSwitchToLogin}
-            googleAuthText={t('sign_up_with_google')}
-            onGoogleAuthClick={handleGoogleAuth}
+            footer={{
+                text: t('already_have_account'),
+                action: t('log_in'),
+                onActionClick: onSwitchToLogin,
+            }}
+            googleAuth={{
+                text: t('sign_up_with_google'),
+                onClick: handleGoogleAuth,
+            }}
         >
             {registerFields.map(({ key, htmlFor, ...field }) => (
                 <AuthInputField
