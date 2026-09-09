@@ -17,7 +17,7 @@ type GoogleAuth = {
 type AuthContentProps = PropsWithChildren & {
     header: string;
     subHeader: string;
-    button: string;
+    buttonText: string;
     handleSubmit: (e: ChangeEvent) => void;
     processing: boolean;
     footer?: Footer;
@@ -29,7 +29,7 @@ const AuthContent = ({
     children,
     header,
     subHeader,
-    button,
+    buttonText,
     handleSubmit,
     processing,
     footer,
@@ -57,7 +57,7 @@ const AuthContent = ({
                             disabled={processing}
                             className="mt-[2rem] button-primary-red-background"
                         >
-                            {button}
+                            {buttonText}
                         </button>
                     </Field>
                 </FieldGroup>

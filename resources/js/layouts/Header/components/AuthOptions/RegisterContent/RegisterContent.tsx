@@ -26,7 +26,7 @@ const RegisterContent = ({ onSwitchToLogin }: RegisterContentProps) => {
             subHeader={t('start_your_journey')}
             handleSubmit={handleSubmit}
             processing={processing}
-            button={t('create_account')}
+            buttonText={t('create_account')}
             footer={{
                 text: t('already_have_account'),
                 action: t('log_in'),

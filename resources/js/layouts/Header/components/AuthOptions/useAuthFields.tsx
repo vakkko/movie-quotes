@@ -7,7 +7,6 @@ type FieldConfig = {
     type?: string;
     autoComplete: string;
     placeholder: string;
-    hasEyeIcon?: boolean;
 };
 
 const useAuthFields = () => {
@@ -35,7 +34,6 @@ const useAuthFields = () => {
         type: 'password',
         autoComplete: 'new-password',
         placeholder: t('password_placeholder'),
-        hasEyeIcon: true,
     };
     const confirmPasswordField: FieldConfig = {
         key: 'password_confirmation',
@@ -44,7 +42,6 @@ const useAuthFields = () => {
         type: 'password',
         autoComplete: 'new-password',
         placeholder: t('confirm_password_placeholder'),
-        hasEyeIcon: true,
     };
 
     const loginFields: FieldConfig[] = [emailField, passwordField];

@@ -12,7 +12,6 @@ type AuthInputFieldProps = {
     type?: string;
     placeholder: string;
     autoComplete: string;
-    hasEyeIcon?: boolean;
     value: string;
     onChange: (value: string) => void;
     error?: string;
@@ -24,7 +23,6 @@ const AuthInputField = ({
     type = 'text',
     placeholder,
     autoComplete,
-    hasEyeIcon,
     value,
     onChange,
     error,
@@ -32,6 +30,7 @@ const AuthInputField = ({
     const [toggleEyeIcon, setToggleEyeIcon] = useState(false);
 
     const handleEyeIconClick = () => setToggleEyeIcon((prev) => !prev);
+    const hasEyeIcon = type === 'password';
 
     const inputType = hasEyeIcon ? (toggleEyeIcon ? 'text' : 'password') : type;
 
