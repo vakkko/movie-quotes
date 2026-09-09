@@ -24,7 +24,6 @@ declare module '@inertiajs/core' {
             passwordReset: boolean;
             unverifiedEmail: boolean;
             unverifiedEmailAddress: string | null;
-            unverifiedEmailAddress: string | null;
             [key: string]: unknown;
         };
     }

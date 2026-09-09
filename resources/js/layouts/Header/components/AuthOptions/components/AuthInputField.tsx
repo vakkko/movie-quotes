@@ -79,9 +79,11 @@ const AuthInputField = ({
                 <button
                     type="button"
                     onClick={handleClear}
-                    className={`absolute top-1/2 -translate-y-1/2 ${
-                        hasEyeIcon ? 'right-[4.4rem]' : 'right-[1.4rem]'
-                    }`}
+                    className={cn(
+                        `absolute top-1/2 -translate-y-1/2 ${
+                            hasEyeIcon ? 'right-[4.4rem]' : 'right-[1.4rem]'
+                        }`,
+                    )}
                 >
                     {isValid ? (
                         <Check
