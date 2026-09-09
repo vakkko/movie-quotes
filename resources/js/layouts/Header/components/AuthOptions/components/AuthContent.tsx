@@ -1,9 +1,7 @@
-import { ArrowLeft } from 'lucide-react';
 import type { ChangeEvent, PropsWithChildren } from 'react';
 import Google from '@/components/svgs/Google';
 import { DialogContent, DialogHeader } from '@/components/ui/dialog';
 import { Field, FieldGroup } from '@/components/ui/field';
-import { useTranslation } from '@/hooks/useTranslation';
 
 type AuthContentProps = PropsWithChildren & {
     header: string;
@@ -17,8 +15,6 @@ type AuthContentProps = PropsWithChildren & {
     googleAuthText?: string;
     onGoogleAuthClick?: () => void;
     backToLogin?: boolean;
-    backToLoginLabel?: string;
-    switchToLogin?: () => void;
 };
 
 const AuthContent = ({
@@ -33,11 +29,7 @@ const AuthContent = ({
     onFooterActionClick,
     googleAuthText,
     onGoogleAuthClick,
-    backToLogin,
-    switchToLogin,
 }: AuthContentProps) => {
-    const { t } = useTranslation();
-
     return (
         <DialogContent
             className="w-full rounded-none border-none bg-dark-navy p-4 p-[12rem] py-[5.3rem] text-white max-sm:h-full max-sm:max-w-none max-sm:px-[2.4rem] sm:max-w-5xl sm:rounded-[1rem]"
@@ -88,15 +80,6 @@ const AuthContent = ({
                             {footerAction}
                         </button>
                     </p>
-                )}
-                {backToLogin && (
-                    <button
-                        onClick={switchToLogin}
-                        className="flex-items-center gap-[1.1rem] text-slate-gray"
-                    >
-                        <ArrowLeft className="text-white" />{' '}
-                        {t('back_to_login')}
-                    </button>
                 )}
             </div>
         </DialogContent>
