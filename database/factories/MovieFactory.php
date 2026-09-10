@@ -39,15 +39,21 @@ class MovieFactory extends Factory
 
         return [
             'user_id' => User::factory(),
-            'title_en' => $titleEn,
-            'title_ka' => fake()->randomElement($titlesKa),
+            'title' => [
+                'en' => $titleEn,
+                'ka' => fake()->randomElement($titlesKa),
+            ],
             'image_url' => fake()->imageUrl(1920, 1080, 'movies'),
             'released_at' => fake()->dateTimeBetween('-30 years', 'now'),
             'genre' => $genre,
-            'description_en' => fake()->paragraph(),
-            'description_ka' => fake()->randomElement($descriptionsKa),
-            'director_en' => fake()->name(),
-            'director_ka' => fake()->randomElement($directorsKa),
+            'description' => [
+                'en' => fake()->paragraph(),
+                'ka' => fake()->randomElement($descriptionsKa),
+            ],
+            'director' => [
+                'en' => fake()->name(),
+                'ka' => fake()->randomElement($directorsKa),
+            ],
         ];
     }
 }

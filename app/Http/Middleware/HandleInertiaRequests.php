@@ -43,6 +43,10 @@ class HandleInertiaRequests extends Middleware
             'locale' => $locale,
             'translations' => $this->translations($locale),
             'user' => $request->user(),
+            'notifications' => fn () => $request->user()?->notifications()
+                ->with('actor:id,username,avatar_url')
+                ->latest()
+                ->get(),
             'verified' => fn () => session('verified', false),
             'verifyExpired' => fn () => session('verify_expired', false),
             'verificationSent' => fn () => session('verification_sent', false),

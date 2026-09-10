@@ -29,8 +29,10 @@ class QuoteFactory extends Factory
         return [
             'user_id' => User::factory(),
             'movie_id' => Movie::factory(),
-            'quote_en' => fake()->sentence(),
-            'quote_ka' => fake()->randomElement($quotesKa),
+            'quote' => [
+                'en' => fake()->sentence(),
+                'ka' => fake()->randomElement($quotesKa),
+            ],
             'image_url' => fake()->imageUrl(1920, 1080, 'quotes'),
         ];
     }
