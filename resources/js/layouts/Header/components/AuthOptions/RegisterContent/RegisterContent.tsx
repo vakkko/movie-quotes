@@ -27,12 +27,12 @@ const RegisterContent = ({ onSwitchToLogin }: RegisterContentProps) => {
             handleSubmit={handleSubmit}
             processing={processing}
             buttonText={t('create_account')}
-            footer={{
+            footerConfig={{
                 text: t('already_have_account'),
                 action: t('log_in'),
                 onActionClick: onSwitchToLogin,
             }}
-            googleAuth={{
+            googleAuthConfig={{
                 text: t('sign_up_with_google'),
                 onClick: handleGoogleAuth,
             }}

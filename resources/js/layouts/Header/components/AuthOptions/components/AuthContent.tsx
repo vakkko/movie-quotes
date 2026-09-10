@@ -20,8 +20,8 @@ type AuthContentProps = PropsWithChildren & {
     buttonText: string;
     handleSubmit: (e: ChangeEvent) => void;
     processing: boolean;
-    footer?: Footer;
-    googleAuth?: GoogleAuth;
+    footerConfig?: Footer;
+    googleAuthConfig?: GoogleAuth;
     backToLogin?: boolean;
 };
 
@@ -32,8 +32,8 @@ const AuthContent = ({
     buttonText,
     handleSubmit,
     processing,
-    footer,
-    googleAuth,
+    footerConfig,
+    googleAuthConfig,
 }: AuthContentProps) => {
     return (
         <DialogContent
@@ -63,26 +63,26 @@ const AuthContent = ({
                 </FieldGroup>
             </form>
             <div className="flex-column items-center">
-                {googleAuth && (
+                {googleAuthConfig && (
                     <button
                         type="button"
-                        onClick={googleAuth.onClick}
+                        onClick={googleAuthConfig.onClick}
                         className="flex-items-center w-full button-transparent-background-white-border justify-center gap-[0.8rem]"
                     >
                         <Google />
-                        {googleAuth.text}
+                        {googleAuthConfig.text}
                     </button>
                 )}
 
-                {footer && (
+                {footerConfig && (
                     <p className="mt-[2rem] text-center text-[1.4rem] text-slate-gray">
-                        {footer.text}
+                        {footerConfig.text}
                         <button
                             type="button"
-                            onClick={footer.onActionClick}
+                            onClick={footerConfig.onActionClick}
                             className="text-blue-underline"
                         >
-                            {footer.action}
+                            {footerConfig.action}
                         </button>
                     </p>
                 )}
