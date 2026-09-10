@@ -2,8 +2,8 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { HeaderProps } from '../../Header';
 
-import EmailVerify from './LoginContent/EmailVerify/EmailVerify';
 import LoginContent from './LoginContent/LoginContent';
+import EmailVerify from './LoginContent/PasswordReset/EmailVerify/EmailVerify';
 import RegisterContent from './RegisterContent/RegisterContent';
 
 type AuthOptionsProps = HeaderProps & {
