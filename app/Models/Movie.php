@@ -8,15 +8,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @use HasFactory<MovieFactory>
  */
-#[Fillable('title_en', 'title_ka', 'image_url', 'released_at', 'genre', 'description_en', 'description_ka', 'director_en', 'director_ka', )]
+#[Fillable(['user_id', 'title', 'image_url', 'released_at', 'genre', 'description', 'director'])]
 class Movie extends Model
 {
     /** @use HasFactory<MovieFactory> */
     use HasFactory;
+
+    use HasTranslations;
+
+    /** @var array<int, string> */
+    public array $translatable = ['title', 'description', 'director'];
 
     protected $casts = [
         'released_at' => 'datetime',
