@@ -83,7 +83,7 @@ const AuthInputField = ({
                         hasEyeIcon ? 'right-[4.4rem]' : 'right-[1.4rem]',
                     )}
                 >
-                    {isValid ? (
+                    {isValid && type !== 'password' ? (
                         <Check
                             className="text-bootstrap-green"
                             width="20"
