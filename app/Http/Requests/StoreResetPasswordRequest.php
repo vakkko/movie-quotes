@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\PasswordRules;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class StoreResetPasswordRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
+    use PasswordRules;
 
     /**
      * @return array<string, mixed>
@@ -19,13 +16,7 @@ class StoreResetPasswordRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email', 'exists:users,email'],
-            'password' => [
-                'required',
-                'string',
-                Password::min(8)->max(15)->letters(),
-                'regex:/^[a-z]+$/',
-                'confirmed',
-            ],
+            'password' => $this->passwordRules(),
         ];
     }
 }
