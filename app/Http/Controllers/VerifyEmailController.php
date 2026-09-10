@@ -25,19 +25,25 @@ class VerifyEmailController extends Controller
             event(new Verified($user));
         }
 
-        return redirect()->route('home')->with('verified_user', [
-            'id' => $user->id,
-            'email' => $user->email,
-        ]);
+        if (! $user->password) {
+            return redirect()->route('home')->with('verified_user', [
+                'id' => $user->id,
+                'email' => $user->email,
+            ]);
+        }
+
+        return redirect()->route('home')->with('verification_sent', true);
     }
 
     public function resend(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['nullable', 'email'],
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $email = $request->email ?: $request->user()?->email;
+
+        $user = $email ? User::where('email', $email)->first() : null;
 
         if ($user) {
             $user->sendEmailVerificationNotification();

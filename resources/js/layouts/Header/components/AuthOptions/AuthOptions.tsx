@@ -1,0 +1,93 @@
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { useTranslation } from '@/hooks/useTranslation';
+import type { HeaderProps } from '../../Header';
+
+import EmailVerify from './LoginContent/EmailVerify/EmailVerify';
+import LoginContent from './LoginContent/LoginContent';
+import RegisterContent from './RegisterContent/RegisterContent';
+
+type AuthOptionsProps = HeaderProps & {
+    isLoggedIn: boolean;
+    handleLogout: () => void;
+};
+
+const AuthOptions = ({
+    isLoggedIn,
+    handleLogout,
+    activeModal,
+    setActiveModal,
+}: AuthOptionsProps) => {
+    const { t } = useTranslation();
+
+    const switchToRegister = () => {
+        setActiveModal('register');
+    };
+
+    const switchToEmailVerification = () => {
+        setActiveModal('verify-email');
+    };
+
+    const switchToLogin = () => {
+        setActiveModal('login');
+    };
+
+    const handleLoginSuccess = () => {
+        setActiveModal(null);
+    };
+
+    const handleEmailVerifySuccess = () => {
+        setActiveModal(null);
+    };
+
+    return (
+        <>
+            {isLoggedIn && activeModal !== 'login' ? (
+                <button
+                    onClick={handleLogout}
+                    className="button-transparent-background-white-border"
+                >
+                    {t('log_out')}
+                </button>
+            ) : (
+                <>
+                    <Dialog
+                        open={activeModal === 'register'}
+                        onOpenChange={(open: boolean) =>
+                            setActiveModal(open ? 'register' : null)
+                        }
+                    >
+                        <DialogTrigger className="button-primary-red-background">
+                            {t('sign_up')}
+                        </DialogTrigger>
+                        <RegisterContent onSwitchToLogin={switchToLogin} />
+                    </Dialog>
+                    <Dialog
+                        open={activeModal === 'login'}
+                        onOpenChange={(open: boolean) =>
+                            setActiveModal(open ? 'login' : null)
+                        }
+                    >
+                        <DialogTrigger className="button-transparent-background-white-border">
+                            {t('log_in')}
+                        </DialogTrigger>
+                        <LoginContent
+                            onSuccess={handleLoginSuccess}
+                            onSwitchToRegister={switchToRegister}
+                            onSwitchToEmailVerify={switchToEmailVerification}
+                        />
+                    </Dialog>
+                </>
+            )}
+            <EmailVerify
+                open={activeModal === 'verify-email'}
+                onOpenChange={(open: boolean) =>
+                    setActiveModal(open ? 'verify-email' : null)
+                }
+                switchToLogin={switchToLogin}
+                handleEmailVerifySuccess={handleEmailVerifySuccess}
+            />
+        </>
+    );
+};
+
+export default AuthOptions;

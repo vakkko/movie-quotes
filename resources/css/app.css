@@ -19,7 +19,14 @@
     --color-slate-gray: #6c757d;
     --color-light-ash: #e9ecef;
     --color-bootstrap-green: #198754;
+    --color-bootstrap-blue: #0d6efd;
+    --color-deep-navy: #11101a;
+    --color-charcoal-navy: #24222f;
+    --color-soft-navy: #242230;
+    --color-cloud-white: #efefef;
+    --color-cloud-gray: rgba(239, 239, 239, 0.3);
     --color-focus-shadow: rgba(13, 110, 253, 0.25);
+    --color-blue-overlay: rgba(151, 71, 255, 0.4);
 }
 
 @theme inline {
@@ -46,8 +53,8 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+    --background: #0d0b14;
+    --foreground: oklch(0.985 0 0);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
@@ -78,7 +85,8 @@
         border-color: var(--border);
     }
     body {
-        background-color: var(--background);
+        min-height: 100vh;
+        background-image: var(--header-gradient);
         color: var(--foreground);
         font-family: var(--font-sans);
         font-size: 1.6rem;
@@ -93,8 +101,16 @@ input {
     outline: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 @utility font-500-size-16 {
     @apply text-[1.6rem] font-medium;
+}
+
+@utility font-500-size-24 {
+    @apply text-[2.4rem] font-medium;
 }
 
 @utility font-500-size-32 {
@@ -105,12 +121,11 @@ input {
     @apply text-[6rem] font-bold;
 }
 
-@utility font-700-size-50 {
-    @apply text-[5rem] font-bold;
-}
-
 @utility font-700-size-30 {
     @apply text-[3rem] font-bold;
+}
+@utility font-700-size-50 {
+    @apply text-[5rem] font-bold;
 }
 
 @utility flex-items-center {
@@ -127,4 +142,8 @@ input {
 
 @utility button-transparent-background-white-border {
     @apply cursor-pointer rounded-[0.4rem] border border-white px-[2.5rem] py-[0.7rem] text-white;
+}
+
+@utility text-blue-underline {
+    @apply text-bootstrap-blue underline;
 }

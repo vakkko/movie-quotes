@@ -42,14 +42,14 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'locale' => $locale,
             'translations' => $this->translations($locale),
-            'auth' => [
-                'user' => $request->user(),
-            ],
+            'user' => $request->user(),
             'verified' => fn () => session('verified', false),
             'verifyExpired' => fn () => session('verify_expired', false),
             'verificationSent' => fn () => session('verification_sent', false),
-            'verifiedUser' => fn () => session('verified_user'),
+            'verifyUserFromEmailRedirection' => fn () => session('verified_user'),
             'passwordReset' => fn () => session('password_reset', false),
+            'unverifiedEmail' => fn () => session('unverified_email', false),
+            'unverifiedEmailAddress' => fn () => session('unverified_email_address'),
         ];
     }
 

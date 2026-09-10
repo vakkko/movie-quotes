@@ -16,6 +16,15 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
+        $user = User::where('email', $credentials['email'])->first();
+
+        if ($user && ! $user->email_verified_at) {
+            $request->session()->flash('unverified_email', true);
+            $request->session()->flash('unverified_email_address', $user->email);
+
+            return redirect()->route('home');
+        }
+
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()->withErrors([
                 'email' => "The current credentilas didn't match our records",
