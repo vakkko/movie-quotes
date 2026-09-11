@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Throwable;
 
 /**
  * @extends Factory<Movie>
@@ -43,7 +44,6 @@ class MovieFactory extends Factory
                 'en' => $titleEn,
                 'ka' => fake()->randomElement($titlesKa),
             ],
-            'image_url' => fake()->imageUrl(1920, 1080, 'movies'),
             'released_at' => fake()->dateTimeBetween('-30 years', 'now'),
             'genre' => $genre,
             'description' => [
@@ -55,5 +55,19 @@ class MovieFactory extends Factory
                 'ka' => fake()->randomElement($directorsKa),
             ],
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Movie $movie) {
+            try {
+                $movie->addMediaFromUrl("https://picsum.photos/seed/movie-{$movie->id}/1920/1080")
+                    ->toMediaCollection('poster');
+            } catch (Throwable) {
+                $movie->addMediaFromString(file_get_contents(__DIR__.'/../../tests/fixtures/test-image.png'))
+                    ->usingFileName('test-image.png')
+                    ->toMediaCollection('poster');
+            }
+        });
     }
 }

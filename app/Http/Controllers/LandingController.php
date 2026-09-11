@@ -12,10 +12,10 @@ class LandingController extends Controller
     public function __invoke(): Response
     {
         $quotes = Quote::query()
-            ->with('movie:id,title,released_at,image_url,genre,description,director')
+            ->with('movie:id,title,released_at,genre,description,director')
             ->inRandomOrder()
             ->limit(3)
-            ->get(['id', 'quote', 'image_url', 'movie_id']);
+            ->get(['id', 'quote', 'movie_id']);
 
         return Inertia::render('Landing/Landing', [
             'quotes' => $quotes->map(

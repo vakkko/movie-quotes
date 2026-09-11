@@ -8,12 +8,11 @@ use App\Models\Quote;
 use App\Models\QuoteComment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\CursorPaginator;
+use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class NewsControllerService
 {
@@ -37,7 +36,7 @@ class NewsControllerService
             ->cursorPaginate(5);
     }
 
-    public function getMoviesForUser(User $user): Collection
+    public function getMoviesForUser(User $user): SupportCollection
     {
         $locale = app()->getLocale();
 
@@ -65,16 +64,17 @@ class NewsControllerService
 
     public function createQuote(User $user, array $data, UploadedFile $file): Quote
     {
-        $imagePath = $file->store('quotes', 'public');
-
-        return $user->quotes()->create([
+        $quote = $user->quotes()->create([
             'quote' => [
                 'en' => $data['quote_en'],
                 'ka' => $data['quote_ka'],
             ],
             'movie_id' => $data['movie_id'],
-            'image_url' => Storage::disk('public')->url($imagePath),
         ]);
+
+        $quote->addMedia($file)->toMediaCollection('image');
+
+        return $quote;
     }
 
     public function updateQuote(Quote $quote, array $data, ?UploadedFile $file = null): Quote
@@ -90,24 +90,20 @@ class NewsControllerService
             ],
         ];
 
-        if ($file) {
-            $imagePath = $file->store('quotes', 'public');
-            $updateData['image_url'] = Storage::disk('public')->url($imagePath);
-        }
-
         $quote->update($updateData);
+
+        if ($file) {
+            $quote->clearMediaCollection('image')->addMedia($file)->toMediaCollection('image');
+        }
 
         return $quote;
     }
 
     public function deleteQuote(Quote $quote): bool
     {
-        if ($quote->image_url) {
-            $path = str_replace(Storage::disk('public')->url('/'), '', $quote->image_url);
-            Storage::disk('public')->delete($path);
-        }
+        $quote->delete();
 
-        return $quote->delete();
+        return true;
     }
 
     public function addComment(User $user, Quote $quote, string $body): QuoteComment
