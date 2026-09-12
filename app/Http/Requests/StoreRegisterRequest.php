@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\PasswordRules;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class StoreRegisterRequest extends FormRequest
 {
-    public function authorize(): bool
-    {
-        return true;
-    }
+    use PasswordRules;
 
     /**
      * @return array<string, mixed>
@@ -27,13 +24,7 @@ class StoreRegisterRequest extends FormRequest
                 'unique:users,username',
             ],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => [
-                'required',
-                'string',
-                Password::min(8)->max(15)->letters(),
-                'regex:/^[a-z]+$/',
-                'confirmed',
-            ],
+            'password' => $this->passwordRules(),
         ];
     }
 }

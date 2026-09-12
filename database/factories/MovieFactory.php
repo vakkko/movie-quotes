@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Movie;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Throwable;
 
 /**
  * @extends Factory<Movie>
@@ -39,15 +40,34 @@ class MovieFactory extends Factory
 
         return [
             'user_id' => User::factory(),
-            'title_en' => $titleEn,
-            'title_ka' => fake()->randomElement($titlesKa),
-            'image_url' => fake()->imageUrl(1920, 1080, 'movies'),
+            'title' => [
+                'en' => $titleEn,
+                'ka' => fake()->randomElement($titlesKa),
+            ],
             'released_at' => fake()->dateTimeBetween('-30 years', 'now'),
             'genre' => $genre,
-            'description_en' => fake()->paragraph(),
-            'description_ka' => fake()->randomElement($descriptionsKa),
-            'director_en' => fake()->name(),
-            'director_ka' => fake()->randomElement($directorsKa),
+            'description' => [
+                'en' => fake()->paragraph(),
+                'ka' => fake()->randomElement($descriptionsKa),
+            ],
+            'director' => [
+                'en' => fake()->name(),
+                'ka' => fake()->randomElement($directorsKa),
+            ],
         ];
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Movie $movie) {
+            try {
+                $movie->addMediaFromUrl("https://picsum.photos/seed/movie-{$movie->id}/1920/1080")
+                    ->toMediaCollection('poster');
+            } catch (Throwable) {
+                $movie->addMediaFromString(file_get_contents(__DIR__.'/../../tests/fixtures/test-image.png'))
+                    ->usingFileName('test-image.png')
+                    ->toMediaCollection('poster');
+            }
+        });
     }
 }

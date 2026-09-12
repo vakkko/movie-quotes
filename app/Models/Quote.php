@@ -10,20 +10,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
 /**
  * @use HasFactory<QuoteFactory>
  */
-#[Fillable(['user_id', 'movie_id', 'quote', 'image_url'])]
+#[Fillable(['user_id', 'movie_id', 'quote'])]
 #[Hidden('created_at', 'updated_at')]
 
-class Quote extends Model
+class Quote extends Model implements HasMedia
 {
     /** @use HasFactory<QuoteFactory> */
     use HasFactory;
 
     use HasTranslations;
+    use InteractsWithMedia;
 
     /** @var array<int, string> */
     public array $translatable = ['quote'];
@@ -56,5 +59,10 @@ class Quote extends Model
     public function likedByUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'quote_likes');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')->singleFile();
     }
 }

@@ -5,6 +5,8 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\StoreCommentController;
+use App\Http\Controllers\ToggleLikeController;
 use App\Http\Controllers\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +33,8 @@ Route::get('/news/quotes/{quote}', [NewsController::class, 'show'])->name('news.
 Route::put('/news/quotes/{quote}', [NewsController::class, 'update'])->name('news.quotes.update');
 Route::delete('/news/quotes/{quote}', [NewsController::class, 'destroy'])->name('news.quotes.destroy');
 Route::post('/news/quotes', [NewsController::class, 'store'])->name('news.quotes.store');
-Route::post('/news/quotes/{quote}/comments', [NewsController::class, 'storeComment'])->name('news.quotes.comments.store');
-Route::post('/news/quotes/{quote}/like', [NewsController::class, 'toggleLike'])->name('news.quotes.like');
+Route::post('/news/quotes/{quote}/comments', [StoreCommentController::class, 'storeComment'])->name('quotes.comments.store');
+Route::post('/news/quotes/{quote}/like', ToggleLikeController::class)->name('quotes.like.toggle');
 
 Route::get('/movies', [MovieController::class, 'index'])->name('movies');
 Route::post('/movies', [MovieController::class, 'store'])->name('movies.store');
