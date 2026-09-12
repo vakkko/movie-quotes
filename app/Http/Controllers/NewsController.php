@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreQuoteCommentRequest;
 use App\Http\Requests\StoreQuoteRequest;
 use App\Http\Requests\UpdateQuoteRequest;
 use App\Http\Resources\QuoteResource;
@@ -101,48 +100,5 @@ class NewsController extends Controller
         );
 
         return redirect()->route('news');
-    }
-
-    public function storeComment(
-        StoreQuoteCommentRequest $request,
-        Quote $quote,
-    ): RedirectResponse|JsonResponse {
-        if (! Auth::check()) {
-            abort(403);
-        }
-
-        $comment = $this->newsService->addComment(
-            Auth::user(),
-            $quote,
-            $request->input('body')
-        );
-
-        if ($request->expectsJson()) {
-            return response()->json([
-                'comment' => [
-                    'id' => $comment->id,
-                    'body' => $comment->body,
-                    'created_at' => $comment->created_at,
-                    'user' => [
-                        'id' => Auth::id(),
-                        'username' => Auth::user()->username,
-                        'avatar' => Auth::user()->avatar_url,
-                    ],
-                ],
-            ], 201);
-        }
-
-        return back();
-    }
-
-    public function toggleLike(Quote $quote): RedirectResponse
-    {
-        if (! Auth::check()) {
-            abort(403);
-        }
-
-        $this->newsService->toggleLike(Auth::user(), $quote);
-
-        return back();
     }
 }
