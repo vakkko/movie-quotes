@@ -79,7 +79,7 @@ const Landing = ({
                 header={t('thank_you')}
                 infotext={t('email_activated')}
                 anchorText={t('go_to_news')}
-                href="/"
+                href="/news"
             >
                 <Verified />
             </StatusModal>
