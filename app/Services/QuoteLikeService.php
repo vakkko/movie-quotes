@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Services;
+
 use App\Models\Notification;
 use App\Models\Quote;
 use App\Models\User;

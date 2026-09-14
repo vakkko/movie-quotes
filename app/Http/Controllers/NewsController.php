@@ -34,8 +34,16 @@ class NewsController extends Controller
         ]);
     }
 
-    public function show(Quote $quote): JsonResponse
+    public function show(Request $request, Quote $quote)
     {
+        if (! Auth::check()) {
+            abort(403);
+        }
+
+        if ($quote->user_id !== Auth::id()) {
+            abort(403);
+        }
+
         $quote = $this->newsService->getQuoteDetails($quote);
 
         $data = (new QuoteResource($quote))->resolve();
@@ -45,7 +53,10 @@ class NewsController extends Controller
         $data['quote_en'] = $rawQuote['en'] ?? null;
         $data['quote_ka'] = $rawQuote['ka'] ?? null;
 
-        return response()->json($data);
+        return Inertia::render('Quote/Quote', [
+            'quote' => $data,
+            'editing' => (bool) $request->boolean('edit'),
+        ]);
     }
 
     public function update(UpdateQuoteRequest $request, Quote $quote): RedirectResponse|JsonResponse
