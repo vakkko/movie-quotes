@@ -2,6 +2,7 @@ import { Link, router, usePage } from '@inertiajs/react';
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { ActiveModal } from '@/layouts/DefaultLayout';
+import Notifications from '@/layouts/Header/components/Notifications/Notifications';
 import type { SharedPageProps } from '@/types/global';
 
 import AuthOptions from './components/AuthOptions/AuthOptions';
@@ -15,6 +16,7 @@ export type HeaderProps = {
 const Header = ({ activeModal, setActiveModal }: HeaderProps) => {
     const { props } = usePage<SharedPageProps>();
     const { user } = props;
+    const { notifications } = props;
     const { url } = usePage();
     const isLoggedIn = !!user;
     const isHome = url === '/';
@@ -30,7 +32,8 @@ const Header = ({ activeModal, setActiveModal }: HeaderProps) => {
             <Link href="/" className="font-500-size-16 uppercase">
                 Movie quotes
             </Link>
-            <div className="flex-items-center gap-[1.6rem]">
+            <div className="flex-items-center gap-[4rem]">
+                {user && <Notifications notifications={notifications} />}
                 <LanguageDropDown />
                 <AuthOptions
                     isLoggedIn={isLoggedIn}
