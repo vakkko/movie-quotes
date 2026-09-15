@@ -24,7 +24,7 @@ class QuoteResource extends JsonResource
         return [
             'id' => $this->id,
             'quote' => $this->quote,
-            'image_url' => $this->image_url,
+            'image_url' => $this->getFirstMediaUrl('image'),
             'created_at' => $this->created_at,
             'movie' => $this->whenLoaded('movie', fn () => MovieResource::make($this->movie)->resolve()),
             'user' => $this->whenLoaded('user', fn () => UserResource::make($this->user)),
@@ -32,7 +32,7 @@ class QuoteResource extends JsonResource
                 'id' => $comment->id,
                 'body' => $comment->body,
                 'created_at' => $comment->created_at,
-                'user' => [UserResource::make($comment->user)],
+                'user' => UserResource::make($comment->user),
             ])),
             'likes_count' => $this->whenCounted('likes'),
             'comments_count' => $this->whenCounted('comments'),

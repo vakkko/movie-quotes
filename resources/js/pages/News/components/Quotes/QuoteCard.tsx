@@ -1,9 +1,15 @@
+import { useEchoPublic } from '@laravel/echo-react';
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import QuotePoster from '@/components/QuotePoster';
 import { cn, startWithUpperCase } from '@/lib/utils';
 import type { User } from '@/types';
-import type { Quote, QuoteComment } from '../../types';
+import type {
+    Quote,
+    QuoteComment,
+    QuoteCommentCreated,
+    QuoteReactionChanged,
+} from '../../types';
 import AvatarAndUsername from '../AvatarAndUsername';
 import Comments from './components/Comments';
 import Reactions from './components/Reactions';
@@ -27,6 +33,34 @@ const QuoteCard = ({
 }: QuoteCardProps) => {
     const [comments, setComments] = useState<QuoteComment[]>(quote.comments);
     const [commentsCount, setCommentsCount] = useState(quote.comments_count);
+    const [likesCount, setLikesCount] = useState(quote.likes_count);
+    const [prevQuote, setPrevQuote] = useState(quote);
+
+    if (prevQuote !== quote) {
+        setPrevQuote(quote);
+        setComments(quote.comments);
+        setCommentsCount(quote.comments_count);
+        setLikesCount(quote.likes_count);
+    }
+
+    useEchoPublic<QuoteReactionChanged>(
+        `quotes.${quote.id}`,
+        '.QuoteReactionChanged',
+        (payload) => setLikesCount(payload.likes_count),
+    );
+
+    useEchoPublic<QuoteCommentCreated>(
+        `quotes.${quote.id}`,
+        '.QuoteCommentCreated',
+        (payload) => {
+            setComments((previous) =>
+                previous.some((comment) => comment.id === payload.comment.id)
+                    ? previous
+                    : [payload.comment, ...previous],
+            );
+            setCommentsCount((previous) => previous + 1);
+        },
+    );
 
     const handleCommentAdded = (comment: QuoteComment) => {
         setComments((previous) => [comment, ...previous]);
@@ -53,8 +87,8 @@ const QuoteCard = ({
             ) : (
                 <p className="mt-[1.6rem] mb-[2.8rem] text-[2rem]">
                     &ldquo;{startSentenceUpperCase}&rdquo; -{' '}
-                    <span className="text-cream">{quote.movie.director}</span>.(
-                    {quote.movie.released_at}){' '}
+                    <span className="text-cream">{quote.movie.title}</span> (
+                    {quote.movie.released_at})
                 </p>
             )}
             <QuotePoster
@@ -68,7 +102,7 @@ const QuoteCard = ({
                     <Reactions
                         quoteId={quote.id}
                         commentsCount={commentsCount}
-                        likesCount={quote.likes_count}
+                        likesCount={likesCount}
                         isLiked={quote.is_liked}
                     />
                     <hr className="border-cloud-gray" />
