@@ -50,7 +50,7 @@ class QuoteCommentCreated implements ShouldBroadcastNow, ShouldDispatchAfterComm
                 'user' => [
                     'id' => $this->comment->user->id,
                     'username' => $this->comment->user->username,
-                    'avatar' => $this->comment->user->avatar_url,
+                    'avatar_url' => $this->comment->user->avatar_url,
                 ],
             ],
         ];

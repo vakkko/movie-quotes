@@ -8,7 +8,7 @@ type MovieOption = {
 type QuoteUser = {
     id: number;
     username: string;
-    avatar: string;
+    avatar_url: string;
 };
 
 type QuoteMovie = {

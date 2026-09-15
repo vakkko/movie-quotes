@@ -31,7 +31,7 @@ export type MovieQuote = {
     user: {
         id: number;
         username: string;
-        avatar: string | null;
+        avatar_url: string | null;
     };
     likes_count: number;
     comments_count: number;
@@ -46,7 +46,7 @@ export type QuoteComment = {
     user: {
         id: number;
         username: string;
-        avatar: string | null;
+        avatar_url: string | null;
     };
 };
 
