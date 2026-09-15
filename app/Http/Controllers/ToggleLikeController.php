@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quote;
+use App\Services\QuoteLikeService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use QuoteLikeService;
 
 class ToggleLikeController extends Controller
 {

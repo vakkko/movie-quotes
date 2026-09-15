@@ -23,6 +23,7 @@
     --color-deep-navy: #11101a;
     --color-charcoal-navy: #24222f;
     --color-soft-navy: #242230;
+    --color-slate-gray-50: rgba(108, 117, 125, 0.5);
     --color-cloud-white: #efefef;
     --color-cloud-gray: rgba(239, 239, 239, 0.3);
     --color-focus-shadow: rgba(13, 110, 253, 0.25);
@@ -117,15 +118,20 @@ button {
     @apply text-[3.2rem] font-medium;
 }
 
-@utility font-700-size-60 {
-    @apply text-[6rem] font-bold;
+@utility font-700-size-18 {
+    @apply text-[1.8rem] font-bold;
 }
 
 @utility font-700-size-30 {
     @apply text-[3rem] font-bold;
 }
+
 @utility font-700-size-50 {
     @apply text-[5rem] font-bold;
+}
+
+@utility font-700-size-60 {
+    @apply text-[6rem] font-bold;
 }
 
 @utility flex-items-center {
@@ -146,4 +152,12 @@ button {
 
 @utility text-blue-underline {
     @apply text-bootstrap-blue underline;
+}
+
+@utility scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }

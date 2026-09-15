@@ -79,7 +79,7 @@ const Landing = ({
                 header={t('thank_you')}
                 infotext={t('email_activated')}
                 anchorText={t('go_to_news')}
-                href="/"
+                href="/news"
             >
                 <Verified />
             </StatusModal>
@@ -99,7 +99,7 @@ const Landing = ({
 };
 
 Landing.layout = (page: React.ReactNode) => (
-    <DefaultLayout>{page}</DefaultLayout>
+    <DefaultLayout className="m-0 flex-col gap-0 pr-0">{page}</DefaultLayout>
 );
 
 export default Landing;
