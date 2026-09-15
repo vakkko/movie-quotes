@@ -53,6 +53,11 @@ export type QuoteReactionChanged = {
     likes_count: number;
 };
 
+export type QuoteReactionToggled = {
+    is_liked: boolean;
+    likes_count: number;
+};
+
 export type QuoteCommentCreated = {
     quote_id: number;
     comment: QuoteComment;
