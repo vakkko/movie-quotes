@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Events\NotificationCreated;
+use App\Events\QuoteCommentCreated;
 use App\Models\Notification;
 use App\Models\Quote;
 use App\Models\QuoteComment;
@@ -16,14 +18,18 @@ class QuoteCommentService
             'body' => $body,
         ]);
 
+        broadcast(new QuoteCommentCreated($comment))->toOthers();
+
         if ($quote->user_id !== $user->id) {
-            Notification::create([
+            $notification = Notification::create([
                 'user_id' => $quote->user_id,
                 'actor_id' => $user->id,
                 'type' => 'comment',
                 'quote_id' => $quote->id,
                 'comment_id' => $comment->id,
             ]);
+
+            event(new NotificationCreated($notification));
         }
 
         return $comment;

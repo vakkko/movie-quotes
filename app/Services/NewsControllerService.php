@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Events\NotificationCreated;
+use App\Events\QuoteCreated;
 use App\Models\Movie;
 use App\Models\Notification;
 use App\Models\Quote;
@@ -74,6 +76,8 @@ class NewsControllerService
 
         $quote->addMedia($file)->toMediaCollection('image');
 
+        broadcast(new QuoteCreated($quote))->toOthers();
+
         return $quote;
     }
 
@@ -114,13 +118,15 @@ class NewsControllerService
         ]);
 
         if ($quote->user_id !== $user->id) {
-            Notification::create([
+            $notification = Notification::create([
                 'user_id' => $quote->user_id,
                 'actor_id' => $user->id,
                 'type' => 'comment',
                 'quote_id' => $quote->id,
                 'comment_id' => $comment->id,
             ]);
+
+            event(new NotificationCreated($notification));
         }
 
         return $comment;
@@ -146,7 +152,10 @@ class NewsControllerService
             return;
         }
 
-        $this->whereTranslation($query, 'quote', $term);
+        $query->where(function (Builder $builder) use ($term) {
+            $this->whereTranslation($builder, 'quote', $term);
+            $builder->orWhereHas('movie', fn (Builder $movie) => $this->whereTranslation($movie, 'title', $term));
+        });
     }
 
     private function whereTranslation(Builder $query, string $column, string $term): void
