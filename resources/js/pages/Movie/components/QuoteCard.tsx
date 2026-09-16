@@ -1,11 +1,30 @@
+import { useEchoPublic } from '@laravel/echo-react';
+import { useState } from 'react';
 import type { MovieQuote } from '@/types';
 import Reactions from '../../News/components/Quotes/components/Reactions';
+import type { QuoteReactionChanged } from '../../News/types';
 
 type QuoteCardProps = {
     quote: MovieQuote;
 };
 
 const QuoteCard = ({ quote }: QuoteCardProps) => {
+    const [commentsCount, setCommentsCount] = useState(quote.comments_count);
+    const [likesCount, setLikesCount] = useState(quote.likes_count);
+    const [prevQuote, setPrevQuote] = useState(quote);
+
+    if (prevQuote !== quote) {
+        setPrevQuote(quote);
+        setCommentsCount(quote.comments_count);
+        setLikesCount(quote.likes_count);
+    }
+
+    useEchoPublic<QuoteReactionChanged>(
+        `quotes.${quote.id}`,
+        '.QuoteReactionChanged',
+        (payload) => setLikesCount(payload.likes_count),
+    );
+
     return (
         <>
             <div className="mb-[2rem] flex gap-[2.4rem]">
@@ -20,8 +39,8 @@ const QuoteCard = ({ quote }: QuoteCardProps) => {
             </div>
             <hr />
             <Reactions
-                commentsCount={quote.comments_count}
-                likesCount={quote.likes_count}
+                commentsCount={commentsCount}
+                likesCount={likesCount}
             />
         </>
     );
