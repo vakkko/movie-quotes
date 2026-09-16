@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\CursorPaginator;
 use Illuminate\Support\Collection as SupportCollection;
-use Illuminate\Support\Facades\Auth;
 
 class NewsControllerService
 {
@@ -83,10 +82,6 @@ class NewsControllerService
 
     public function updateQuote(Quote $quote, array $data, ?UploadedFile $file = null): Quote
     {
-        if ($quote->user_id !== Auth::id()) {
-            abort(403);
-        }
-
         $updateData = [
             'quote' => [
                 'en' => $data['quote_en'],

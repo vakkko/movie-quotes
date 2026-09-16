@@ -21,10 +21,6 @@ class NewsController extends Controller
 
     public function index(Request $request)
     {
-        if (! Auth::check()) {
-            abort(403);
-        }
-
         $quotes = $this->newsService->getQuotesPaginated($request);
         $movies = $this->newsService->getMoviesForUser(Auth::user());
 
@@ -36,13 +32,7 @@ class NewsController extends Controller
 
     public function show(Request $request, Quote $quote)
     {
-        if (! Auth::check()) {
-            abort(403);
-        }
-
-        if ($quote->user_id !== Auth::id()) {
-            abort(403);
-        }
+        $this->authorize('view', $quote);
 
         $quote = $this->newsService->getQuoteDetails($quote);
 
@@ -61,9 +51,7 @@ class NewsController extends Controller
 
     public function update(UpdateQuoteRequest $request, Quote $quote): RedirectResponse|JsonResponse
     {
-        if (! Auth::check()) {
-            abort(403);
-        }
+        $this->authorize('update', $quote);
 
         $quote = $this->newsService->updateQuote(
             $quote,
@@ -85,9 +73,7 @@ class NewsController extends Controller
 
     public function destroy(Quote $quote): RedirectResponse|JsonResponse
     {
-        if ($quote->user_id !== Auth::id()) {
-            abort(403);
-        }
+        $this->authorize('delete', $quote);
 
         $this->newsService->deleteQuote($quote);
 
@@ -100,10 +86,6 @@ class NewsController extends Controller
 
     public function store(StoreQuoteRequest $request): RedirectResponse
     {
-        if (! Auth::check()) {
-            abort(403);
-        }
-
         $this->newsService->createQuote(
             Auth::user(),
             $request->validated(),

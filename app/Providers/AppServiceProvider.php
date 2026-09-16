@@ -2,9 +2,18 @@
 
 namespace App\Providers;
 
+use App\Models\Movie;
+use App\Models\Notification;
+use App\Models\Quote;
+use App\Models\User;
+use App\Policies\MoviePolicy;
+use App\Policies\NotificationPolicy;
+use App\Policies\QuotePolicy;
+use App\Policies\UserPolicy;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Inertia\ExceptionResponse;
@@ -26,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->registerPolicies();
 
         Inertia::handleExceptionsUsing(function (ExceptionResponse $response) {
             if (in_array($response->statusCode(), [403, 404])) {
@@ -56,5 +66,13 @@ class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null,
         );
+    }
+
+    protected function registerPolicies(): void
+    {
+        Gate::policy(Movie::class, MoviePolicy::class);
+        Gate::policy(Quote::class, QuotePolicy::class);
+        Gate::policy(Notification::class, NotificationPolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
     }
 }

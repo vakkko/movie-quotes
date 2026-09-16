@@ -19,10 +19,6 @@ class StoreCommentController extends Controller
         StoreQuoteCommentRequest $request,
         Quote $quote,
     ): RedirectResponse|JsonResponse {
-        if (! Auth::check()) {
-            abort(403);
-        }
-
         $comment = $this->commentService->addComment(
             Auth::user(),
             $quote,
