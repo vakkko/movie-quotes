@@ -17,10 +17,6 @@ class ToggleLikeController extends Controller
 
     public function __invoke(Request $request, Quote $quote): RedirectResponse|JsonResponse
     {
-        if (! Auth::check()) {
-            abort(403);
-        }
-
         $result = $this->likeService->toggleLike(Auth::user(), $quote);
 
         if ($request->expectsJson()) {

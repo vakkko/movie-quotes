@@ -29,6 +29,7 @@ class Movie extends Model implements HasMedia
 
     protected $casts = [
         'released_at' => 'datetime',
+        'genre' => 'array',
     ];
 
     /** @return HasMany<Quote, $this> */

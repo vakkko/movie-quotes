@@ -20,7 +20,11 @@ class MovieFactory extends Factory
     public function definition(): array
     {
         $titleEn = fake()->sentence(3, false);
-        $genre = fake()->randomElement(['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Animation', 'Documentary', 'Fantasy']);
+
+        $genreNames = fake()->randomElements(
+            ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Thriller', 'Romance', 'Animation', 'Documentary', 'Fantasy'],
+            rand(1, 3),
+        );
 
         $titlesKa = [
             'შურისმაძიებლები',
@@ -45,7 +49,7 @@ class MovieFactory extends Factory
                 'ka' => fake()->randomElement($titlesKa),
             ],
             'released_at' => fake()->dateTimeBetween('-30 years', 'now'),
-            'genre' => $genre,
+            'genre' => $genreNames,
             'description' => [
                 'en' => fake()->paragraph(),
                 'ka' => fake()->randomElement($descriptionsKa),
