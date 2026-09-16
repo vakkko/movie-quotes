@@ -65,24 +65,7 @@ class MovieController extends Controller
 
     public function store(StoreMovieRequest $request): RedirectResponse
     {
-        $user = Auth::user();
-
-        $movie = $user->movies()->create([
-            'title' => [
-                'en' => $request->input('title_en'),
-                'ka' => $request->input('title_ka'),
-            ],
-            'director' => [
-                'en' => $request->input('director_en'),
-                'ka' => $request->input('director_ka'),
-            ],
-            'description' => [
-                'en' => $request->input('description_en'),
-                'ka' => $request->input('description_ka'),
-            ],
-            'genre' => $request->input('genre'),
-            'released_at' => $request->input('released_at'),
-        ]);
+        $movie = Auth::user()->movies()->create($request->mappedAttributes());
 
         $movie->addMedia($request->file('image'))->toMediaCollection('poster');
 
@@ -95,22 +78,7 @@ class MovieController extends Controller
     {
         $this->authorize('update', $movie);
 
-        $movie->update([
-            'title' => [
-                'en' => $request->input('title_en'),
-                'ka' => $request->input('title_ka'),
-            ],
-            'director' => [
-                'en' => $request->input('director_en'),
-                'ka' => $request->input('director_ka'),
-            ],
-            'description' => [
-                'en' => $request->input('description_en'),
-                'ka' => $request->input('description_ka'),
-            ],
-            'genre' => $request->input('genre'),
-            'released_at' => $request->input('released_at'),
-        ]);
+        $movie->update($request->mappedAttributes());
 
         if ($request->hasFile('image')) {
             $movie->clearMediaCollection('poster');
