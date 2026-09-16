@@ -15,12 +15,13 @@ class VerifyEmail extends Mailable
     public function __construct(
         public string $url,
         public string $username,
+        public bool $isChange = false,
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('mail.verification_subject'),
+            subject: __($this->isChange ? 'mail.email_change_subject' : 'mail.verification_subject'),
         );
     }
 
@@ -31,6 +32,7 @@ class VerifyEmail extends Mailable
             with: [
                 'url' => $this->url,
                 'username' => $this->username,
+                'isChange' => $this->isChange,
             ],
         );
     }
