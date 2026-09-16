@@ -1,4 +1,5 @@
 import { useHttp } from '@inertiajs/react';
+import { useSocketId } from '@laravel/echo-react';
 import type { ChangeEvent } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -15,6 +16,7 @@ type UserCommentProps = {
 
 const UserComment = ({ quoteId, user, onCommentAdded }: UserCommentProps) => {
     const { t } = useTranslation();
+    const socketId = useSocketId();
     const { data, setData, post, errors, processing, reset } = useHttp({
         body: '',
     });
@@ -29,6 +31,7 @@ const UserComment = ({ quoteId, user, onCommentAdded }: UserCommentProps) => {
         }
 
         post(storeCommentRoute.url(quoteId), {
+            headers: socketId ? { 'X-Socket-ID': socketId } : undefined,
             onSuccess: (response: unknown) => {
                 const { comment } = response as { comment: QuoteComment };
                 onCommentAdded(comment);
