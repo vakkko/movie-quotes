@@ -1,4 +1,5 @@
-import { router, useHttp } from '@inertiajs/react';
+import { router, useHttp, usePage } from '@inertiajs/react';
+import { useEcho } from '@laravel/echo-react';
 import { useState } from 'react';
 import {
     show as showQuoteRoute,
@@ -7,7 +8,7 @@ import {
     read as markNotificationAsRead,
     readAll as markAllNotificationsAsRead,
 } from '@/routes/notifications';
-import type { SharedNotification } from '@/types/global';
+import type { SharedNotification, SharedPageProps } from '@/types/global';
 
 type UseNotificationsOptions = {
     notifications: SharedNotification[] | null;
@@ -16,10 +17,30 @@ type UseNotificationsOptions = {
 export const useNotifications = ({
     notifications,
 }: UseNotificationsOptions) => {
+    const { props } = usePage<SharedPageProps>();
+    const { user } = props;
+    const [now] = useState(() => Date.now());
+    const [liveNotifications, setLiveNotifications] = useState<
+        SharedNotification[] | null
+    >(notifications);
+    const [prevNotifications, setPrevNotifications] = useState(notifications);
     const [readLocally, setReadLocally] = useState<Set<number>>(
         () => new Set(),
     );
     const { patch } = useHttp({});
+
+    if (prevNotifications !== notifications) {
+        setPrevNotifications(notifications);
+        setLiveNotifications(notifications);
+    }
+
+    useEcho<SharedNotification>(
+        `App.Models.User.${user?.id}`,
+        '.NotificationCreated',
+        (notification) => {
+            setLiveNotifications((prev) => [notification, ...(prev ?? [])]);
+        },
+    );
 
     const isRead = (notification: SharedNotification) =>
         notification.is_read || readLocally.has(notification.id);
@@ -71,8 +92,10 @@ export const useNotifications = ({
     };
 
     return {
+        liveNotifications,
         isRead,
         unreadCount,
+        now,
         handleNotificationClick,
         handleMarkAllRead,
     };

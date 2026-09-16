@@ -1,5 +1,3 @@
-import { usePage } from '@inertiajs/react';
-import { useEcho } from '@laravel/echo-react';
 import { Bell, Heart } from 'lucide-react';
 import { useState } from 'react';
 import AvatarImage from '@/components/AvatarImage';
@@ -13,41 +11,25 @@ import {
 } from '@/components/ui/popover';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getTimeAgo } from '@/layouts/Header/utils';
-import type { SharedNotification, SharedPageProps } from '@/types/global';
+import type { SharedNotification } from '@/types/global';
 import { useNotifications } from './useNotifications';
 
 type NotificationsProps = {
     notifications: SharedNotification[] | null;
 };
 
-type LiveNotification = SharedNotification;
-
 const Notifications = ({ notifications }: NotificationsProps) => {
     const { t } = useTranslation();
-    const { props } = usePage<SharedPageProps>();
-    const { user } = props;
-    const [now] = useState(() => Date.now());
     const [isOpen, setIsOpen] = useState(false);
-    const [liveNotifications, setLiveNotifications] = useState<
-        SharedNotification[] | null
-    >(notifications);
-    const [prevNotifications, setPrevNotifications] = useState(notifications);
 
-    if (prevNotifications !== notifications) {
-        setPrevNotifications(notifications);
-        setLiveNotifications(notifications);
-    }
-
-    useEcho<LiveNotification>(
-        `App.Models.User.${user?.id}`,
-        '.NotificationCreated',
-        (notification) => {
-            setLiveNotifications((prev) => [notification, ...(prev ?? [])]);
-        },
-    );
-
-    const { isRead, unreadCount, handleNotificationClick, handleMarkAllRead } =
-        useNotifications({ notifications: liveNotifications });
+    const {
+        liveNotifications,
+        isRead,
+        unreadCount,
+        now,
+        handleNotificationClick,
+        handleMarkAllRead,
+    } = useNotifications({ notifications });
 
     const handleNotificationClickAndClose = (
         notification: SharedNotification,
