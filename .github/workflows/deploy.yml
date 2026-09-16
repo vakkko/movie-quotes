@@ -35,6 +35,12 @@ jobs:
       - name: Run linter
         run: npm run lint
 
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Package frontend assets
+        run: tar -czf build.tar.gz -C public build
+
       - name: Set SSH key
         run: |
           mkdir -p ~/.ssh
@@ -43,11 +49,18 @@ jobs:
 
       - name: Deploy to server
         run: |
+          scp -o StrictHostKeyChecking=no build.tar.gz ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/tmp/movie-quotes-build.tar.gz
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd apps
-            cd nextjs-folder-structure-example
-            git pull
-            npm ci
-            npm run build
-            pm2 restart nextjs-example-process
+            set -e
+            cd /home/vako/apps/vladimer-gabisonia-movie-quotes
+            git pull --ff-only origin main
+            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            php artisan migrate --force
+            rm -rf public/build
+            mkdir -p public/build
+            tar -xzf /tmp/movie-quotes-build.tar.gz -C public
+            php artisan optimize:clear
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
           EOF
