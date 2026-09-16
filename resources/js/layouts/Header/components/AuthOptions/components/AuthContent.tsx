@@ -1,7 +1,11 @@
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, XIcon } from 'lucide-react';
 import type { ChangeEvent, PropsWithChildren } from 'react';
 import Google from '@/components/svgs/Google';
-import { DialogContent, DialogHeader } from '@/components/ui/dialog';
+import {
+    DialogClose,
+    DialogContent,
+    DialogHeader,
+} from '@/components/ui/dialog';
 import { Field, FieldGroup } from '@/components/ui/field';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -45,6 +49,12 @@ const AuthContent = ({
             className="w-full rounded-none border-none bg-dark-navy p-4 p-[12rem] py-[5.3rem] text-white max-sm:h-full max-sm:max-w-none max-sm:px-[2.4rem] sm:max-w-5xl sm:rounded-[1rem]"
             showCloseButton={false}
         >
+            <DialogClose
+                className="absolute top-[2.4rem] right-[2.4rem] rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-hidden"
+                aria-label={t('close')}
+            >
+                <XIcon className="size-[2rem] text-white" />
+            </DialogClose>
             <DialogHeader className="mb-[2.4rem[ flex-column items-center">
                 <h3 className="font-500-size-32 leading-[120%] whitespace-nowrap">
                     {header}

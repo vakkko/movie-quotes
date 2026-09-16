@@ -54,8 +54,8 @@ const DefaultLayout = ({
                 {children}
             </main>
             {isLandingPage && (
-                <footer className="ml-[7rem] py-[1.5rem]">
-                    <span className="text-cream">
+                <footer className="ml-[7rem] py-[1.5rem] max-sm:ml-[3.4rem] max-sm:py-[1rem]">
+                    <span className="text-cream max-sm:text-[0.8rem]">
                         {t('footer_copyright')}
                     </span>
                 </footer>
