@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Events\NotificationCreated;
+use App\Events\QuoteReactionChanged;
 use App\Models\Notification;
 use App\Models\Quote;
 use App\Models\User;
@@ -24,6 +26,8 @@ class QuoteLikeService
                 ->where('quote_id', $quote->id)
                 ->delete();
 
+            broadcast(new QuoteReactionChanged($quote, $quote->likes()->count()))->toOthers();
+
             return 'unliked';
         }
 
@@ -31,13 +35,17 @@ class QuoteLikeService
             'user_id' => $user->id,
         ]);
 
+        broadcast(new QuoteReactionChanged($quote, $quote->likes()->count()))->toOthers();
+
         if ($quote->user_id !== $user->id) {
-            Notification::create([
+            $notification = Notification::create([
                 'user_id' => $quote->user_id,
                 'actor_id' => $user->id,
                 'type' => 'like',
                 'quote_id' => $quote->id,
             ]);
+
+            event(new NotificationCreated($notification));
         }
 
         return 'liked';

@@ -2,6 +2,7 @@ import { usePage } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 
+import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 import type { SharedPageProps } from '@/types/global';
 
@@ -23,6 +24,7 @@ const DefaultLayout = ({
     className,
 }: PropsWithChildren<{ className?: string }>) => {
     const { url } = usePage();
+    const { t } = useTranslation();
     const { verifyUserFromEmailRedirection } = usePage<SharedPageProps>().props;
 
     const isLandingPage = new URL(url, window.location.origin).pathname === '/';
@@ -36,6 +38,7 @@ const DefaultLayout = ({
     const headerProps: HeaderProps = {
         activeModal,
         setActiveModal,
+        isLandingPage,
     };
 
     return (
@@ -50,6 +53,13 @@ const DefaultLayout = ({
                 {!isLandingPage && <ProfileAndNavSection />}
                 {children}
             </main>
+            {isLandingPage && (
+                <footer className="ml-[7rem] py-[1.5rem]">
+                    <span className="text-cream">
+                        {t('footer_copyright')}
+                    </span>
+                </footer>
+            )}
             {localVerifiedUser && (
                 <CreatePasswordModal
                     open={activeModal === 'create-password'}

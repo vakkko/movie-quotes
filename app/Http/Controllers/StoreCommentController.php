@@ -38,7 +38,7 @@ class StoreCommentController extends Controller
                     'user' => [
                         'id' => Auth::id(),
                         'username' => Auth::user()->username,
-                        'avatar' => Auth::user()->avatar_url,
+                        'avatar_url' => Auth::user()->avatar_url,
                     ],
                 ],
             ], 201);

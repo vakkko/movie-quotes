@@ -8,7 +8,7 @@ type MovieOption = {
 type QuoteUser = {
     id: number;
     username: string;
-    avatar: string;
+    avatar_url: string;
 };
 
 type QuoteMovie = {
@@ -46,4 +46,55 @@ export type NewsProps = {
     };
     movies: MovieOption[];
     user: User;
+};
+
+export type QuoteReactionChanged = {
+    quote_id: number;
+    likes_count: number;
+};
+
+export type QuoteReactionToggled = {
+    is_liked: boolean;
+    likes_count: number;
+};
+
+export type QuoteCommentCreated = {
+    quote_id: number;
+    comment: QuoteComment;
+};
+
+export type QuoteCreated = {
+    quote: {
+        id: number;
+        quote_en: string;
+        quote_ka: string;
+        image_url: string;
+        created_at: string;
+        user: QuoteUser;
+        movie: {
+            id: number;
+            title_en: string;
+            title_ka: string;
+            director_en: string;
+            director_ka: string;
+            released_at: string;
+        };
+        comments: QuoteComment[];
+        likes_count: number;
+        comments_count: number;
+        is_liked: boolean;
+    };
+};
+
+export type MovieCreated = {
+    movie: {
+        id: number;
+        title: string;
+        released_at: number;
+        image_url: string;
+        genres: string[];
+        description: string | null;
+        director: string;
+        quotes_count: number;
+    };
 };

@@ -3,8 +3,11 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\MarkAllNotificationsAsReadController;
+use App\Http\Controllers\MarkNotificationAsReadController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreCommentController;
 use App\Http\Controllers\ToggleLikeController;
 use App\Http\Controllers\VerifyEmailController;
@@ -29,6 +32,9 @@ Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
 
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
 Route::get('/news/quotes/{quote}', [NewsController::class, 'show'])->name('news.quotes.show');
 Route::put('/news/quotes/{quote}', [NewsController::class, 'update'])->name('news.quotes.update');
 Route::delete('/news/quotes/{quote}', [NewsController::class, 'destroy'])->name('news.quotes.destroy');
@@ -36,5 +42,14 @@ Route::post('/news/quotes', [NewsController::class, 'store'])->name('news.quotes
 Route::post('/news/quotes/{quote}/comments', [StoreCommentController::class, 'storeComment'])->name('quotes.comments.store');
 Route::post('/news/quotes/{quote}/like', ToggleLikeController::class)->name('quotes.like.toggle');
 
+Route::patch('/notifications/{notification}/read', MarkNotificationAsReadController::class)
+    ->name('notifications.read');
+
+Route::patch('/notifications/read-all', MarkAllNotificationsAsReadController::class)
+    ->name('notifications.read-all');
+
 Route::get('/movies', [MovieController::class, 'index'])->name('movies');
+Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
 Route::post('/movies', [MovieController::class, 'store'])->name('movies.store');
+Route::put('/movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
+Route::delete('/movies/{movie}', [MovieController::class, 'destroy'])->name('movies.destroy');
