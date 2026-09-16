@@ -37,6 +37,8 @@ class GoogleAuthController extends Controller
             ]);
         }
 
+        $user->google_id = $googleUser->getId();
+
         $user->save();
 
         Auth::login($user);
