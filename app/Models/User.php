@@ -13,11 +13,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @property int $id
+ * @property string|null $google_id
  * @property string $name
  * @property string $email
+ * @property string|null $pending_email
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $avatar_url
@@ -25,16 +29,21 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['username', 'email', 'password', 'email_verified_at', 'avatar_url'])]
+#[Fillable(['username', 'email', 'pending_email', 'password', 'email_verified_at', 'avatar_url', 'google_id'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, InteractsWithMedia, Notifiable;
 
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new EmailVerificationNotification);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')->singleFile();
     }
 
     /**

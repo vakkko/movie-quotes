@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('mail.verification_subject') }}</title>
+    <title>{{ $isChange ? __('mail.email_change_subject') : __('mail.verification_subject') }}</title>
 </head>
 
 <body
@@ -43,7 +43,7 @@
                     <tr align="start">
                         <td align="left" style="padding-bottom: 28px;">
                             <div style="margin: 0; font-size: 15px; line-height: 1.5; color: #ffffff;">
-                                {{ __('mail.verification_join') }}
+                                {{ $isChange ? __('mail.email_change_join') : __('mail.verification_join') }}
                             </div>
                         </td>
                     </tr>
@@ -52,7 +52,7 @@
                         <td style="padding-top: 8px;">
                             <a href="{{ $url }}"
                                 style="display: inline-block; background-color: #e31221; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; padding: 12px 36px; border-radius: 8px; text-align: center;">
-                                {{ __('mail.verification_action') }}
+                                {{ $isChange ? __('mail.email_change_action') : __('mail.verification_action') }}
                             </a>
                         </td>
                     </tr>
