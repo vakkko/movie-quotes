@@ -2,11 +2,11 @@ import { Minus, Pencil, Trash2 } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 
 type EditDeleteActionsProps = {
-    showModal: string | null;
+    showModal?: string | null;
     handleCancel: () => void;
     handleEditClick: () => void;
     isDeleting?: boolean;
-    handleDeleteClick: () => void;
+    handleDeleteClick?: () => void;
 };
 
 const EditDeleteActions = ({
