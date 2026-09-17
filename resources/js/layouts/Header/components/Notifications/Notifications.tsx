@@ -120,7 +120,7 @@ const Notifications = ({ notifications }: NotificationsProps) => {
                                                     fill="red"
                                                     stroke="red"
                                                 />{' '}
-                                                {t('commented_to_quote')}
+                                                {t('reacted_to_quote')}
                                             </p>
                                         )}
                                         {!isRead(notification) && (
