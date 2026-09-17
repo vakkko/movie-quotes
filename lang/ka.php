@@ -61,6 +61,7 @@ return [
     'write_quote' => 'დაწერე ციტატა',
     'search_placeholder' => 'ჩაწერეთ @ ფილმის საძიებლად, ჩაწერეთ # ციტატის საძიებლად',
     'search_by' => 'ძიება',
+    'no_movies_or_quotes_found' => 'ფილმი ან ციტატა არ მოიძებნა',
     'edit_profile' => 'შეასწორე შენი ანგარიში',
     'my_profile' => 'ჩემი პროფილი',
     'upload_photo' => 'ახალი სურათის ატვირთვა',

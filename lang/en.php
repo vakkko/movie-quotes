@@ -61,6 +61,7 @@ return [
     'write_quote' => 'Write quote',
     'search_placeholder' => 'Enter @ to search movies, Enter # to search quotes',
     'search_by' => 'Search by',
+    'no_movies_or_quotes_found' => 'No movies or quotes found',
     'edit_profile' => 'Edit your profile',
     'my_profile' => 'My profile',
     'upload_photo' => 'Upload new photo',
