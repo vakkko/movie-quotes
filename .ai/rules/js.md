@@ -16,3 +16,6 @@ The shared Inertia prop for the authenticated user is a single flattened `user` 
 
 ## Co-locate component hooks with the component
 Component-specific hooks live in the component's own folder with a named export (e.g. Notifications/useNotifications.ts, useStickyQuotes.ts) and are imported as `import { useX } from './useX'`. Generic/reusable hooks go in resources/js/hooks with a default export (e.g. useAddMovieOrQuote).
+
+## Auth modals exposed via useAuthModal context
+The single activeModal state for auth modals (login/register/verify-email/create-password/success/null) is owned by DefaultLayout and exposed to the tree through the AuthModalProvider context in resources/js/hooks/useAuthModal.tsx. The `ActiveModal` type lives there too. Any component can open the login modal via `const { setActiveModal } = useAuthModal()`. Landing's "Get started" CTA uses this to open the login modal for guests; always keep this single state (no per-modal booleans).
