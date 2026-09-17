@@ -54,9 +54,7 @@ function ImageUpload({
                     },
                 )}
             >
-                {preview && (
-                    <ImagePreview preview={preview} onRemove={clear} />
-                )}
+                {preview && <ImagePreview preview={preview} onRemove={clear} />}
                 <label
                     htmlFor="image-upload"
                     className={cn(

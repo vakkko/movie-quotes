@@ -1,9 +1,7 @@
 import { router, useHttp, usePage } from '@inertiajs/react';
 import { useEcho } from '@laravel/echo-react';
 import { useState } from 'react';
-import {
-    show as showQuoteRoute,
-} from '@/routes/news/quotes';
+import { show as showQuoteRoute } from '@/routes/news/quotes';
 import {
     read as markNotificationAsRead,
     readAll as markAllNotificationsAsRead,
@@ -61,7 +59,9 @@ export const useNotifications = ({
                         return next;
                     });
 
-                    router.visit(showQuoteRoute.url({ quote: notification.quote_id }));
+                    router.visit(
+                        showQuoteRoute.url({ quote: notification.quote_id }),
+                    );
                 },
             });
 
