@@ -20,7 +20,7 @@ const QuotePoster = ({ src, alt, preview, onChangeFile }: QuotePosterProps) => {
     return (
         <div className="relative w-fit">
             <img
-                className="h-[50rem] w-[84rem] rounded-[1rem]"
+                className="h-[50rem] w-[84rem] rounded-[1rem] object-cover"
                 src={preview ?? src}
                 alt={alt}
             />

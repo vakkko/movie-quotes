@@ -19,11 +19,11 @@ const MoviesList = ({ movies }: MoviesListProps) => {
                 {movies.data.map((movie) => (
                     <Link
                         href={`/movies/${String(movie.id)}`}
-                        className="flex-column gap-[1.6rem]"
+                        className="flex-column h-[37rem] w-[44rem] gap-[1.6rem]"
                         key={movie.id}
                     >
                         <img
-                            className="h-[37rem] w-[44rem] rounded-[1.2rem]"
+                            className="h-full w-full rounded-[1.2rem]"
                             src={movie.image_url}
                             alt={movie.title}
                         />
