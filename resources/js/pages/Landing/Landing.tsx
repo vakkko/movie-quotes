@@ -1,4 +1,4 @@
-import { router } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 import StyledAnchor from '@/components/StyledAnchor';
@@ -6,6 +6,8 @@ import Verified from '@/components/svgs/Verified';
 import Warning from '@/components/svgs/Warning';
 import { useTranslation } from '@/hooks/useTranslation';
 import DefaultLayout from '@/layouts/DefaultLayout';
+import { useAuthModal } from '@/pages/Landing/useAuthModal';
+import { news } from '@/routes';
 import { send as resendVerification } from '@/routes/verification';
 import type { Quote } from '@/types';
 import type { SharedPageProps } from '@/types/global';
@@ -23,6 +25,8 @@ const Landing = ({
     quotes,
 }: LandingProps) => {
     const { t } = useTranslation();
+    const { user } = usePage<SharedPageProps>().props;
+    const { setActiveModal } = useAuthModal();
 
     const [showExpiredModal, setShowExpiredModal] = useState(verifyExpired);
     const [showSentModal, setShowSentModal] = useState(verificationSent);
@@ -58,9 +62,19 @@ const Landing = ({
                 <h1 className="text-center font-montserrat font-700-size-60 leading-[150%] text-cream max-xl:text-[4rem] max-sm:text-[2.4rem]">
                     {t('hero_title')}
                 </h1>
-                <StyledAnchor href="/news" redBackground>
-                    {t('get_started')}
-                </StyledAnchor>
+                {user ? (
+                    <StyledAnchor href={news.url()} redBackground>
+                        {t('get_started')}
+                    </StyledAnchor>
+                ) : (
+                    <button
+                        type="button"
+                        className="button-primary-red-background text-center"
+                        onClick={() => setActiveModal('login')}
+                    >
+                        {t('get_started')}
+                    </button>
+                )}
             </div>
             <StickyQuotes quotes={quotes} />
             <StatusModal
