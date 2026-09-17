@@ -54,14 +54,16 @@ const ProfileEmailSection = ({
                 <div className="flex-items-center w-full gap-[1.2rem] rounded-[0.4rem] bg-primary-red/10 px-[1.3rem] py-[0.8rem]">
                     <span className="flex-1 text-[1.4rem] text-slate-gray">
                         {t('pending_email_notice')}{' '}
-                        <span className="font-600 text-cream">{pendingEmail}</span>{' '}
+                        <span className="font-600 text-cream">
+                            {pendingEmail}
+                        </span>{' '}
                         {t('pending_email_check_inbox')}
                     </span>
                     <button
                         type="button"
                         onClick={handleResend}
                         disabled={sending}
-                        className="text-[1.4rem] font-600 text-primary-red"
+                        className="font-600 text-[1.4rem] text-primary-red"
                     >
                         {t('resend')}
                     </button>

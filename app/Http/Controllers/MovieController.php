@@ -14,10 +14,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class MovieController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $movies = Movie::query()
             ->where('user_id', Auth::id())
@@ -35,7 +36,7 @@ class MovieController extends Controller
         ]);
     }
 
-    public function show(Movie $movie)
+    public function show(Movie $movie): Response
     {
         $this->authorize('view', $movie);
 
@@ -88,7 +89,10 @@ class MovieController extends Controller
         return back();
     }
 
-    private function applySearch($query, string $term): void
+    /**
+     * @param  Builder<Movie>  $query
+     */
+    private function applySearch(Builder $query, string $term): void
     {
         $term = trim($term);
 

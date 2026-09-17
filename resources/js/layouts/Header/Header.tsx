@@ -11,9 +11,14 @@ import LanguageDropDown from './components/LanguageDropDown';
 export type HeaderProps = {
     activeModal: ActiveModal;
     setActiveModal: Dispatch<SetStateAction<ActiveModal>>;
+    isLandingPage?: boolean;
 };
 
-const Header = ({ activeModal, setActiveModal }: HeaderProps) => {
+const Header = ({
+    activeModal,
+    setActiveModal,
+    isLandingPage,
+}: HeaderProps) => {
     const { props } = usePage<SharedPageProps>();
     const { user } = props;
     const { notifications } = props;
@@ -32,8 +37,10 @@ const Header = ({ activeModal, setActiveModal }: HeaderProps) => {
             <Link href="/" className="font-500-size-16 uppercase">
                 Movie quotes
             </Link>
-            <div className="flex-items-center gap-[4rem]">
-                {user && <Notifications notifications={notifications} />}
+            <div className="flex-items-center gap-[4rem] max-sm:gap-[2rem]">
+                {user && !isLandingPage && (
+                    <Notifications notifications={notifications} />
+                )}
                 <LanguageDropDown />
                 <AuthOptions
                     isLoggedIn={isLoggedIn}

@@ -15,10 +15,7 @@ export const initialForm: QuoteForm = {
     image: null,
 };
 
-export const validateField = createFieldValidator(
-    ['quote_en'],
-    ['quote_ka'],
-);
+export const validateField = createFieldValidator(['quote_en'], ['quote_ka']);
 
 export const validateForm = (
     form: QuoteForm,

@@ -44,9 +44,13 @@ class QuoteFactory extends Factory
                 $quote->addMediaFromUrl("https://picsum.photos/seed/quote-{$quote->id}/1920/1080")
                     ->toMediaCollection('image');
             } catch (Throwable) {
-                $quote->addMediaFromString(file_get_contents(__DIR__.'/../../tests/fixtures/test-image.png'))
-                    ->usingFileName('test-image.png')
-                    ->toMediaCollection('image');
+                $image = file_get_contents(__DIR__.'/../../tests/fixtures/test-image.png');
+
+                if ($image !== false) {
+                    $quote->addMediaFromString($image)
+                        ->usingFileName('test-image.png')
+                        ->toMediaCollection('image');
+                }
             }
         });
     }

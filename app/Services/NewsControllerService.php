@@ -10,6 +10,7 @@ use App\Models\Quote;
 use App\Models\QuoteComment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\CursorPaginator;
@@ -17,6 +18,9 @@ use Illuminate\Support\Collection as SupportCollection;
 
 class NewsControllerService
 {
+    /**
+     * @return CursorPaginator<int, Quote>
+     */
     public function getQuotesPaginated(Request $request): CursorPaginator
     {
         return Quote::query()
@@ -37,10 +41,11 @@ class NewsControllerService
             ->cursorPaginate(5);
     }
 
+    /**
+     * @return SupportCollection<int, array{id: int, title: string}>
+     */
     public function getMoviesForUser(User $user): SupportCollection
     {
-        $locale = app()->getLocale();
-
         return Movie::query()
             ->where('user_id', $user->id)
             ->orderByDesc('created_at')
@@ -48,7 +53,7 @@ class NewsControllerService
             ->get()
             ->map(fn (Movie $movie) => [
                 'id' => $movie->id,
-                'title' => $movie->getTranslation('title', $locale),
+                'title' => $movie->title,
             ]);
     }
 
@@ -63,6 +68,9 @@ class NewsControllerService
         ])->loadCount(['likes', 'comments']);
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function createQuote(User $user, array $data, UploadedFile $file): Quote
     {
         $quote = $user->quotes()->create([
@@ -80,6 +88,9 @@ class NewsControllerService
         return $quote;
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function updateQuote(Quote $quote, array $data, ?UploadedFile $file = null): Quote
     {
         $updateData = [
@@ -127,6 +138,9 @@ class NewsControllerService
         return $comment;
     }
 
+    /**
+     * @param  Builder<Quote>  $query
+     */
     private function applySearch(Builder $query, string $search): void
     {
         if (str_starts_with($search, '@')) {
@@ -147,12 +161,15 @@ class NewsControllerService
             return;
         }
 
-        $query->where(function (Builder $builder) use ($term) {
+        $query->where(function ($builder) use ($term) {
             $this->whereTranslation($builder, 'quote', $term);
-            $builder->orWhereHas('movie', fn (Builder $movie) => $this->whereTranslation($movie, 'title', $term));
+            $builder->orWhereHas('movie', fn ($movie) => $this->whereTranslation($movie, 'title', $term));
         });
     }
 
+    /**
+     * @param  Builder<Model>|Builder<Quote>  $query
+     */
     private function whereTranslation(Builder $query, string $column, string $term): void
     {
         $query->where(function (Builder $builder) use ($column, $term) {

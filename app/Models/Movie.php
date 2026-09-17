@@ -8,11 +8,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
 /**
+ * @property-read int $id
+ * @property-read string $title
+ * @property-read Carbon|null $released_at
+ * @property-read array<int, string> $genre
+ * @property-read string|null $description
+ * @property-read string $director
+ *
  * @use HasFactory<MovieFactory>
  */
 #[Fillable(['user_id', 'title', 'released_at', 'genre', 'description', 'director'])]

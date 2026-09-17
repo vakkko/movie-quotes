@@ -68,9 +68,13 @@ class MovieFactory extends Factory
                 $movie->addMediaFromUrl("https://picsum.photos/seed/movie-{$movie->id}/1920/1080")
                     ->toMediaCollection('poster');
             } catch (Throwable) {
-                $movie->addMediaFromString(file_get_contents(__DIR__.'/../../tests/fixtures/test-image.png'))
-                    ->usingFileName('test-image.png')
-                    ->toMediaCollection('poster');
+                $image = file_get_contents(__DIR__.'/../../tests/fixtures/test-image.png');
+
+                if ($image !== false) {
+                    $movie->addMediaFromString($image)
+                        ->usingFileName('test-image.png')
+                        ->toMediaCollection('poster');
+                }
             }
         });
     }

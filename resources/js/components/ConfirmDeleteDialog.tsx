@@ -1,7 +1,4 @@
-import {
-    Dialog,
-    DialogContent,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useTranslation } from '@/hooks/useTranslation';
 
 type ConfirmDeleteDialogProps = {

@@ -5,7 +5,7 @@ import {
 } from '@/actions/App/Http/Controllers/MovieController';
 import AddMovieOrQuoteWrapper from '@/components/AddMovieOrQuote/AddMovieOrQuoteWrapper';
 import DatePicker from '@/components/AddMovieOrQuote/DatePicker';
-import GenresDropdown from '@/components/AddMovieOrQuote/GenresDropdown';
+import GenresDropdown from '@/components/AddMovieOrQuote/GenresDropdown/GenresDropdown';
 import ImageUpload from '@/components/AddMovieOrQuote/ImageUpload/ImageUpload';
 import type { ImageUploadHandle } from '@/components/AddMovieOrQuote/ImageUpload/ImageUpload';
 import MovieOrQuoteInput from '@/components/AddMovieOrQuote/MovieOrQuoteInput';

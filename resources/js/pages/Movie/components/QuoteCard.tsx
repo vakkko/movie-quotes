@@ -38,10 +38,7 @@ const QuoteCard = ({ quote }: QuoteCardProps) => {
                 </div>
             </div>
             <hr />
-            <Reactions
-                commentsCount={commentsCount}
-                likesCount={likesCount}
-            />
+            <Reactions commentsCount={commentsCount} likesCount={likesCount} />
         </>
     );
 };

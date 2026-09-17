@@ -5,7 +5,11 @@ type ReactionWrapperProps = PropsWithChildren & {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const ReactionWrapper = ({ count, children, onClick }: ReactionWrapperProps) => {
+const ReactionWrapper = ({
+    count,
+    children,
+    onClick,
+}: ReactionWrapperProps) => {
     return (
         <button
             className="flex-items-center gap-[1.2rem] text-white"

@@ -5,6 +5,11 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property-read int $id
+ * @property-read string $username
+ * @property-read string|null $avatar_url
+ */
 class UserResource extends JsonResource
 {
     /**

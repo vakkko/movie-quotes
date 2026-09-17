@@ -7,7 +7,9 @@ import MovieDropdown from '@/components/AddMovieOrQuote/MovieDropdown';
 import MovieOrQuoteTextarea from '@/components/AddMovieOrQuote/MovieOrQuoteTextarea';
 import useAddMovieOrQuote from '@/hooks/useAddMovieOrQuote';
 import { useTranslation } from '@/hooks/useTranslation';
+import MovieDetails from '@/pages/Movie/components/MovieDetails';
 import { store as storeQuoteRoute } from '@/routes/news/quotes';
+import type { Movie } from '@/types';
 import { initialForm, validateField, validateForm } from './quoteValidation';
 
 type MovieOption = {
@@ -15,19 +17,34 @@ type MovieOption = {
     title: string;
 };
 
+type MovieBase = Pick<
+    Movie,
+    'id' | 'title' | 'released_at' | 'image_url' | 'genres' | 'director'
+>;
+
+type AddQuoteProps = {
+    isExpanded?: boolean;
+    movies: MovieOption[];
+    movie?: MovieBase;
+    triggerText?: string;
+    triggerIcon?: ReactNode;
+    modalTitle?: string;
+    addQuoteFromMoviePage?: boolean;
+};
+
 const AddQuote = ({
     isExpanded = false,
     movies,
+    movie,
     triggerText,
     triggerIcon,
-}: {
-    isExpanded?: boolean;
-    movies: MovieOption[];
-    triggerText?: string;
-    triggerIcon?: ReactNode;
-}) => {
+    addQuoteFromMoviePage,
+    modalTitle,
+}: AddQuoteProps) => {
     const { t } = useTranslation();
     const singleMovie = movies.length === 1 ? movies[0] : null;
+    const movieId =
+        singleMovie?.id ?? (addQuoteFromMoviePage && movie ? movie.id : null);
     const [selectedMovie, setSelectedMovie] = useState<MovieOption | null>(
         singleMovie,
     );
@@ -43,9 +60,10 @@ const AddQuote = ({
         handleSubmit,
         processing,
     } = useAddMovieOrQuote(t, {
-        initialForm: singleMovie
-            ? { ...initialForm, movie_id: String(singleMovie.id) }
-            : initialForm,
+        initialForm:
+            movieId !== null
+                ? { ...initialForm, movie_id: String(movieId) }
+                : initialForm,
         validateField,
         validateForm,
         url: storeQuoteRoute.url(),
@@ -67,7 +85,7 @@ const AddQuote = ({
             triggerText={triggerText ? triggerText : t('write_quote')}
             triggerIcon={triggerIcon}
             isExpanded={isExpanded}
-            title={t('write_quote')}
+            title={modalTitle ? modalTitle : t('write_quote')}
             open={open}
             onOpenChange={setOpen}
         >
@@ -76,6 +94,12 @@ const AddQuote = ({
                 onSubmit={handleSubmit}
                 className="mt-[2.4rem] flex-column gap-[2.4rem]"
             >
+                {addQuoteFromMoviePage && movie && (
+                    <MovieDetails
+                        data={movie}
+                        addQuoteFromMoviePage={addQuoteFromMoviePage}
+                    />
+                )}
                 <MovieOrQuoteTextarea
                     placeholder="Start create new quote"
                     languageBadge="ENG"
@@ -97,12 +121,14 @@ const AddQuote = ({
                     onFileChange={handleImageChange}
                     error={fieldError('image')}
                 />
-                <MovieDropdown
-                    movies={movies}
-                    value={selectedMovie}
-                    onChange={handleMovieChange}
-                    disabled={Boolean(singleMovie)}
-                />
+                {!addQuoteFromMoviePage && (
+                    <MovieDropdown
+                        movies={movies}
+                        value={selectedMovie}
+                        onChange={handleMovieChange}
+                        disabled={Boolean(singleMovie)}
+                    />
+                )}
                 {fieldError('movie_id') && (
                     <span className="text-[1.4rem] text-primary-red">
                         {fieldError('movie_id')}

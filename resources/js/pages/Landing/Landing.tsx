@@ -55,7 +55,7 @@ const Landing = ({
     return (
         <>
             <div className="mx-auto flex-column w-[36.6%] items-center gap-[2.4rem] pt-[28rem] pb-[21rem] max-lg:w-[65%]">
-                <h1 className="text-center font-montserrat font-700-size-60 leading-[150%] text-cream max-sm:text-[2.4rem]">
+                <h1 className="text-center font-montserrat font-700-size-60 leading-[150%] text-cream max-xl:text-[4rem] max-sm:text-[2.4rem]">
                     {t('hero_title')}
                 </h1>
                 <StyledAnchor href="/news" redBackground>

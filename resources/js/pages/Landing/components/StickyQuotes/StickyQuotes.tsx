@@ -1,3 +1,4 @@
+import { Minus } from 'lucide-react';
 import { startWithUpperCase } from '@/lib/utils';
 import type { Quote } from '@/types';
 import useStickyQuotes from './useStickyQuotes';
@@ -45,16 +46,24 @@ const StickyQuotes = ({ quotes }: StickyQuotesProps) => {
                             <div className="absolute inset-0 bg-black/50" />
                             <div
                                 ref={setTextRef(index)}
-                                className="relative w-[50%] pl-[17rem]"
+                                className="relative flex w-[50%] gap-[1.5rem] pl-[17rem] max-xl:pl-[8rem] max-sm:w-[70%] max-sm:pl-[2.5rem]"
                                 style={{ willChange: 'transform' }}
                             >
-                                <blockquote className="flex items-start gap-[1.6rem] font-montserrat font-700-size-50 text-white first-letter:uppercase">
-                                    <span className="mt-[4rem] w-[5.3rem] border-2 border-white"></span>
-                                    “{startSentenceUpperCase}”
-                                </blockquote>
-                                <p className="ml-[5rem] font-700-size-30 text-light-gray uppercase">
-                                    {quote.movie?.title} <span>{year}</span>
-                                </p>
+                                <div>
+                                    <Minus
+                                        color="white"
+                                        size={50}
+                                        className="max-sm:w-[2rem]"
+                                    />
+                                </div>
+                                <div className="flex-column gap-[1rem]">
+                                    <blockquote className="font-montserrat font-700-size-50 text-white first-letter:uppercase max-xl:text-[3rem] max-sm:text-[2rem]">
+                                        “{startSentenceUpperCase}”
+                                    </blockquote>
+                                    <p className="font-700-size-30 text-light-gray uppercase max-xl:text-[2rem] max-sm:text-[1.6rem]">
+                                        {quote.movie?.title} <span>{year}</span>
+                                    </p>
+                                </div>
                             </div>
                         </section>
                     );

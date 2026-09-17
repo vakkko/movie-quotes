@@ -13,6 +13,9 @@ use Illuminate\Support\Carbon;
  * @property-read array<int, string> $genre
  * @property-read string|null $description
  * @property-read string $director
+ *
+ * @method string getFirstMediaUrl(string $collectionName = 'default', string $conversionName = '')
+ * @method mixed getTranslation(string $key, string $locale, bool $useFallbackLocale = true)
  */
 class MovieShowResource extends JsonResource
 {

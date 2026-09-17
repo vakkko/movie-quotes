@@ -18,9 +18,7 @@ const CustomErrorWrapper = ({
             <p className="mb-[3rem] font-500-size-24">{errorText}</p>
             <a
                 href="/"
-                className={cn(
-                    'text-center button-primary-red-background',
-                )}
+                className={cn('button-primary-red-background text-center')}
             >
                 Return Home
             </a>

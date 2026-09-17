@@ -13,6 +13,8 @@ use Illuminate\Support\Carbon;
  * @property-read array<int, string> $genre
  * @property-read string|null $description
  * @property-read string $director
+ *
+ * @method string getFirstMediaUrl(string $collectionName = 'default', string $conversionName = '')
  */
 class MovieResource extends JsonResource
 {

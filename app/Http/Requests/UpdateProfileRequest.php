@@ -42,9 +42,6 @@ class UpdateProfileRequest extends FormRequest
         ];
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function withValidator(Validator $validator): void
     {
         $validator->sometimes('current_password', ['required', 'current_password'], fn () => $this->filled('password'));

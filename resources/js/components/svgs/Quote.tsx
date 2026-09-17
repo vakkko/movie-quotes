@@ -1,4 +1,10 @@
-const Quote = ({ width = 32, height = 32 }: { width?: number; height?: number }) => {
+const Quote = ({
+    width = 32,
+    height = 32,
+}: {
+    width?: number;
+    height?: number;
+}) => {
     return (
         <svg
             width={width}
