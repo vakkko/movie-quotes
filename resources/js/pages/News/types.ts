@@ -1,6 +1,6 @@
 import type { User } from '@/types';
 
-type MovieOption = {
+export type MovieOption = {
     id: number;
     title: string;
 };
