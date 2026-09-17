@@ -1,3 +1,4 @@
+import LogoutButton from '@/components/LogoutButton';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { useTranslation } from '@/hooks/useTranslation';
 import type { HeaderProps } from '../../Header';
@@ -8,12 +9,10 @@ import RegisterContent from './RegisterContent/RegisterContent';
 
 type AuthOptionsProps = HeaderProps & {
     isLoggedIn: boolean;
-    handleLogout: () => void;
 };
 
 const AuthOptions = ({
     isLoggedIn,
-    handleLogout,
     activeModal,
     setActiveModal,
 }: AuthOptionsProps) => {
@@ -42,12 +41,10 @@ const AuthOptions = ({
     return (
         <>
             {isLoggedIn && activeModal !== 'login' ? (
-                <button
-                    onClick={handleLogout}
-                    className="button-transparent-background-white-border"
-                >
-                    {t('log_out')}
-                </button>
+                <LogoutButton
+                    showIcon={false}
+                    className="button-transparent-background-white-border max-lg:hidden"
+                />
             ) : (
                 <>
                     <Dialog
