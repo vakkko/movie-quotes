@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class NewsController extends Controller
 {
@@ -19,7 +20,7 @@ class NewsController extends Controller
         private NewsControllerService $newsService
     ) {}
 
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $quotes = $this->newsService->getQuotesPaginated($request);
         $movies = $this->newsService->getMoviesForUser(Auth::user());
@@ -30,7 +31,7 @@ class NewsController extends Controller
         ]);
     }
 
-    public function show(Request $request, Quote $quote)
+    public function show(Request $request, Quote $quote): Response
     {
         $this->authorize('view', $quote);
 

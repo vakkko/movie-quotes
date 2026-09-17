@@ -3,14 +3,25 @@
 namespace App\Http\Resources;
 
 use App\Models\Movie;
+use App\Models\QuoteComment;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 /**
  * @property-read int $id
  * @property-read string $quote
  * @property-read string $image_url
  * @property-read Movie|null $movie
+ * @property-read Carbon|null $created_at
+ * @property-read User|null $user
+ * @property-read Collection<int, QuoteComment>|null $comments
+ * @property-read Collection<int, User>|null $likedByUsers
+ *
+ * @method string getFirstMediaUrl(string $collectionName = 'default', string $conversionName = '')
+ * @method bool relationLoaded(string $key)
  */
 class QuoteResource extends JsonResource
 {
@@ -33,7 +44,7 @@ class QuoteResource extends JsonResource
                 'body' => $comment->body,
                 'created_at' => $comment->created_at,
                 'user' => UserResource::make($comment->user)->resolve(),
-            ])),
+            ])->all()),
             'likes_count' => $this->whenCounted('likes'),
             'comments_count' => $this->whenCounted('comments'),
             'is_liked' => $this->relationLoaded('likedByUsers')
