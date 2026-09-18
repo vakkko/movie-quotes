@@ -3,7 +3,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useMediaQuery } from 'react-responsive';
-import SearchBar from '@/components/SearchBar';
+import SearchBar from '@/components/SearchBar/SearchBar';
 import Notifications from '@/layouts/Header/components/Notifications/Notifications';
 
 import type { ActiveModal } from '@/pages/Landing/useAuthModal';
