@@ -45,7 +45,6 @@ const SearchMobile = ({
                     {searchInput}
                 </SheetContent>
             </Sheet>
-            ;
         </>
     );
 };

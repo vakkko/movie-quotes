@@ -56,7 +56,7 @@ const Notifications = ({ notifications }: NotificationsProps) => {
                         </span>
                     )}
                 </PopoverTrigger>
-                <PopoverContent className="scroll-none mr-[6.4rem] max-h-[60vh] w-[40vw] overflow-y-auto rounded-[1rem] border-none bg-black px-[3.2rem] py-[4rem] text-white [&::-webkit-scrollbar]:hidden">
+                <PopoverContent className="scroll-none mr-[6.4rem] max-h-[80vh] w-[40vw] overflow-y-auto rounded-[1rem] border-none bg-black px-[3.2rem] py-[4rem] text-white max-lg:w-[60vw] max-sm:h-[90vh] max-sm:w-[100vw] [&::-webkit-scrollbar]:hidden">
                     <PopoverArrow
                         width={20}
                         height={10}
