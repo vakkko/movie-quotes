@@ -62,7 +62,7 @@ const AddMovieOrQuoteWrapper = ({
                 </DialogTrigger>
             )}
             <DialogContent
-                className="top-0 left-0 flex max-h-[calc(100vh-4rem)] w-full max-w-full translate-x-0 translate-y-0 flex-col rounded-none border-none bg-deep-navy p-0"
+                className="top-[4rem] flex max-h-[calc(100vh-8rem)] translate-y-0 flex-col border-none p-0 max-sm:top-0 max-sm:left-0 max-sm:w-full max-sm:max-w-full max-sm:translate-x-0 sm:max-w-7xl"
                 showCloseButton={false}
             >
                 <DialogHeader className="shrink-0 flex-row items-center justify-between border-b border-b-cloud-gray pt-[4rem] pb-[2.4rem]">
