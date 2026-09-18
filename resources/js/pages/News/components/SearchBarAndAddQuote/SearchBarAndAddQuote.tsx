@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import SearchBar from '@/components/SearchBar';
-import { useDebouncedSearch } from '@/hooks/useDebouncedSearch';
-import { news } from '@/routes';
+import { useMediaQuery } from 'react-responsive';
+import SearchBar from '@/components/SearchBar/SearchBar';
 import AddQuote from './component/AddQuote';
 
 type MovieOption = {
@@ -9,29 +8,23 @@ type MovieOption = {
     title: string;
 };
 
-const SearchBarAndAddQuote = ({
-    initialSearch,
-    movies,
-}: {
-    initialSearch?: string;
+type SearchBarAndAddQuoteProps = {
     movies: MovieOption[];
-}) => {
+};
+
+const SearchBarAndAddQuote = ({ movies }: SearchBarAndAddQuoteProps) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const { search, setSearch } = useDebouncedSearch(initialSearch, {
-        getUrl: (search) => news.url({ query: search ? { search } : {} }),
-        only: ['quotes'],
-        reset: ['quotes'],
-    });
+    const isMobile = useMediaQuery({ maxWidth: 639 });
 
     return (
-        <div className="mb-[2.2rem] flex justify-between gap-[2.4rem]">
+        <div className="mb-[2.2rem] flex w-full justify-between gap-[2.4rem] max-xl:flex-column">
             <AddQuote isExpanded={isExpanded} movies={movies} />
-            <SearchBar
-                isExpanded={isExpanded}
-                setIsExpanded={setIsExpanded}
-                search={search}
-                setSearch={setSearch}
-            />
+            {!isMobile && (
+                <SearchBar
+                    isExpanded={isExpanded}
+                    setIsExpanded={setIsExpanded}
+                />
+            )}
         </div>
     );
 };

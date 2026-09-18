@@ -43,3 +43,6 @@ POST /news/quotes/{quote}/comments (news.quotes.comments.store) is handled by Ne
 ## Like toggle returns JSON on AJAX for optimistic UI
 
 The like endpoint returns { is_liked, likes_count } when $request->expectsJson() (see frontend QuoteCard handleLike), and back() otherwise. Feed likes are optimistic via useHttp with manual X-Socket-ID header; don't revert to router.post or full page reloads, or likes feel slow.
+
+## Login redirects to /news
+Successful logins redirect to /news, not home: AuthController::login uses redirect()->intended(route('news')) and GoogleAuthController::callback redirects to route('news'). The landing "Get started" CTA opens the login modal for guests (via useAuthModal) and the server handles the onward jump to /news — no client-side redirect state. The unverified-email fallback still redirects to home to show the verify modal.

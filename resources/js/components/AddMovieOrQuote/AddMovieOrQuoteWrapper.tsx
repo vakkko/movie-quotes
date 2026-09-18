@@ -51,8 +51,8 @@ const AddMovieOrQuoteWrapper = ({
             {!hideTrigger && (
                 <DialogTrigger
                     className={cn(
-                        'flex-items-center w-full gap-[1.6rem] rounded-[1rem] bg-charcoal-navy px-[1.6rem] py-[1.1rem] whitespace-nowrap',
-                        { 'w-fit': isExpanded },
+                        'flex-items-center w-full gap-[1.6rem] rounded-[1rem] bg-charcoal-navy px-[1.6rem] py-[1.1rem] whitespace-nowrap max-sm:w-fit',
+                        { 'w-fit max-xl:w-full': isExpanded },
                         { 'w-fit !button-primary-red-background': addMovie },
                         { 'bg-primary-red': triggerIcon },
                     )}
@@ -62,7 +62,7 @@ const AddMovieOrQuoteWrapper = ({
                 </DialogTrigger>
             )}
             <DialogContent
-                className="top-[4rem] flex max-h-[calc(100vh-8rem)] translate-y-0 flex-col border-none p-0 sm:max-w-7xl"
+                className="top-[4rem] flex max-h-[calc(100vh-8rem)] translate-y-0 flex-col border-none p-0 max-sm:top-0 max-sm:left-0 max-sm:w-full max-sm:max-w-full max-sm:translate-x-0 sm:max-w-7xl"
                 showCloseButton={false}
             >
                 <DialogHeader className="shrink-0 flex-row items-center justify-between border-b border-b-cloud-gray pt-[4rem] pb-[2.4rem]">

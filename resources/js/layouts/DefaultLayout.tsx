@@ -4,20 +4,14 @@ import { useState } from 'react';
 
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
+import { AuthModalProvider } from '@/pages/Landing/useAuthModal';
+import type { ActiveModal } from '@/pages/Landing/useAuthModal';
 import type { SharedPageProps } from '@/types/global';
 
 import CreatePasswordModal from './Header/components/AuthOptions/LoginContent/PasswordReset/CreatePasswordModal/CreatePasswordModal';
 import Header from './Header/Header';
 import type { HeaderProps } from './Header/Header';
 import ProfileAndNavSection from './ProfileAndNavSection/ProfileAndNavSection';
-
-export type ActiveModal =
-    | 'login'
-    | 'register'
-    | 'verify-email'
-    | 'create-password'
-    | 'success'
-    | null;
 
 const DefaultLayout = ({
     children,
@@ -42,15 +36,19 @@ const DefaultLayout = ({
     };
 
     return (
-        <>
+        <AuthModalProvider value={{ activeModal, setActiveModal }}>
             <Header {...headerProps} />
             <main
                 className={cn(
-                    'mt-[3.2rem] ml-[7rem] flex gap-[12.7rem] pr-[7rem]',
+                    'mt-[3.2rem] flex gap-[12.7rem] pr-[7rem] max-sm:pr-[1.6rem]',
                     className,
                 )}
             >
-                {!isLandingPage && <ProfileAndNavSection />}
+                {!isLandingPage && (
+                    <div className="max-lg:hidden">
+                        <ProfileAndNavSection />
+                    </div>
+                )}
                 {children}
             </main>
             {isLandingPage && (
@@ -71,7 +69,7 @@ const DefaultLayout = ({
                     setActiveModal={setActiveModal}
                 />
             )}
-        </>
+        </AuthModalProvider>
     );
 };
 

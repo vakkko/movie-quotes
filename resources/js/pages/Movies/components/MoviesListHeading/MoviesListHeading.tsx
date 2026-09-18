@@ -1,27 +1,16 @@
 import { useState } from 'react';
-import SearchBar from '@/components/SearchBar';
-import { useDebouncedSearch } from '@/hooks/useDebouncedSearch';
+import SearchBar from '@/components/SearchBar/SearchBar';
 import { useTranslation } from '@/hooks/useTranslation';
-import { movies } from '@/routes';
 import AddMovie from '../../../../components/AddMovieOrQuote/AddMovie/AddMovie';
 
 type MoviesListHeadingProps = {
     total: number;
-    initialSearch?: string;
 };
 
-const MoviesListHeading = ({
-    total,
-    initialSearch,
-}: MoviesListHeadingProps) => {
+const MoviesListHeading = ({ total }: MoviesListHeadingProps) => {
     const { t } = useTranslation();
     const [isExpanded, setIsExpanded] = useState(false);
     const [isAddMovieOpen, setIsAddMovieOpen] = useState(false);
-    const { search, setSearch } = useDebouncedSearch(initialSearch, {
-        getUrl: (search) => movies.url({ query: search ? { search } : {} }),
-        only: ['movies'],
-        reset: ['movies'],
-    });
 
     return (
         <div className="flex-items-center w-full justify-between">
@@ -32,8 +21,6 @@ const MoviesListHeading = ({
                 <SearchBar
                     isExpanded={isExpanded}
                     setIsExpanded={setIsExpanded}
-                    search={search}
-                    setSearch={setSearch}
                     placeholder={t('search_placeholder_movies')}
                 />
                 <AddMovie

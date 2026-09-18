@@ -44,7 +44,7 @@ class GoogleAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('home');
+        return redirect()->route('news');
     }
 
     private function uniqueUsername(string $name): string

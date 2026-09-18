@@ -1,4 +1,3 @@
-import { usePage } from '@inertiajs/react';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import type { Movie } from '@/types';
 import MoviesList from './components/MoviesList';
@@ -12,18 +11,11 @@ type MoviesProps = {
 };
 
 const Movies = ({ movies }: MoviesProps) => {
-    const { url } = usePage();
-    const initialSearch =
-        new URLSearchParams(url.split('?')[1] ?? '').get('search') ?? '';
-
     const combined = useMovies({ movies });
 
     return (
         <div className="flex-column w-full gap-[6.6rem]">
-            <MoviesListHeading
-                total={combined.data.length}
-                initialSearch={initialSearch}
-            />
+            <MoviesListHeading total={combined.data.length} />
             <MoviesList movies={combined} />
         </div>
     );
