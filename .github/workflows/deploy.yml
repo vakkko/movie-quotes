@@ -26,8 +26,17 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2
+        with:
+          php-version: '8.5'
+          tools: composer:v2
+
       - name: Copy env file
         run: cp .env.example .env
+
+      - name: Install composer dependencies
+        run: composer install --no-interaction --prefer-dist
 
       - name: Install npm dependencies
         run: npm ci

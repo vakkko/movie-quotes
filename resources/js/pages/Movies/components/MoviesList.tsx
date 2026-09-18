@@ -1,6 +1,7 @@
 import { InfiniteScroll, Link } from '@inertiajs/react';
 import Quote from '@/components/svgs/Quote';
 import type { Movie } from '@/types';
+import { truncateTitle } from './util';
 
 type moviesTypes = Movie & {
     quotes_count: number;
@@ -15,21 +16,25 @@ type MoviesListProps = {
 const MoviesList = ({ movies }: MoviesListProps) => {
     return (
         <InfiniteScroll data="movies">
-            <div className="grid cursor-pointer grid-cols-3 gap-[5rem]">
+            <div className="grid cursor-pointer grid-cols-3 gap-20 max-[1735px]:grid-cols-2 max-[1735px]:justify-items-start max-sm:grid-cols-1">
                 {movies.data.map((movie) => (
                     <Link
                         href={`/movies/${String(movie.id)}`}
-                        className="flex-column h-[37rem] w-[44rem] gap-[1.6rem]"
+                        className="flex-column gap-[1.6rem]"
                         key={movie.id}
                     >
                         <img
-                            className="h-full w-full rounded-[1.2rem]"
+                            className="aspect-video w-full rounded-[1.2rem] object-cover"
                             src={movie.image_url}
                             alt={movie.title}
                         />
                         <div className="flex-column gap-[1.6rem]">
-                            <h3 className="font-500-size-24 uppercase">
-                                {movie.title} ({movie.released_at})
+                            <h3
+                                className="font-500-size-24 uppercase"
+                                title={movie.title}
+                            >
+                                {truncateTitle(movie.title)} (
+                                {movie.released_at})
                             </h3>
                             <div className="flex-items-center gap-[0.8rem]">
                                 <span className="font-500-size-20 leading-[150%]">
