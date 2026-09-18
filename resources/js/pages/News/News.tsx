@@ -36,7 +36,7 @@ const News = ({ quotes, movies, user }: NewsProps) => {
 };
 
 News.layout = (page: React.ReactNode) => (
-    <DefaultLayout className="ml-[7rem] max-xl:gap-[7rem] max-lg:ml-0 max-lg:pr-0 max-sm:!pr-0">
+    <DefaultLayout className="max-xl:gap-28 max-lg:ml-0 max-lg:pr-0 max-sm:pr-0!">
         {page}
     </DefaultLayout>
 );

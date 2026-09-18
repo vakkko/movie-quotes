@@ -40,7 +40,7 @@ const DefaultLayout = ({
             <Header {...headerProps} />
             <main
                 className={cn(
-                    'mt-[3.2rem] flex gap-[12.7rem] pr-[7rem] max-sm:pr-[1.6rem]',
+                    'mt-[3.2rem] ml-28 flex gap-[12.7rem] pr-[7rem] max-sm:pr-[1.6rem]',
                     className,
                 )}
             >
