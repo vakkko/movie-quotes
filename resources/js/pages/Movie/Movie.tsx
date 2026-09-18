@@ -57,7 +57,7 @@ const Movie = ({ movie }: MovieProps) => {
                     return (
                         <div
                             key={quote.id}
-                            className="relative w-[60%] bg-deep-navy px-[3.2rem] py-[2.4rem]"
+                            className="relative w-[60%] bg-deep-navy px-[3.2rem] py-[2.4rem] max-lg:w-full"
                         >
                             {isOwner && (
                                 <QuoteDropdown
@@ -90,6 +90,8 @@ const Movie = ({ movie }: MovieProps) => {
     );
 };
 
-Movie.layout = (page: React.ReactNode) => <DefaultLayout>{page}</DefaultLayout>;
+Movie.layout = (page: React.ReactNode) => (
+    <DefaultLayout className="ml-[1.6rem]">{page}</DefaultLayout>
+);
 
 export default Movie;

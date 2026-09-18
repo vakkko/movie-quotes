@@ -1,6 +1,8 @@
+import { usePage } from '@inertiajs/react';
 import { Edit, PlusCircle, X } from 'lucide-react';
 import type { PropsWithChildren, ReactNode } from 'react';
 import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import {
     Dialog,
     DialogContent,
@@ -46,6 +48,11 @@ const AddMovieOrQuoteWrapper = ({
         }
     };
 
+    const { url } = usePage();
+
+    const isMobile = useMediaQuery({ maxWidth: 639 });
+    const isMoviePage = /^\/movies\/\d+$/.test(url);
+
     return (
         <Dialog open={isOpen} onOpenChange={handleModalClose}>
             {!hideTrigger && (
@@ -55,6 +62,7 @@ const AddMovieOrQuoteWrapper = ({
                         { 'w-fit max-xl:w-full': isExpanded },
                         { 'w-fit !button-primary-red-background': addMovie },
                         { 'bg-primary-red': triggerIcon },
+                        { 'w-fit': isMobile && isMoviePage },
                     )}
                 >
                     {addMovie || triggerIcon ? <PlusCircle /> : <Edit />}

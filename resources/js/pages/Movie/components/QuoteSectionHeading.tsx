@@ -16,7 +16,7 @@ const QuoteSectionHeading = ({
 
     return (
         <div className="mt-[4rem] mb-[6rem] flex-items-center gap-[1.6rem]">
-            <p className="text-[2rem]">
+            <p className="text-[2rem] whitespace-nowrap">
                 {t('quotes')} ({t('total')} {quotesCount})
             </p>
             <Minus className="h-full w-auto rotate-90" color="#6c757d" />
