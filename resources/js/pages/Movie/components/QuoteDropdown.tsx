@@ -23,7 +23,7 @@ const QuoteDropdown = ({ quote, onDelete }: QuoteDropdownProps) => {
             <DropdownMenuTrigger asChild>
                 <button
                     type="button"
-                    className="absolute top-[2.4rem] right-[2.4rem] cursor-pointer"
+                    className="absolute top-[2.4rem] right-[2.4rem] cursor-pointer max-sm:top-0 max-sm:right-0"
                 >
                     <Ellipsis className="text-gray-400 transition-colors hover:text-white" />
                 </button>

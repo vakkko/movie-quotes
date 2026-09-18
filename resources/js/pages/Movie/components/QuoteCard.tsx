@@ -27,9 +27,9 @@ const QuoteCard = ({ quote }: QuoteCardProps) => {
 
     return (
         <>
-            <div className="mb-[2rem] flex gap-[2.4rem]">
+            <div className="mb-[2rem] flex gap-[2.4rem] max-sm:flex-col">
                 <img
-                    className="h-[14rem] w-[22.6rem] rounded-[0.2rem]"
+                    className="h-[14rem] w-[22.6rem] rounded-[0.2rem] max-sm:w-full"
                     src={quote.image_url}
                     alt={quote.quote}
                 />
