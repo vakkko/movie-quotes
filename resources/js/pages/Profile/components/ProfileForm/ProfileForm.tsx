@@ -63,6 +63,7 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
                 hideButton={Boolean(user.google_id)}
                 inlineEditing={inlineEditing}
                 edited={editing.email}
+                className={user.google_id ? 'mr-auto w-[85%]' : ''}
             />
             {!user.google_id && (
                 <ProfilePasswordSection

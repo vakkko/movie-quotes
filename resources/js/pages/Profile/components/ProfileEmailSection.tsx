@@ -1,6 +1,7 @@
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { cn } from '@/lib/utils';
 import { send as resendVerification } from '@/routes/verification';
 import ProfileInputField from './ProfileInputField';
 import ProfileRow from './ProfileRow';
@@ -12,6 +13,7 @@ type ProfileEmailSectionProps = {
     onToggle: () => void;
     value: string;
     onChange: (value: string) => void;
+    className?: string;
     error?: string;
     hideButton?: boolean;
     inlineEditing?: boolean;
@@ -25,6 +27,7 @@ const ProfileEmailSection = ({
     onToggle,
     value,
     onChange,
+    className,
     error,
     hideButton,
     inlineEditing = true,
@@ -47,7 +50,7 @@ const ProfileEmailSection = ({
     };
 
     return (
-        <>
+        <div className={cn('flex-column w-full gap-[2.4rem]', className)}>
             <ProfileRow
                 label={t('email')}
                 displayValue={showEdited ? value : email}
@@ -87,7 +90,7 @@ const ProfileEmailSection = ({
                     error={error}
                 />
             )}
-        </>
+        </div>
     );
 };
 
