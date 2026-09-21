@@ -13,7 +13,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | database/factories/*.php | .ai/rules/factories.md |
 | *.yaml | .ai/rules/general.md |
 | app/Notifications/**,app/Http/Controllers/PasswordResetController.php | .ai/rules/http-controllers.md |
-| resources/js/**, resources/js/**/*.ts | .ai/rules/js.md |
+| resources/js/**, resources/js/**/*.ts, resources/js/app.tsx | .ai/rules/js.md |
 | resources/js/layouts/** | .ai/rules/layouts.md |
 | resources/js/lib/** | .ai/rules/lib.md |
 | resources/views/mail/** | .ai/rules/mail.md |
