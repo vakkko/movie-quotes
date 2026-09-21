@@ -40,11 +40,9 @@ const DatePicker = ({ value, onChange, error }: DatePickerProps) => {
                         {value ? (
                             format(date as Date, 'PPP')
                         ) : (
-                            <span className="placeholder:text-white">
-                                Select date
-                            </span>
+                            <span className="text-gray-500">Select date</span>
                         )}
-                        <CalendarIcon className="pointer-events-none absolute top-[1rem] right-[2rem] size-[2rem] text-silver-gray" />
+                        <CalendarIcon className="pointer-events-none absolute top-[1rem] right-[2rem] size-[2rem] text-gray-500" />
                     </button>
                 </PopoverTrigger>
                 <PopoverContent

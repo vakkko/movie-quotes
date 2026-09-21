@@ -56,7 +56,6 @@ const QuoteEditor = ({
                 <div className="mt-[2.4rem] mb-[3.2rem] flex-column gap-[2rem]">
                     <MovieOrQuoteTextarea
                         placeholder="Quote"
-                        whitePlaceholder
                         languageBadge="Eng"
                         name="quote_en"
                         value={data.quote_en}
@@ -65,7 +64,6 @@ const QuoteEditor = ({
                     />
                     <MovieOrQuoteTextarea
                         placeholder="ციტატა"
-                        whitePlaceholder
                         languageBadge="ქარ"
                         name="quote_ka"
                         value={data.quote_ka}

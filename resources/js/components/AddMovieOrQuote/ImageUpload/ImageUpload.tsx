@@ -74,7 +74,7 @@ function ImageUpload({
                             {t('change_image')}
                         </span>
                     )}
-                    <span className="mr-[1.6rem] ml-[0.8rem] flex-items-center gap-4 text-[2rem] max-sm:text-[1.2rem]">
+                    <span className="mr-[1.6rem] ml-[0.8rem] flex-items-center gap-4 text-[2rem] text-gray-500 max-sm:text-[1.2rem]">
                         <Camera />
                         {t('drag_and_drop_image')}
                     </span>
