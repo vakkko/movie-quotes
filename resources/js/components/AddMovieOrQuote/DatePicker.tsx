@@ -58,6 +58,7 @@ const DatePicker = ({ value, onChange, error }: DatePickerProps) => {
                     <Calendar
                         mode="single"
                         selected={date}
+                        disabled={{ after: new Date() }}
                         onSelect={(selected) => {
                             onChange(toValue(selected));
                             setOpen(false);
