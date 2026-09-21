@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Events\NotificationCreated;
 use App\Events\QuoteCreated;
+use App\Events\QuoteDeleted;
 use App\Models\Movie;
 use App\Models\Notification;
 use App\Models\Quote;
@@ -111,6 +112,8 @@ class NewsControllerService
 
     public function deleteQuote(Quote $quote): bool
     {
+        broadcast(new QuoteDeleted($quote))->toOthers();
+
         $quote->delete();
 
         return true;
