@@ -1,5 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 import { register as registerRoute } from '@/actions/App/Http/Controllers/AuthController';
 import type { T } from '../authValidation';
 import type { RegisterForm } from './registerValidation';
@@ -41,7 +42,8 @@ export const useRegisterForm = (t: T) => {
         setClientErrors(nextErrors);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (e: ChangeEvent) => {
+        e.preventDefault();
         const nextErrors = validateForm(data, t);
 
         setClientErrors(nextErrors);
