@@ -40,15 +40,15 @@ const MovieDetails = ({
     };
 
     return (
-        <div className="mt-[3.3rem] flex gap-[2rem]">
-            <img
-                className={cn('h-[44rem] w-[80rem] rounded-[1.2rem]', {
-                    'h-[15rem] w-[29rem]': addQuoteFromMoviePage,
-                })}
-                src={data.image_url}
-                alt={data.title}
-            />
-            <div className="flex-column w-full gap-[2rem]">
+        <div className="mt-[3.3rem] flex gap-[2rem] max-[1520px]:flex-col">
+            <div className="h-[44rem] w-[80rem] overflow-hidden max-[1520px]:h-full max-[1520px]:w-full">
+                <img
+                    className={cn('aspect-auto w-full rounded-[1.2rem]')}
+                    src={data.image_url}
+                    alt={data.title}
+                />
+            </div>
+            <div className="flex-column gap-[2rem] max-[1520px]:w-full">
                 <div className="flex items-start justify-between">
                     <h3 className="font-500-size-24 leading-[150%] text-cream">
                         {data.title} ({data.released_at})

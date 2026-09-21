@@ -45,10 +45,10 @@ function ImageUpload({
     };
 
     return (
-        <div className="flex w-full flex-col gap-1 outline-none">
+        <div className="flex h-[20rem] w-full flex-col gap-1 outline-none">
             <div
                 className={cn(
-                    'flex w-full items-center overflow-hidden rounded-md',
+                    'flex h-full w-full items-center overflow-hidden rounded-md',
                     {
                         flex: preview,
                     },
@@ -74,13 +74,13 @@ function ImageUpload({
                             {t('change_image')}
                         </span>
                     )}
-                    <span className="mr-[1.6rem] ml-[0.8rem] flex-items-center gap-4 text-[2rem]">
+                    <span className="mr-[1.6rem] ml-[0.8rem] flex-items-center gap-4 text-[2rem] max-sm:text-[1.2rem]">
                         <Camera />
                         {t('drag_and_drop_image')}
                     </span>
                     <button
                         type="button"
-                        className="rounded-[0.4rem] bg-blue-overlay p-4 text-[1.8rem]"
+                        className="rounded-[0.4rem] bg-blue-overlay p-4 text-[1.8rem] max-sm:text-[1rem]"
                         onClick={() => inputRef.current?.click()}
                     >
                         {t('choose_file')}
