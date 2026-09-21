@@ -14,6 +14,8 @@ type ProfilePasswordSectionProps = {
     currentPasswordError?: string;
     newPasswordError?: string;
     confirmPasswordError?: string;
+    inlineEditing?: boolean;
+    edited?: boolean;
 };
 
 const ProfilePasswordSection = ({
@@ -28,21 +30,26 @@ const ProfilePasswordSection = ({
     currentPasswordError,
     newPasswordError,
     confirmPasswordError,
+    inlineEditing = true,
+    edited = false,
 }: ProfilePasswordSectionProps) => {
     const { t } = useTranslation();
+    const showEdited = edited && !inlineEditing;
 
     return (
         <>
             <ProfileRow
                 label={editing ? t('current_password') : t('password')}
-                displayValue={editing ? currentPassword : ''}
+                displayValue={editing ? currentPassword : showEdited ? newPassword : ''}
                 editing={editing}
                 onToggle={onToggle}
                 type="password"
+                placeholder={editing ? undefined : '••••••••'}
                 onChange={editing ? onCurrentPasswordChange : undefined}
                 error={editing ? currentPasswordError : undefined}
+                edited={showEdited}
             />
-            {editing && (
+            {editing && inlineEditing && (
                 <>
                     <ProfileInputField
                         label={t('new_password')}
