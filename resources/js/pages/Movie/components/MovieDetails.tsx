@@ -49,7 +49,7 @@ const MovieDetails = ({
                 />
             </div>
             <div className="flex-column gap-[2rem] max-[1520px]:w-full">
-                <div className="flex justify-between">
+                <div className="flex-items-center justify-between gap-[2rem]">
                     <h3 className="font-500-size-24 leading-[150%] text-cream">
                         {data.title} ({data.released_at})
                     </h3>

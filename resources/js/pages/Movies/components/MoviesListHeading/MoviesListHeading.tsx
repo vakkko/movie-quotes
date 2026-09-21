@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { useTranslation } from '@/hooks/useTranslation';
-import AddMovie from '../../../../components/AddMovieOrQuote/AddMovie/AddMovie';
+import MovieForm from '../../../../components/AddMovieOrQuote/AddMovie/MovieForm';
 
 type MoviesListHeadingProps = {
     total: number;
@@ -26,7 +26,7 @@ const MoviesListHeading = ({ total }: MoviesListHeadingProps) => {
                     placeholder={t('search_placeholder_movies')}
                 />
             )}
-            <AddMovie open={isAddMovieOpen} onOpenChange={setIsAddMovieOpen} />
+            <MovieForm open={isAddMovieOpen} onOpenChange={setIsAddMovieOpen} />
         </div>
     );
 };

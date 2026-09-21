@@ -135,7 +135,7 @@ const AddQuote = ({
                     </span>
                 )}
                 <button
-                    className="button-primary-red-background"
+                    className="mt-[1.6rem] button-primary-red-background"
                     type="submit"
                     disabled={processing}
                 >
