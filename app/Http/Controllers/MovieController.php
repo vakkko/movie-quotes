@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\MovieCreated;
+use App\Events\MovieDeleted;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Resources\MovieResource;
@@ -54,6 +55,8 @@ class MovieController extends Controller
     public function destroy(Movie $movie): RedirectResponse|JsonResponse
     {
         $this->authorize('delete', $movie);
+
+        broadcast(new MovieDeleted($movie))->toOthers();
 
         $movie->delete();
 
