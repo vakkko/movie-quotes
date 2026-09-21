@@ -12,6 +12,7 @@ Auth is modal-based on the landing page; there are no GET `/login` or `/register
 - One `activeModal` state (`'login' | 'register' | 'verify-email' | 'create-password' | 'success' | null`) lives in `DefaultLayout` via `AuthModalProvider` (`resources/js/pages/Landing/useAuthModal.tsx`). Never add per-modal booleans.
 - `redirectGuestsTo(fn () => route('home'))` must stay configured, because the `auth` middleware would otherwise redirect to a non-existent GET `/login` (405).
 - Successful login always redirects to `/news`; unverified users are bounced home with an `unverified_email` flash.
+- The landing route (`/`) is guest-only: `LandingController` redirects any authenticated user (`Auth::check()`) to `/news`, covering email and Google OAuth logins alike.
 - `AuthController::register` calls `Auth::login($user)` before sending verification — without auto-login the signed verify link is redirected away by middleware and `email_verified_at` never updates.
 - Every auth form submit handler must accept the event and call `e.preventDefault()`; a missed one causes a native POST/405.
 
