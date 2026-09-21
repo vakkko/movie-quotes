@@ -4,7 +4,6 @@ import { Textarea } from '../ui/textarea';
 type MovieOrQuoteTextareaProps = {
     placeholder: string;
     languageBadge: string;
-    whitePlaceholder?: boolean;
     value?: string;
     onChange?: (value: string) => void;
     name?: string;
@@ -15,7 +14,6 @@ type MovieOrQuoteTextareaProps = {
 const MovieOrQuoteTextarea = ({
     placeholder,
     languageBadge,
-    whitePlaceholder,
     value,
     onChange,
     name,
@@ -26,11 +24,12 @@ const MovieOrQuoteTextarea = ({
         <div className="flex flex-col gap-1">
             <div className="relative">
                 <Textarea
-                    className={cn('min-h-[8.6rem] resize-none pr-[5.5rem]', {
-                        'placeholder:text-white placeholder:not-italic':
-                            whitePlaceholder,
-                        'cursor-default opacity-100': readOnly,
-                    })}
+                    className={cn(
+                        '!placeholder:text-gray-500 min-h-[8.6rem] resize-none pr-[5.5rem]',
+                        {
+                            'cursor-default opacity-100': readOnly,
+                        },
+                    )}
                     placeholder={placeholder}
                     value={value ?? ''}
                     onChange={(e) =>
@@ -39,7 +38,7 @@ const MovieOrQuoteTextarea = ({
                     name={name}
                     readOnly={readOnly}
                 />
-                <span className="text-2rem pointer-events-none absolute top-[1.3rem] right-[2rem]">
+                <span className="text-2rem pointer-events-none absolute top-[1.3rem] right-8 text-gray-500">
                     {languageBadge}
                 </span>
             </div>

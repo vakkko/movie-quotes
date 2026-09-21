@@ -111,7 +111,6 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                 <MovieOrQuoteTextarea
                     placeholder="Movie discription"
                     languageBadge="Eng"
-                    whitePlaceholder
                     name="description_en"
                     value={data.description_en}
                     onChange={(value) => handleChange('description_en', value)}
@@ -120,7 +119,6 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                 <MovieOrQuoteTextarea
                     placeholder="ფილმის აღწერა"
                     languageBadge="ქარ"
-                    whitePlaceholder
                     name="description_ka"
                     value={data.description_ka}
                     onChange={(value) => handleChange('description_ka', value)}

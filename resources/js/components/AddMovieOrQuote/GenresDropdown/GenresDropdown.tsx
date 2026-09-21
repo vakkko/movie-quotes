@@ -43,9 +43,11 @@ const GenresDropdown = ({ value, onChange, error }: GenresDropdownProps) => {
                             ))}
                         </>
                     ) : (
-                        <span>{t('select_genres')}</span>
+                        <span className="text-gray-500">
+                            {t('select_genres')}
+                        </span>
                     )}
-                    <ChevronDown className="pointer-events-none ml-auto size-[2rem]" />
+                    <ChevronDown className="pointer-events-none ml-auto size-[2rem] text-gray-500" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="max-h-[28rem] w-[var(--radix-dropdown-menu-trigger-width)] overflow-y-auto border-slate-gray bg-charcoal-navy">
                     {GENRES.map((genre) => {

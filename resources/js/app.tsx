@@ -1,7 +1,6 @@
 import { createInertiaApp } from '@inertiajs/react';
 import { configureEcho } from '@laravel/echo-react';
-
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+import type { SharedPageProps } from '@/types/global';
 
 configureEcho({
     broadcaster: 'pusher',
@@ -11,7 +10,11 @@ configureEcho({
 });
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title, page) => {
+        const appName = (page.props as unknown as SharedPageProps).name;
+
+        return title ? `${title} - ${appName}` : appName;
+    },
     progress: {
         color: '#4B5563',
     },
