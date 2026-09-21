@@ -126,7 +126,7 @@ const AddQuote = ({
                         movies={movies}
                         value={selectedMovie}
                         onChange={handleMovieChange}
-                        disabled={Boolean(singleMovie)}
+                        disabled={Boolean(singleMovie) || movies.length === 0}
                     />
                 )}
                 {fieldError('movie_id') && (

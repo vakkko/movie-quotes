@@ -106,9 +106,11 @@ return [
     'edit_quote' => 'Edit Quote',
     'show_more_comments' => 'Show more comments',
     'choose_movie' => 'Choose movie',
+    'no_movies_yet' => 'No movies added yet. Please add a movie first.',
     'select_genres' => 'Select genres',
     'drag_and_drop_image' => 'Drag & drop your image here or',
     'choose_file' => 'Choose file',
     'preview' => 'Preview',
     'footer_copyright' => '© 2022 movie quotes. All rights reserved.',
+    'post' => 'post',
 ];
