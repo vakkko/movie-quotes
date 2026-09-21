@@ -23,7 +23,7 @@ const MovieOrQuoteInput = ({
         <div className="flex flex-col gap-1">
             <div className="relative">
                 <Input
-                    className="border border-slate-gray !bg-transparent !py-[2rem] pr-[5.5rem] pl-[1.6rem] !text-[2.4rem] !leading-[150%] text-white outline-none placeholder:text-[2rem] placeholder:text-gray-500 focus-visible:border-slate-gray focus-visible:ring-0 disabled:cursor-default disabled:opacity-100"
+                    className="selection:bg-bootstrap-blue! selection:text-white! border border-slate-gray !bg-transparent !py-[2rem] pr-[5.5rem] pl-[1.6rem] !text-[2.4rem] !leading-[150%] text-white outline-none placeholder:text-[2rem] placeholder:text-gray-500 focus-visible:border-slate-gray focus-visible:ring-0 disabled:cursor-default disabled:opacity-100"
                     placeholder={placeholder}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}

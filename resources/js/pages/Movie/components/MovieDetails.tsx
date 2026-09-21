@@ -49,7 +49,7 @@ const MovieDetails = ({
                 />
             </div>
             <div className="flex-column gap-[2rem] max-[1520px]:w-full">
-                <div className="flex items-start justify-between">
+                <div className="flex justify-between">
                     <h3 className="font-500-size-24 leading-[150%] text-cream">
                         {data.title} ({data.released_at})
                     </h3>
@@ -60,6 +60,7 @@ const MovieDetails = ({
                             handleEditClick={handleEditClick}
                             handleDeleteClick={onDeleteMovie}
                             isDeleting={isDeleting}
+                            className="rounded-2xl bg-charcoal-navy px-10 py-4"
                         />
                     )}
                 </div>
