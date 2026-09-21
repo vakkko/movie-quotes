@@ -45,7 +45,14 @@ function ImageUpload({
     };
 
     return (
-        <div className="flex h-[20rem] w-full flex-col gap-1 outline-none">
+        <div
+            className={cn(
+                'flex w-full flex-col gap-1 rounded-[0.4rem] border border-slate-gray outline-none',
+                {
+                    'py-8 pl-10': preview,
+                },
+            )}
+        >
             <div
                 className={cn(
                     'flex h-full w-full items-center overflow-hidden rounded-md',
@@ -71,7 +78,7 @@ function ImageUpload({
                 >
                     {preview && (
                         <span className="font-700-size-18 text-cream">
-                            {t('change_image')}
+                            {preview ? t('replace_photo') : t('change_image')}
                         </span>
                     )}
                     <span className="mr-[1.6rem] ml-[0.8rem] flex-items-center gap-4 text-[2rem] text-gray-500 max-sm:text-[1.2rem]">

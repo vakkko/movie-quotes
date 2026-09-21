@@ -4,7 +4,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 
 | Applies to | Rule file |
 | --- | --- |
-| resources/js/components/AddMovieOrQuote/** | .ai/rules/add-movie-or-quote.md |
+| resources/js/components/AddMovieOrQuote/**, resources/js/components/AddMovieOrQuote/DatePicker.tsx | .ai/rules/add-movie-or-quote.md |
 | app/Mail/** | .ai/rules/app-mail.md |
 | resources/js/pages/Landing/components/Header/components/Auth/** | .ai/rules/auth.md |
 | bootstrap/providers.php | .ai/rules/bootstrap.md |

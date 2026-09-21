@@ -20,13 +20,19 @@ import {
     validateForm,
 } from './movieValidation';
 
-type AddMovieProps = {
+type MovieFormProps = {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     movie?: MovieShowResponse;
+    editMovie?: boolean;
 };
 
-const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
+const MovieForm = ({
+    open,
+    onOpenChange,
+    movie,
+    editMovie,
+}: MovieFormProps) => {
     const { t } = useTranslation();
     const imageUploadRef = useRef<ImageUploadHandle>(null);
     const isEditing = Boolean(movie);
@@ -73,6 +79,7 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                     value={data.title_en}
                     onChange={(value) => handleChange('title_en', value)}
                     error={fieldError('title_en')}
+                    editMovie={editMovie}
                 />
                 <MovieOrQuoteInput
                     placeholder="ფილმის სახელი"
@@ -81,6 +88,7 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                     value={data.title_ka}
                     onChange={(value) => handleChange('title_ka', value)}
                     error={fieldError('title_ka')}
+                    editMovie={editMovie}
                 />
                 <GenresDropdown
                     value={data.genre}
@@ -99,6 +107,7 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                     value={data.director_en}
                     onChange={(value) => handleChange('director_en', value)}
                     error={fieldError('director_en')}
+                    editMovie={editMovie}
                 />
                 <MovieOrQuoteInput
                     placeholder="რეჟისორი"
@@ -107,6 +116,7 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                     value={data.director_ka}
                     onChange={(value) => handleChange('director_ka', value)}
                     error={fieldError('director_ka')}
+                    editMovie={editMovie}
                 />
                 <MovieOrQuoteTextarea
                     placeholder="Movie discription"
@@ -115,6 +125,7 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                     value={data.description_en}
                     onChange={(value) => handleChange('description_en', value)}
                     error={fieldError('description_en')}
+                    editMovie={editMovie}
                 />
                 <MovieOrQuoteTextarea
                     placeholder="ფილმის აღწერა"
@@ -123,6 +134,7 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
                     value={data.description_ka}
                     onChange={(value) => handleChange('description_ka', value)}
                     error={fieldError('description_ka')}
+                    editMovie={editMovie}
                 />
                 <ImageUpload
                     ref={imageUploadRef}
@@ -142,4 +154,4 @@ const AddMovie = ({ open, onOpenChange, movie }: AddMovieProps) => {
     );
 };
 
-export default AddMovie;
+export default MovieForm;
