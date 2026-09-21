@@ -1,5 +1,5 @@
 import { useHttp } from '@inertiajs/react';
-import MovieOrQuoteInput from '@/components/AddMovieOrQuote/MovieOrQuoteInput';
+import MovieOrQuoteTextarea from '@/components/AddMovieOrQuote/MovieOrQuoteTextarea';
 import { useTranslation } from '@/hooks/useTranslation';
 import QuoteCard from '@/pages/News/components/Quotes/QuoteCard';
 import type { Quote } from '@/pages/News/types';
@@ -54,16 +54,18 @@ const QuoteEditor = ({
                 onImageChange={isEditing ? handleImageChange : undefined}
             >
                 <div className="mt-[2.4rem] mb-[3.2rem] flex-column gap-[2rem]">
-                    <MovieOrQuoteInput
+                    <MovieOrQuoteTextarea
                         placeholder="Quote"
+                        whitePlaceholder
                         languageBadge="Eng"
                         name="quote_en"
                         value={data.quote_en}
                         onChange={(value) => setData('quote_en', value)}
                         readOnly={!isEditing}
                     />
-                    <MovieOrQuoteInput
+                    <MovieOrQuoteTextarea
                         placeholder="ციტატა"
+                        whitePlaceholder
                         languageBadge="ქარ"
                         name="quote_ka"
                         value={data.quote_ka}

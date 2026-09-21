@@ -32,22 +32,24 @@ const Quote = ({ quote, editing = false }: QuoteProps) => {
 
     return (
         <div className="mx-auto flex w-full flex-col rounded-[1.2rem] bg-black sm:max-w-7xl">
-            <div className="flex shrink-0 flex-row items-center justify-between border-b border-b-cloud-gray px-[4.6rem] pt-[4rem] pb-[2.4rem]">
-                <EditDeleteActions
-                    handleCancel={handleCancel}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                    showModal={showModal}
-                    isDeleting={isDeleting}
-                />
-                <span className="font-500-size-24 text-white">
-                    {t('view_quote')}
-                </span>
+            <div className="flex shrink-0 flex-col gap-[2.4rem] border-b border-b-cloud-gray px-[4.6rem] pt-[4rem] pb-[2.4rem] sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-row items-center justify-between sm:contents">
+                    <EditDeleteActions
+                        handleCancel={handleCancel}
+                        handleEditClick={handleEditClick}
+                        handleDeleteClick={handleDeleteClick}
+                        showModal={showModal}
+                        isDeleting={isDeleting}
+                    />
+                    <span className="font-500-size-24 text-white">
+                        {t('view_quote')}
+                    </span>
+                </div>
                 <Link href={news.url()} className="text-white">
                     {t('back_to_news')}
                 </Link>
             </div>
-            <div className="scrollbar-hide overflow-y-auto px-[2.2rem]">
+            <div className="scrollbar-hide overflow-y-auto px-[2.2rem] pb-20">
                 {showModal !== 'delete' && quote && (
                     <QuoteEditor
                         key={quote.id}
@@ -71,6 +73,8 @@ const Quote = ({ quote, editing = false }: QuoteProps) => {
     );
 };
 
-Quote.layout = (page: React.ReactNode) => <DefaultLayout>{page}</DefaultLayout>;
+Quote.layout = (page: React.ReactNode) => (
+    <DefaultLayout className="pb-30">{page}</DefaultLayout>
+);
 
 export default Quote;
