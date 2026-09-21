@@ -1,6 +1,6 @@
 ---
 name: testing-best-practices
-description: "Laravel test design and review. Use when selecting coverage, naming or structuring tests, choosing assertions or test data, isolating dependencies, testing HTTP or security boundaries, improving suite performance, or reviewing test value. Use framework guidance or search-docs for Pest and PHPUnit syntax."
+description: "Laravel test design and review. Use when selecting coverage, naming or structuring tests, choosing assertions or test data, isolating dependencies, testing HTTP or security boundaries, improving suite performance, or reviewing test value. Use framework guidance or search-docs for Pest and PHPUnit syntax. In this project tests are Pest feature tests using model factories, RefreshDatabase, and tests/fixtures/test-image.png (no GD); see the project-verification skill for the exact commands and traps."
 license: MIT
 metadata:
   author: laravel

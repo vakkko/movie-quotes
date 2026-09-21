@@ -2,6 +2,7 @@
 paths:
   - 'resources/js/**'
   - 'resources/js/**/*.ts'
+  - resources/js/app.tsx
 ---
 
 # Js
@@ -23,3 +24,6 @@ The single activeModal state for auth modals (login/register/verify-email/create
 
 ## Auth/forms must preventDefault in handleSubmit
 AuthContent renders `<form onSubmit={handleSubmit}>` without preventing default itself. Every submit handler passed to it (useLoginForm, useRegisterForm, useEmailVerifyForm, useCreatePasswordForm) MUST accept the event and call `e.preventDefault()` before calling Inertia post/patch. Missing a single one causes the browser to natively POST the form to the current URL (no action attr) and get a 405, even though the Inertia request succeeded.
+
+## Use server-shared app name, never baked VITE_APP_NAME fallback
+The Inertia title callback is always invoked with an empty title on load; it overwrote the server-rendered <title> with a build-baked 'Laravel' fallback whenever VITE_APP_NAME was missing at build time (deployed sites). Source the app name from the page's shared props (page.props.name, set from config('app.name') in HandleInertiaRequests) instead of import.meta.env.VITE_APP_NAME.

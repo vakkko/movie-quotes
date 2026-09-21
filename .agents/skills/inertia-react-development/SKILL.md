@@ -1,6 +1,6 @@
 ---
 name: inertia-react-development
-description: "Develops Inertia.js v3 React client-side applications. Activates when creating React pages, forms, or navigation; using <Link>, <Form>, useForm, useHttp, setLayoutProps, or router; working with deferred props, prefetching, optimistic updates, instant visits, or polling; or when user mentions React with Inertia, React pages, React forms, or React navigation."
+description: "Develops Inertia.js v3 React client-side applications. Activates when creating React pages, forms, or navigation; using <Link>, <Form>, useForm, useHttp, setLayoutProps, or router; working with deferred props, prefetching, optimistic updates, instant visits, or polling; or when user mentions React with Inertia, React pages, React forms, or React navigation. In this project that means the movie/quote/news/profile/landing pages under resources/js/pages, forms using useForm/useHttp with t() translations, and InfiniteScroll feeds."
 license: MIT
 metadata:
   author: laravel
