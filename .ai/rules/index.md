@@ -7,11 +7,12 @@ Before planning or editing, find the row whose globs match the file's path and r
 | resources/js/components/AddMovieOrQuote/** | .ai/rules/add-movie-or-quote.md |
 | app/Mail/** | .ai/rules/app-mail.md |
 | resources/js/pages/Landing/components/Header/components/Auth/** | .ai/rules/auth.md |
+| resources/js/pages/Profile/components/** | .ai/rules/components.md |
 | app/Http/Controllers/**, app/Http/Controllers/VerifyEmailController.php, app/Http/Controllers/NewsController.php, app/Http/Controllers/ToggleLikeController.php | .ai/rules/controllers.md |
 | database/factories/*.php | .ai/rules/factories.md |
 | *.yaml | .ai/rules/general.md |
 | app/Notifications/**,app/Http/Controllers/PasswordResetController.php | .ai/rules/http-controllers.md |
-| resources/js/** | .ai/rules/js.md |
+| resources/js/**, resources/js/**/*.ts | .ai/rules/js.md |
 | resources/js/layouts/** | .ai/rules/layouts.md |
 | resources/js/lib/** | .ai/rules/lib.md |
 | resources/views/mail/** | .ai/rules/mail.md |

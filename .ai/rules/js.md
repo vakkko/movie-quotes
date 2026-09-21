@@ -1,6 +1,7 @@
 ---
 paths:
   - 'resources/js/**'
+  - 'resources/js/**/*.ts'
 ---
 
 # Js
@@ -19,3 +20,6 @@ Component-specific hooks live in the component's own folder with a named export 
 
 ## Auth modals exposed via useAuthModal context
 The single activeModal state for auth modals (login/register/verify-email/create-password/success/null) is owned by DefaultLayout and exposed to the tree through the AuthModalProvider context in resources/js/hooks/useAuthModal.tsx. The `ActiveModal` type lives there too. Any component can open the login modal via `const { setActiveModal } = useAuthModal()`. Landing's "Get started" CTA uses this to open the login modal for guests; always keep this single state (no per-modal booleans).
+
+## Auth/forms must preventDefault in handleSubmit
+AuthContent renders `<form onSubmit={handleSubmit}>` without preventing default itself. Every submit handler passed to it (useLoginForm, useRegisterForm, useEmailVerifyForm, useCreatePasswordForm) MUST accept the event and call `e.preventDefault()` before calling Inertia post/patch. Missing a single one causes the browser to natively POST the form to the current URL (no action attr) and get a 405, even though the Inertia request succeeded.
