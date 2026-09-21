@@ -7,28 +7,33 @@ import type { NewsProps } from './types';
 import { useNews } from './useNews';
 
 const News = ({ quotes, movies, user }: NewsProps) => {
-    const { liveQuotes, liveMovies, liveQuoteIds } = useNews({
+    const { liveQuotes, liveMovies, liveQuoteIds, removedQuoteIds } = useNews({
         quotes,
         movies,
         user,
     });
 
+    const visibleLiveQuotes = liveQuotes.filter(
+        (quote) => !removedQuoteIds.has(quote.id),
+    );
+    const visibleServerQuotes = quotes.data.filter(
+        (quote) =>
+            !removedQuoteIds.has(quote.id) && !liveQuoteIds.has(quote.id),
+    );
+
     const hasSearchResults =
-        liveQuotes.length > 0 ||
-        quotes.data.some((quote) => !liveQuoteIds.has(quote.id));
+        visibleLiveQuotes.length > 0 || visibleServerQuotes.length > 0;
 
     return (
         <div className="mx-auto">
             <SearchBarAndAddQuote movies={liveMovies} />
-            {liveQuotes.map((quote) => (
+            {visibleLiveQuotes.map((quote) => (
                 <QuoteCard quote={quote} user={user} key={quote.id} />
             ))}
             <InfiniteScroll className="w-fit" data="quotes">
-                {quotes.data
-                    .filter((quote) => !liveQuoteIds.has(quote.id))
-                    .map((quote) => (
-                        <QuoteCard quote={quote} user={user} key={quote.id} />
-                    ))}
+                {visibleServerQuotes.map((quote) => (
+                    <QuoteCard quote={quote} user={user} key={quote.id} />
+                ))}
             </InfiniteScroll>
             {!hasSearchResults && <NoSearchResults />}
         </div>

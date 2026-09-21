@@ -38,6 +38,9 @@ export const useNews = ({ movies, user }: NewsProps) => {
     const locale = props.locale ?? 'en';
 
     const [liveQuotes, setLiveQuotes] = useState<Quote[]>([]);
+    const [removedQuoteIds, setRemovedQuoteIds] = useState<Set<number>>(
+        () => new Set(),
+    );
     const [liveMovies, setLiveMovies] = useState(movies);
     const [prevMovies, setPrevMovies] = useState(movies);
 
@@ -54,6 +57,20 @@ export const useNews = ({ movies, user }: NewsProps) => {
         );
     });
 
+    useEchoPublic<{ quote_id: number }>('news', '.QuoteDeleted', (payload) => {
+        setRemovedQuoteIds((previous) => {
+            if (previous.has(payload.quote_id)) {
+                return previous;
+            }
+
+            const next = new Set(previous);
+
+            next.add(payload.quote_id);
+
+            return next;
+        });
+    });
+
     useEcho<MovieCreated>(
         `App.Models.User.${user?.id}`,
         '.MovieCreated',
@@ -66,7 +83,17 @@ export const useNews = ({ movies, user }: NewsProps) => {
         },
     );
 
+    useEcho<{ movie_id: number }>(
+        `App.Models.User.${user?.id}`,
+        '.MovieDeleted',
+        (payload) => {
+            setLiveMovies((previous) =>
+                previous.filter((movie) => movie.id !== payload.movie_id),
+            );
+        },
+    );
+
     const liveQuoteIds = new Set(liveQuotes.map((quote) => quote.id));
 
-    return { liveQuotes, liveMovies, liveQuoteIds };
+    return { liveQuotes, liveMovies, liveQuoteIds, removedQuoteIds };
 };

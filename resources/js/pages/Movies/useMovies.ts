@@ -33,6 +33,9 @@ const useMovies = ({ movies }: UseMoviesOptions) => {
     const { props } = usePage();
 
     const [liveMovies, setLiveMovies] = useState<MovieListItem[]>([]);
+    const [removedMovieIds, setRemovedMovieIds] = useState<Set<number>>(
+        () => new Set(),
+    );
 
     useEcho<MovieCreated>(
         `App.Models.User.${props.user?.id}`,
@@ -46,12 +49,37 @@ const useMovies = ({ movies }: UseMoviesOptions) => {
         },
     );
 
+    useEcho<{ movie_id: number }>(
+        `App.Models.User.${props.user?.id}`,
+        '.MovieDeleted',
+        (payload) => {
+            setLiveMovies((previous) =>
+                previous.filter((movie) => movie.id !== payload.movie_id),
+            );
+            setRemovedMovieIds((previous) => {
+                if (previous.has(payload.movie_id)) {
+                    return previous;
+                }
+
+                const next = new Set(previous);
+
+                next.add(payload.movie_id);
+
+                return next;
+            });
+        },
+    );
+
     const liveMovieIds = new Set(liveMovies.map((movie) => movie.id));
 
     const combined: MoviesCollection = {
         data: [
             ...liveMovies,
-            ...movies.data.filter((movie) => !liveMovieIds.has(movie.id)),
+            ...movies.data.filter(
+                (movie) =>
+                    !liveMovieIds.has(movie.id) &&
+                    !removedMovieIds.has(movie.id),
+            ),
         ],
     };
 
