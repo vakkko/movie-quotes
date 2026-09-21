@@ -7,6 +7,7 @@ Before planning or editing, find the row whose globs match the file's path and r
 | resources/js/components/AddMovieOrQuote/** | .ai/rules/add-movie-or-quote.md |
 | app/Mail/** | .ai/rules/app-mail.md |
 | resources/js/pages/Landing/components/Header/components/Auth/** | .ai/rules/auth.md |
+| bootstrap/providers.php | .ai/rules/bootstrap.md |
 | resources/js/pages/Profile/components/** | .ai/rules/components.md |
 | app/Http/Controllers/**, app/Http/Controllers/VerifyEmailController.php, app/Http/Controllers/NewsController.php, app/Http/Controllers/ToggleLikeController.php | .ai/rules/controllers.md |
 | database/factories/*.php | .ai/rules/factories.md |
