@@ -7,6 +7,7 @@ use App\Http\Controllers\MarkAllNotificationsAsReadController;
 use App\Http\Controllers\MarkNotificationAsReadController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoreCommentController;
 use App\Http\Controllers\ToggleLikeController;
@@ -17,7 +18,8 @@ Route::get('/', LandingController::class)->name('home');
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/password/forgot', [AuthController::class, 'forgot'])->name('password.forgot');
+Route::post('/password/forgot', [PasswordResetController::class, 'send'])->name('password.forgot');
+Route::get('/password/reset/link/{id}/{hash}', PasswordResetController::class)->name('password.reset.link');
 Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.reset');
 
 Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');

@@ -12,4 +12,12 @@ return [
     'verification_support' => 'If you have any problems, please contact us:',
     'verification_support_email' => 'support@moviequotes.ge',
     'verification_crew' => 'MovieQuotes Crew',
+    'reset_subject' => 'Reset your password',
+    'reset_greeting' => 'Hello, :name!',
+    'reset_body' => 'We received a request to reset your password. Please click the button below to choose a new one:',
+    'reset_ignore' => 'If you didn\'t request this, you can safely ignore this email.',
+    'reset_action' => 'Reset Password',
+    'reset_copy' => 'If clicking doesn\'t work, you can try copying and pasting it to your browser:',
+    'reset_support' => 'If you have any problems, please contact us:',
+    'reset_support_email' => 'support@moviequotes.ge',
 ];

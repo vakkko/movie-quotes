@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreForgotPasswordRequest;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StoreRegisterRequest;
 use App\Http\Requests\StoreResetPasswordRequest;
@@ -10,7 +9,6 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
@@ -60,17 +58,6 @@ class AuthController extends Controller
         $user->sendEmailVerificationNotification();
 
         return redirect()->route('home');
-    }
-
-    public function forgot(StoreForgotPasswordRequest $request): RedirectResponse
-    {
-        $status = Password::sendResetLink(
-            $request->only('email'),
-        );
-
-        return $status === Password::ResetLinkSent
-            ? back()->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
     }
 
     public function resetPassword(StoreResetPasswordRequest $request): RedirectResponse
