@@ -35,7 +35,9 @@ const UserComment = ({ quoteId, user, onCommentAdded }: UserCommentProps) => {
                         className="field-sizing-fixed !h-[7rem] w-full min-w-0 resize-none scrollbar-none overflow-y-auto rounded-[1rem] border-none !bg-charcoal-navy py-[2rem] pr-[7.2rem] pl-[2.7rem] !text-[2rem] leading-[150%] text-silver-gray placeholder:text-[2rem] placeholder:text-silver-gray placeholder:not-italic focus-visible:border-0 focus-visible:ring-0 [&::-webkit-scrollbar]:hidden"
                         placeholder={t('write_comment')}
                         value={body}
-                        onChange={(event) => setBody('body', event.target.value)}
+                        onChange={(event) =>
+                            setBody('body', event.target.value)
+                        }
                         onKeyDown={handleKeyDown}
                     />
                     {showSend && (
