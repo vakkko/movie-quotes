@@ -40,7 +40,9 @@ const ProfilePasswordSection = ({
         <>
             <ProfileRow
                 label={editing ? t('current_password') : t('password')}
-                displayValue={editing ? currentPassword : showEdited ? newPassword : ''}
+                displayValue={
+                    editing ? currentPassword : showEdited ? newPassword : ''
+                }
                 editing={editing}
                 onToggle={onToggle}
                 type="password"
