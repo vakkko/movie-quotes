@@ -14,6 +14,8 @@ type ProfileEmailSectionProps = {
     onChange: (value: string) => void;
     error?: string;
     hideButton?: boolean;
+    inlineEditing?: boolean;
+    edited?: boolean;
 };
 
 const ProfileEmailSection = ({
@@ -25,9 +27,12 @@ const ProfileEmailSection = ({
     onChange,
     error,
     hideButton,
+    inlineEditing = true,
+    edited = false,
 }: ProfileEmailSectionProps) => {
     const { t } = useTranslation();
     const [sending, setSending] = useState(false);
+    const showEdited = edited && !inlineEditing;
 
     const handleResend = () => {
         setSending(true);
@@ -45,10 +50,11 @@ const ProfileEmailSection = ({
         <>
             <ProfileRow
                 label={t('email')}
-                displayValue={email}
+                displayValue={showEdited ? value : email}
                 editing={editing}
                 onToggle={onToggle}
                 hideButton={hideButton}
+                edited={showEdited}
             />
             {pendingEmail && (
                 <div className="flex-items-center w-full gap-[1.2rem] rounded-[0.4rem] bg-primary-red/10 px-[1.3rem] py-[0.8rem]">
@@ -69,7 +75,7 @@ const ProfileEmailSection = ({
                     </button>
                 </div>
             )}
-            {editing && (
+            {editing && inlineEditing && (
                 <ProfileInputField
                     label={t('new_email')}
                     htmlFor="new_email"

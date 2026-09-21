@@ -9,6 +9,8 @@ type ProfileUsernameSectionProps = {
     value: string;
     onChange: (value: string) => void;
     error?: string;
+    inlineEditing?: boolean;
+    edited?: boolean;
 };
 
 const ProfileUsernameSection = ({
@@ -18,18 +20,22 @@ const ProfileUsernameSection = ({
     value,
     onChange,
     error,
+    inlineEditing = true,
+    edited = false,
 }: ProfileUsernameSectionProps) => {
     const { t } = useTranslation();
+    const showEdited = edited && !inlineEditing;
 
     return (
         <>
             <ProfileRow
                 label={t('username')}
-                displayValue={username}
+                displayValue={showEdited ? value : username}
                 editing={editing}
                 onToggle={onToggle}
+                edited={showEdited}
             />
-            {editing && (
+            {editing && inlineEditing && (
                 <ProfileInputField
                     label={t('new_username')}
                     htmlFor="new_username"

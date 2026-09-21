@@ -24,8 +24,11 @@
     --color-charcoal-navy: #24222f;
     --color-soft-navy: #242230;
     --color-slate-gray-50: rgba(108, 117, 125, 0.5);
+    --color-silver-gray-20: rgba(206, 212, 218, 0.2);
     --color-cloud-white: #efefef;
     --color-cloud-gray: rgba(239, 239, 239, 0.3);
+    --color-mint-green: #d1e7dd;
+    --color-deep-green: #0f5132;
     --color-focus-shadow: rgba(13, 110, 253, 0.25);
     --color-blue-overlay: rgba(151, 71, 255, 0.4);
 }
@@ -160,4 +163,19 @@ button {
     &::-webkit-scrollbar {
         display: none;
     }
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(-1rem);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@utility animate-toast-in {
+    animation: toast-in 0.2s ease-out;
 }

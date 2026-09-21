@@ -14,6 +14,7 @@ type ProfileRowProps = {
     onChange?: (value: string) => void;
     error?: string;
     hideButton?: boolean;
+    edited?: boolean;
 };
 
 const ProfileRow = ({
@@ -26,6 +27,7 @@ const ProfileRow = ({
     onChange,
     error,
     hideButton,
+    edited = false,
 }: ProfileRowProps) => {
     const { t } = useTranslation();
     const buttonLabel = editing ? t('cancel') : t('edit');
@@ -61,11 +63,13 @@ const ProfileRow = ({
                         className={cn(
                             'w-full rounded-[0.4rem] bg-light-ash px-[1.3rem] py-[0.7rem] text-slate-gray focus:bg-silver-gray focus:shadow-[0_0_0_4px_var(--color-focus-shadow)]',
                             showEye ? 'pr-[4.8rem]' : '',
-                            isTouched
-                                ? isValid
-                                    ? 'border border-solid border-bootstrap-green'
-                                    : 'border border-primary-red'
-                                : 'border border-transparent',
+                            edited
+                                ? 'border border-solid border-bootstrap-green'
+                                : isTouched
+                                  ? isValid
+                                      ? 'border border-solid border-bootstrap-green'
+                                      : 'border border-primary-red'
+                                  : 'border border-transparent',
                         )}
                     />
                     {showEye && (

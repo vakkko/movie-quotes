@@ -77,9 +77,9 @@ const AddMovieOrQuoteWrapper = ({
                     <DialogTitle className="mx-auto font-500-size-24">
                         {title}
                     </DialogTitle>
-                    <button className="mr-[2rem]" onClick={handleModalClose}>
+                    <span className="mr-[2rem]" onClick={handleModalClose}>
                         <X size={16} />
-                    </button>
+                    </span>
                 </DialogHeader>
                 <div className="flex-1 scrollbar-none overflow-y-auto p-[3.2rem] [&::-webkit-scrollbar]:hidden">
                     <AvatarAndUsername />

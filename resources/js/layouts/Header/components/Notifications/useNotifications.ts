@@ -44,8 +44,8 @@ export const useNotifications = ({
         notification.is_read || readLocally.has(notification.id);
 
     const unreadCount =
-        notifications?.filter((notification) => !isRead(notification)).length ??
-        0;
+        liveNotifications?.filter((notification) => !isRead(notification))
+            .length ?? 0;
 
     const handleNotificationClick = (notification: SharedNotification) => {
         if (!notification.is_read && !readLocally.has(notification.id)) {

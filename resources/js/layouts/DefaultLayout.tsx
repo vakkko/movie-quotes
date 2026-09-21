@@ -2,6 +2,7 @@ import { usePage } from '@inertiajs/react';
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 
+import { ToastProvider } from '@/components/Toast/useToast';
 import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
 import { AuthModalProvider } from '@/pages/Landing/useAuthModal';
@@ -36,40 +37,42 @@ const DefaultLayout = ({
     };
 
     return (
-        <AuthModalProvider value={{ activeModal, setActiveModal }}>
-            <Header {...headerProps} />
-            <main
-                className={cn(
-                    'mt-[3.2rem] ml-28 flex gap-[12.7rem] pr-[7rem] max-sm:pr-[1.6rem]',
-                    className,
+        <ToastProvider>
+            <AuthModalProvider value={{ activeModal, setActiveModal }}>
+                <Header {...headerProps} />
+                <main
+                    className={cn(
+                        'mt-[3.2rem] ml-28 flex gap-[12.7rem] pr-[7rem] max-sm:ml-[1.6rem] max-sm:pr-[1.6rem]',
+                        className,
+                    )}
+                >
+                    {!isLandingPage && (
+                        <div className="max-lg:hidden">
+                            <ProfileAndNavSection />
+                        </div>
+                    )}
+                    {children}
+                </main>
+                {isLandingPage && (
+                    <footer className="ml-[7rem] py-[1.5rem] max-sm:ml-[3.4rem] max-sm:py-[1rem]">
+                        <span className="text-cream max-sm:text-[0.8rem]">
+                            {t('footer_copyright')}
+                        </span>
+                    </footer>
                 )}
-            >
-                {!isLandingPage && (
-                    <div className="max-lg:hidden">
-                        <ProfileAndNavSection />
-                    </div>
+                {localVerifiedUser && (
+                    <CreatePasswordModal
+                        open={activeModal === 'create-password'}
+                        onOpenChange={(open: boolean) =>
+                            setActiveModal(open ? 'create-password' : null)
+                        }
+                        user={localVerifiedUser}
+                        activeModal={activeModal}
+                        setActiveModal={setActiveModal}
+                    />
                 )}
-                {children}
-            </main>
-            {isLandingPage && (
-                <footer className="ml-[7rem] py-[1.5rem] max-sm:ml-[3.4rem] max-sm:py-[1rem]">
-                    <span className="text-cream max-sm:text-[0.8rem]">
-                        {t('footer_copyright')}
-                    </span>
-                </footer>
-            )}
-            {localVerifiedUser && (
-                <CreatePasswordModal
-                    open={activeModal === 'create-password'}
-                    onOpenChange={(open: boolean) =>
-                        setActiveModal(open ? 'create-password' : null)
-                    }
-                    user={localVerifiedUser}
-                    activeModal={activeModal}
-                    setActiveModal={setActiveModal}
-                />
-            )}
-        </AuthModalProvider>
+            </AuthModalProvider>
+        </ToastProvider>
     );
 };
 

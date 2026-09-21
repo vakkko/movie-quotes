@@ -9,6 +9,7 @@ type MovieOrQuoteTextareaProps = {
     onChange?: (value: string) => void;
     name?: string;
     error?: string;
+    readOnly?: boolean;
 };
 
 const MovieOrQuoteTextarea = ({
@@ -19,14 +20,16 @@ const MovieOrQuoteTextarea = ({
     onChange,
     name,
     error,
+    readOnly,
 }: MovieOrQuoteTextareaProps) => {
     return (
         <div className="flex flex-col gap-1">
             <div className="relative">
                 <Textarea
-                    className={cn('min-h-[8.6rem] pr-[5.5rem]', {
+                    className={cn('min-h-[8.6rem] resize-none pr-[5.5rem]', {
                         'placeholder:text-white placeholder:not-italic':
                             whitePlaceholder,
+                        'cursor-default opacity-100': readOnly,
                     })}
                     placeholder={placeholder}
                     value={value ?? ''}
@@ -34,6 +37,7 @@ const MovieOrQuoteTextarea = ({
                         onChange ? onChange(e.target.value) : undefined
                     }
                     name={name}
+                    readOnly={readOnly}
                 />
                 <span className="text-2rem pointer-events-none absolute top-[1.3rem] right-[2rem]">
                     {languageBadge}

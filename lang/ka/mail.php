@@ -12,4 +12,12 @@ return [
     'verification_support' => 'თუ რაიმე პრობლემა გაქვთ, დაგვიკავშირდით:',
     'verification_support_email' => 'support@moviequotes.ge',
     'verification_crew' => 'MovieQuotes-ის გუნდი',
+    'reset_subject' => 'პაროლის აღდგენა',
+    'reset_greeting' => 'გამარჯობა, :name!',
+    'reset_body' => 'ჩვენ მივიღეთ თქვენი პაროლის აღდგენის მოთხოვნა. ახლის ასარჩევად დააჭირეთ ქვემოთ მოცემულ ღილაკს:',
+    'reset_ignore' => 'თუ ეს მოთხოვნა თქვენ არ გამოგიგზავნიათ, უბრალოდ უგულებელყავით ეს წერილი.',
+    'reset_action' => 'პაროლის აღდგენა',
+    'reset_copy' => 'თუ დაჭერა არ მუშაობს, სცადეთ მისი კოპირება და ბრაუზერში ჩასმა:',
+    'reset_support' => 'თუ რაიმე პრობლემა გაქვთ, დაგვიკავშირდით:',
+    'reset_support_email' => 'support@moviequotes.ge',
 ];
