@@ -17,7 +17,7 @@ export const validatePasswordField = (value: string, t: T): string => {
         return t('validation_required');
     }
 
-    if (!/^[a-z]{8,15}$/.test(value)) {
+    if (!/^(?=.*[a-z])[a-z0-9]{8,15}$/.test(value)) {
         return t('validation_password');
     }
 
