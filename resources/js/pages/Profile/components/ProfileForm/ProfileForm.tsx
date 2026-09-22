@@ -24,9 +24,9 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
         modalField,
         confirmingSave,
         setConfirmingSave,
-        openModal,
         cancelEdit,
         confirmEdit,
+        toggleEdit,
         inlineEditing,
         rowEditing,
     } = useProfileForm(t, isMobile);
@@ -45,7 +45,7 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
             <ProfileUsernameSection
                 username={user.username}
                 editing={rowEditing('username')}
-                onToggle={() => openModal('username')}
+                onToggle={() => toggleEdit('username')}
                 value={data.username}
                 onChange={(value) => handleChange('username', value)}
                 error={fieldError('username')}
@@ -56,7 +56,7 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
                 email={user.email}
                 pendingEmail={user.pending_email}
                 editing={rowEditing('email')}
-                onToggle={() => openModal('email')}
+                onToggle={() => toggleEdit('email')}
                 value={data.email}
                 onChange={(value) => handleChange('email', value)}
                 error={fieldError('email')}
@@ -68,7 +68,7 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
             {!user.google_id && (
                 <ProfilePasswordSection
                     editing={rowEditing('password')}
-                    onToggle={() => openModal('password')}
+                    onToggle={() => toggleEdit('password')}
                     currentPassword={data.current_password}
                     newPassword={data.password}
                     confirmPassword={data.password_confirmation}
