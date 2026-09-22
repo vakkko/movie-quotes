@@ -45,7 +45,7 @@ class UpdateProfileRequest extends FormRequest
     public function withValidator(Validator $validator): void
     {
         $validator->sometimes('current_password', ['required', 'current_password'], fn () => $this->filled('password'));
-        $validator->sometimes('password', ['required', 'string', Password::min(8)->max(15)->letters(), 'regex:/^[a-z]+$/', 'confirmed'], fn () => $this->filled('password'));
+        $validator->sometimes('password', ['required', 'string', Password::min(8)->max(15)->letters(), 'regex:/^[a-z0-9]+$/', 'confirmed'], fn () => $this->filled('password'));
         $validator->sometimes('password_confirmation', ['required', 'string'], fn () => $this->filled('password'));
     }
 }

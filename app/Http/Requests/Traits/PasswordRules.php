@@ -15,7 +15,7 @@ trait PasswordRules
             'required',
             'string',
             Password::min(8)->max(15)->letters(),
-            'regex:/^[a-z]+$/',
+            'regex:/^[a-z0-9]+$/',
             'confirmed',
         ];
     }

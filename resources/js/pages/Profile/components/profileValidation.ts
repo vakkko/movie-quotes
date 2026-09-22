@@ -2,6 +2,7 @@ import type { T } from '@/layouts/Header/components/AuthOptions/authValidation';
 import {
     validateEmailField,
     validatePasswordConfirmationField,
+    validatePasswordField,
 } from '@/layouts/Header/components/AuthOptions/authValidation';
 
 export type ProfileForm = {
@@ -46,14 +47,6 @@ const emailValidator = (value: string, required: boolean, t: T): string => {
     return validateEmailField(value, t);
 };
 
-const passwordValidator = (value: string, t: T): string => {
-    if (!value) {
-        return t('validation_required');
-    }
-
-    return /^[a-z]{8,15}$/.test(value) ? '' : t('validation_password');
-};
-
 export const validateField = (
     key: keyof ProfileForm,
     value: string | File | null,
@@ -79,7 +72,7 @@ export const validateField = (
         }
 
         if (key === 'password') {
-            return passwordValidator(value as string, t);
+            return validatePasswordField(value as string, t);
         }
 
         if (key === 'password_confirmation') {

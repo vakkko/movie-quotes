@@ -11,7 +11,7 @@ paths:
 Bilingual fields are stored as single JSON columns ({en, ka}) via spatie/laravel-translatable HasTranslations; declare them in the model's public $translatable array. Read localized values with the attribute accessor ($movie->title) or getTranslation('title', 'en'). Do not add *_en/*_ka columns.
 
 ## Spatie Media Library collections for Movie/Quote images
-Movie and Quote implement HasMedia + InteractsWithMedia with singleFile() collections 'poster' (Movie) and 'image' (Quote). There is no image_url column anymore; derive URLs via $model->getFirstMediaUrl('poster'|'image'). Replace/upsert images with clearMediaCollection(...)->addMedia($file)->toMediaCollection(...).
+Movie and Quote implement HasMedia + InteractsWithMedia with singleFile() collections 'poster' (Movie) and 'image' (Quote). There is no image_url column anymore. Quote exposes a read accessor `image_url` (getImageUrlAttribute) that returns getFirstMediaUrl('image') or the default placeholder asset (Quote::DEFAULT_IMAGE_URL -> /images/defaultQuote.png) when the quote has no media; always use `$quote->image_url` when serializing quote images (resources, broadcast payloads, JSON) so the frontend never receives an empty src. For Movie posters derive URLs via $model->getFirstMediaUrl('poster'). Replace/upsert images with clearMediaCollection(...)->addMedia($file)->toMediaCollection(...).
 
 ## Genres stored as JSON array column
 Genres are stored as a JSON array in the `genre` column on the movies table (cast to `array`). They are NOT a comma-separated string and NOT a separate/pivot table. Validation requires `genre` to be a non-empty array of strings; resources return `$this->genre` directly.
