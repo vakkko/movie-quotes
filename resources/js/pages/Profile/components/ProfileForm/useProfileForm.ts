@@ -183,6 +183,14 @@ export const useProfileForm = (t: T, isMobile = false) => {
     const rowEditing = (key: ToggleKey) =>
         inlineEditing ? editing[key] : false;
 
+    const toggleEdit = (key: ToggleKey) => {
+        if (rowEditing(key)) {
+            cancelEdit(key);
+        } else {
+            openModal(key);
+        }
+    };
+
     return {
         data,
         fieldError,
@@ -197,6 +205,7 @@ export const useProfileForm = (t: T, isMobile = false) => {
         openModal,
         cancelEdit,
         confirmEdit,
+        toggleEdit,
         inlineEditing,
         rowEditing,
     };

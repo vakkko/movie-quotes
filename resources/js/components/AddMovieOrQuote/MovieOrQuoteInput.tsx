@@ -8,6 +8,7 @@ type MovieOrQuoteInputProps = {
     name: string;
     error?: string;
     readOnly?: boolean;
+    editMovie?: boolean;
 };
 
 const MovieOrQuoteInput = ({
@@ -18,13 +19,19 @@ const MovieOrQuoteInput = ({
     name,
     error,
     readOnly,
+    editMovie,
 }: MovieOrQuoteInputProps) => {
     return (
         <div className="flex flex-col gap-1">
-            <div className="relative">
+            <div className="relative flex items-center gap-2 border border-slate-gray px-[1.6rem] py-[2rem]">
+                {editMovie && (
+                    <span className="shrink-0 text-[2rem] whitespace-nowrap text-gray-500">
+                        {placeholder}:
+                    </span>
+                )}
                 <Input
-                    className="border border-slate-gray !bg-transparent !py-[2rem] pr-[5.5rem] pl-[1.6rem] !text-[2.4rem] !leading-[150%] text-white outline-none placeholder:text-[2rem] placeholder:text-gray-500 focus-visible:border-slate-gray focus-visible:ring-0 disabled:cursor-default disabled:opacity-100"
-                    placeholder={placeholder}
+                    className="min-w-0 flex-1 !border-0 !bg-transparent !p-0 !text-[2.4rem] !leading-[150%] text-white outline-none selection:bg-bootstrap-blue! selection:text-white! placeholder:text-[2rem] placeholder:text-gray-500 focus-visible:ring-0 disabled:cursor-default disabled:opacity-100"
+                    placeholder={editMovie ? undefined : placeholder}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     name={name}

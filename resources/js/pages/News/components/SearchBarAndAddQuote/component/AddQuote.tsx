@@ -126,7 +126,7 @@ const AddQuote = ({
                         movies={movies}
                         value={selectedMovie}
                         onChange={handleMovieChange}
-                        disabled={Boolean(singleMovie)}
+                        disabled={Boolean(singleMovie) || movies.length === 0}
                     />
                 )}
                 {fieldError('movie_id') && (
@@ -135,7 +135,7 @@ const AddQuote = ({
                     </span>
                 )}
                 <button
-                    className="button-primary-red-background"
+                    className="mt-[1.6rem] button-primary-red-background"
                     type="submit"
                     disabled={processing}
                 >

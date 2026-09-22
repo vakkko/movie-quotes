@@ -2,7 +2,7 @@ import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog';
 import { useTranslation } from '@/hooks/useTranslation';
 import DefaultLayout from '@/layouts/DefaultLayout';
 import type { MovieShowResponse } from '@/types';
-import AddMovie from '../../components/AddMovieOrQuote/AddMovie/AddMovie';
+import MovieForm from '../../components/AddMovieOrQuote/AddMovie/MovieForm';
 import MovieDetails from './components/MovieDetails';
 import QuoteCard from './components/QuoteCard';
 import QuoteDropdown from './components/QuoteDropdown';
@@ -71,12 +71,13 @@ const Movie = ({ movie }: MovieProps) => {
                 })}
             </div>
             {showModal === 'edit' && (
-                <AddMovie
+                <MovieForm
                     open
                     onOpenChange={(open) =>
                         !open && handleShowModalChange(null)
                     }
                     movie={movie}
+                    editMovie
                 />
             )}
             <ConfirmDeleteDialog

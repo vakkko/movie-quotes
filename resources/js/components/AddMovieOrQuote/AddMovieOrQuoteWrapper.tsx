@@ -72,6 +72,7 @@ const AddMovieOrQuoteWrapper = ({
             <DialogContent
                 className="top-[4rem] flex max-h-[calc(100vh-8rem)] translate-y-0 flex-col border-none p-0 max-sm:top-0 max-sm:left-0 max-sm:w-full max-sm:max-w-full max-sm:translate-x-0 sm:max-w-7xl"
                 showCloseButton={false}
+                onOpenAutoFocus={(e) => e.preventDefault()}
             >
                 <DialogHeader className="shrink-0 flex-row items-center justify-between border-b border-b-cloud-gray pt-[4rem] pb-[2.4rem]">
                     <DialogTitle className="mx-auto font-500-size-24">

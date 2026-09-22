@@ -15,13 +15,13 @@ const ImagePreview = ({ preview, onRemove }: ImagePreviewProps) => {
             <img
                 src={preview}
                 alt={t('preview')}
-                className="h-56 w-[43.3rem] object-cover py-8 pl-10"
+                className="h-56 w-[43.3rem] object-cover"
             />
             <Button
                 type="button"
                 variant="destructive"
                 size="icon"
-                className="absolute top-10 right-2 h-6 w-6 bg-deep-navy!"
+                className="absolute top-0 right-2 h-6 w-6 bg-deep-navy!"
                 onClick={onRemove}
             >
                 <X className="h-4 w-4" />

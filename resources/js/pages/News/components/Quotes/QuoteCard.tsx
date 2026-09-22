@@ -6,7 +6,7 @@ import type { Quote } from '../../types';
 import AvatarAndUsername from '../AvatarAndUsername';
 import Comments from './components/Comments';
 import Reactions from './components/Reactions';
-import UserComment from './components/UserComment';
+import UserComment from './components/UserComment/UserComment';
 import { useQuoteCard } from './useQuoteCard';
 
 type QuoteCardProps = PropsWithChildren & {

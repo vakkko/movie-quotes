@@ -1,6 +1,7 @@
 ---
 paths:
   - 'resources/js/components/AddMovieOrQuote/**'
+  - resources/js/components/AddMovieOrQuote/DatePicker.tsx
 ---
 
 # Add Movie Or Quote
@@ -16,3 +17,6 @@ DatePicker (components/AddMovieOrQuote/DatePicker.tsx) is the shadcn Date Picker
 
 ## ImageUpload self-manages preview via useImageUpload
 ImageUpload no longer accepts controlled `preview`/`onChange` props. It uses `useImageUpload` (in components/AddMovieOrQuote/useImageUpload.ts) to own file/preview state and clearing. Parents sync the file into their form via `onFileChange(file | null)` and can force a reset through the `reset` method exposed on the `ImageUploadHandle` ref (React 19 ref-as-prop + useImperativeHandle). useCreateMovie only stores the file into Inertia data + validates (its handleImageChange), it does not manage preview/clearing anymore.
+
+## DatePicker is year-only now, still stores yyyy-MM-dd
+DatePicker.tsx (release date) is a year-only selector: a Radix Popover with a scrollable 1900..current year list (no react-day-picker Calendar). It still stores/emits a 'yyyy-MM-dd' string, normalized to the selected year on January 1 (YYYY-01-01), so backend 'date' validation and MovieShowResource 'release_date' are unchanged. Placeholder text uses t('select_year') from lang/*.php.

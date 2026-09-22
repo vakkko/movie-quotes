@@ -48,13 +48,14 @@ class VerifyEmailController extends Controller
 
         $user->update([
             'email' => $user->pending_email,
+            'pending_email' => null,
+            'email_verified_at' => now(),
         ]);
 
         event(new Verified($user));
 
         return redirect()->route('home')
             ->with('verification_sent', true);
-
     }
 
     public function resend(Request $request): RedirectResponse
