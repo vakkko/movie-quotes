@@ -28,6 +28,8 @@ class Quote extends Model implements HasMedia
     use HasTranslations;
     use InteractsWithMedia;
 
+    public const string DEFAULT_IMAGE_URL = '/images/defaultQuote.png';
+
     /** @var array<int, string> */
     public array $translatable = ['quote'];
 
@@ -64,5 +66,12 @@ class Quote extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('image')->singleFile();
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        $url = $this->getFirstMediaUrl('image');
+
+        return $url !== '' ? $url : asset(self::DEFAULT_IMAGE_URL);
     }
 }

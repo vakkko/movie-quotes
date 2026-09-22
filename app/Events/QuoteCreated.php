@@ -48,7 +48,7 @@ class QuoteCreated implements ShouldBroadcastNow, ShouldDispatchAfterCommit
                 'id' => $quote->id,
                 'quote_en' => $quote->getTranslation('quote', 'en'),
                 'quote_ka' => $quote->getTranslation('quote', 'ka'),
-                'image_url' => $quote->getFirstMediaUrl('image'),
+                'image_url' => $quote->image_url,
                 'created_at' => $quote->created_at?->toISOString(),
                 'user' => [
                     'id' => $quote->user->id,
