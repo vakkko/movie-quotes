@@ -53,7 +53,7 @@ const AuthOptions = ({
                             setActiveModal(open ? 'register' : null)
                         }
                     >
-                        <DialogTrigger className="button-primary-red-background">
+                        <DialogTrigger className="button-primary-red-background max-[450px]:ml-auto">
                             {t('sign_up')}
                         </DialogTrigger>
                         <RegisterContent onSwitchToLogin={switchToLogin} />

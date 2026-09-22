@@ -6,6 +6,7 @@ import { useMediaQuery } from 'react-responsive';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import Notifications from '@/layouts/Header/components/Notifications/Notifications';
 
+import { cn } from '@/lib/utils';
 import type { ActiveModal } from '@/pages/Landing/useAuthModal';
 import type { SharedPageProps } from '@/types/global';
 
@@ -43,7 +44,14 @@ const Header = ({
 
     return (
         <header
-            className={`flex-items-center justify-between px-[7rem] pt-[2.4rem] text-cream max-sm:px-[1.6rem] ${!isHome && 'pb-3rem bg-soft-navy pb-[3rem]'}`}
+            className={cn(
+                'flex-items-center justify-between px-[7rem] pt-[2.4rem] text-cream max-sm:px-[1.6rem]',
+                { 'bg-soft-navy pb-[3rem]': !isHome },
+                {
+                    'max-[450px]:flex-col max-[450px]:items-start':
+                        isHome && !isLoggedIn,
+                },
+            )}
         >
             <Link
                 href="/"
@@ -57,7 +65,12 @@ const Header = ({
                     setIsMenuOpen={setIsMenuOpen}
                 />
             )}
-            <div className="flex-items-center gap-[4rem] max-sm:gap-[2rem]">
+            <div
+                className={cn(
+                    'flex-items-center gap-[4rem] max-[450px]:justify-between max-sm:gap-[2rem]',
+                    { 'max-[450px]:w-full': !isLoggedIn },
+                )}
+            >
                 {user && !isLandingPage && (
                     <>
                         {isMobile && (
