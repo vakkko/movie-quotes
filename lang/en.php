@@ -16,7 +16,7 @@ return [
     'email' => 'Email',
     'enter_your_email' => 'Enter your email',
     'password' => 'Password',
-    'password_placeholder' => 'At least 8 & max.15 lowercase letters or numbers',
+    'password_placeholder' => 'At least 8 & max.15 lower case characters',
     'confirm_password' => 'Confirm password',
     'confirm_password_placeholder' => 'Confirm password',
     'create_account' => 'Create account',
