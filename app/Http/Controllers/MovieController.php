@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MovieCreated;
-use App\Events\MovieDeleted;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Http\Resources\MovieResource;
 use App\Http\Resources\MovieShowResource;
 use App\Models\Movie;
-use Illuminate\Database\Eloquent\Builder;
+use App\Services\MovieControllerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,19 +17,13 @@ use Inertia\Response;
 
 class MovieController extends Controller
 {
+    public function __construct(
+        private MovieControllerService $movieService
+    ) {}
+
     public function index(Request $request): Response
     {
-        $movies = Movie::query()
-            ->where('user_id', Auth::id())
-            ->withCount('quotes')
-            ->with('media')
-            ->when($request->filled('search'), fn ($query) => $this->applySearch(
-                $query,
-                $request->string('search')->toString(),
-            ))
-            ->orderByDesc('created_at')
-            ->orderByDesc('id')
-            ->paginate(12);
+        $movies = $this->movieService->getMoviesPaginated(Auth::user(), $request);
 
         return Inertia::render('Movies/Movies', [
             'movies' => Inertia::scroll(MovieResource::collection($movies)),
@@ -42,15 +34,8 @@ class MovieController extends Controller
     {
         $this->authorize('view', $movie);
 
-        $movie->load([
-            'media',
-            'quotes' => fn ($query) => $query->latest()
-                ->withCount('likes', 'comments'),
-            'quotes.user',
-        ])->loadCount('quotes');
-
         return Inertia::render('Movie/Movie', [
-            'movie' => MovieShowResource::make($movie),
+            'movie' => MovieShowResource::make($this->movieService->getMovieDetails($movie)),
         ]);
     }
 
@@ -58,9 +43,7 @@ class MovieController extends Controller
     {
         $this->authorize('delete', $movie);
 
-        broadcast(new MovieDeleted($movie))->toOthers();
-
-        $movie->delete();
+        $this->movieService->deleteMovie($movie);
 
         if (request()->expectsJson()) {
             return response()->json(['message' => 'Movie deleted successfully']);
@@ -71,11 +54,11 @@ class MovieController extends Controller
 
     public function store(StoreMovieRequest $request): RedirectResponse
     {
-        $movie = Auth::user()->movies()->create($request->mappedAttributes());
-
-        $movie->addMedia($request->file('image'))->toMediaCollection('poster');
-
-        broadcast(new MovieCreated($movie))->toOthers();
+        $this->movieService->createMovie(
+            Auth::user(),
+            $request->mappedAttributes(),
+            $request->file('image'),
+        );
 
         return redirect()->route('movies');
     }
@@ -84,31 +67,12 @@ class MovieController extends Controller
     {
         $this->authorize('update', $movie);
 
-        $movie->update($request->mappedAttributes());
-
-        if ($request->hasFile('image')) {
-            $movie->clearMediaCollection('poster');
-            $movie->addMedia($request->file('image'))->toMediaCollection('poster');
-        }
+        $this->movieService->updateMovie(
+            $movie,
+            $request->mappedAttributes(),
+            $request->hasFile('image') ? $request->file('image') : null,
+        );
 
         return back();
-    }
-
-    /**
-     * @param  Builder<Movie>  $query
-     */
-    private function applySearch(Builder $query, string $term): void
-    {
-        $term = trim($term);
-
-        if ($term === '') {
-            return;
-        }
-
-        $query->where(function (Builder $builder) use ($term) {
-            foreach (['en', 'ka'] as $locale) {
-                $builder->orWhere('title->'.$locale, 'like', "%{$term}%");
-            }
-        });
     }
 }
