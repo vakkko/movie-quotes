@@ -42,6 +42,8 @@ class NotificationCreated implements ShouldBroadcastNow, ShouldDispatchAfterComm
      */
     public function broadcastWith(): array
     {
+        $this->notification->loadMissing(['actor.media']);
+
         return [
             'id' => $this->notification->id,
             'actor' => [

@@ -26,9 +26,10 @@ class NewsControllerService
     {
         return Quote::query()
             ->with([
-                'user:id,username,avatar_url',
+                'user:id,username',
+                'user.media',
                 'movie:id,title,director,released_at',
-                'comments' => fn ($q) => $q->with('user:id,username,avatar_url')->latest(),
+                'comments' => fn ($q) => $q->with(['user:id,username', 'user.media'])->latest(),
                 'likes',
                 'likedByUsers:id',
             ])
@@ -61,9 +62,10 @@ class NewsControllerService
     public function getQuoteDetails(Quote $quote): Quote
     {
         return $quote->load([
-            'user:id,username,avatar_url',
+            'user:id,username',
+            'user.media',
             'movie:id,title,director,released_at',
-            'comments' => fn ($q) => $q->with('user:id,username,avatar_url')->latest(),
+            'comments' => fn ($q) => $q->with(['user:id,username', 'user.media'])->latest(),
             'likes',
             'likedByUsers:id',
         ])->loadCount(['likes', 'comments']);

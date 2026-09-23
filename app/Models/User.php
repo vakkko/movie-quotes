@@ -24,17 +24,21 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string|null $pending_email
  * @property Carbon|null $email_verified_at
  * @property string $password
- * @property string|null $avatar_url
+ * @property string $avatar_url
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['username', 'email', 'pending_email', 'password', 'email_verified_at', 'avatar_url', 'google_id'])]
+#[Fillable(['username', 'email', 'pending_email', 'password', 'email_verified_at', 'google_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, InteractsWithMedia, Notifiable;
+
+    protected $appends = ['avatar_url'];
+
+    public const string DEFAULT_IMAGE_URL = '/images/defaultUser.png';
 
     public function sendEmailVerificationNotification(): void
     {
@@ -44,6 +48,13 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')->singleFile();
+    }
+
+    public function getAvatarUrlAttribute(): string
+    {
+        $url = $this->getFirstMediaUrl('avatar');
+
+        return $url !== '' ? $url : asset(self::DEFAULT_IMAGE_URL);
     }
 
     /**

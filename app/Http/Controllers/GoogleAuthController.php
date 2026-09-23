@@ -34,7 +34,6 @@ class GoogleAuthController extends Controller
                 'username' => $this->uniqueUsername($googleUser->getName() ?? $googleUser->getEmail()),
                 'password' => Str::password(),
                 'email_verified_at' => now(),
-                'avatar_url' => $googleUser->getAvatar(),
             ]);
         }
 
@@ -42,9 +41,22 @@ class GoogleAuthController extends Controller
 
         $user->save();
 
+        if ($user->wasRecentlyCreated && $googleUser->getAvatar() !== null) {
+            $this->storeGoogleAvatar($user, $googleUser->getAvatar());
+        }
+
         Auth::login($user);
 
         return redirect()->route('news');
+    }
+
+    private function storeGoogleAvatar(User $user, string $url): void
+    {
+        try {
+            $user->addMediaFromUrl($url)->toMediaCollection('avatar');
+        } catch (Throwable) {
+            return;
+        }
     }
 
     private function uniqueUsername(string $name): string

@@ -48,7 +48,5 @@ class ProfileController extends Controller
     private function replaceAvatar(User $user, UploadedFile $file): void
     {
         $user->clearMediaCollection('avatar')->addMedia($file)->toMediaCollection('avatar');
-
-        $user->update(['avatar_url' => $user->getFirstMediaUrl('avatar')]);
     }
 }
