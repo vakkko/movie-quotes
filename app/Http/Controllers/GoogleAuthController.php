@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Services\GoogleAuthService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Throwable;
 
 class GoogleAuthController extends Controller
 {
+    public function __construct(private readonly GoogleAuthService $googleAuthService) {}
+
     public function redirect(): SymfonyRedirectResponse
     {
         return Socialite::driver('google')->redirect();
@@ -27,50 +28,10 @@ class GoogleAuthController extends Controller
             ]);
         }
 
-        $user = User::firstOrNew(['email' => $googleUser->getEmail()]);
-
-        if (! $user->exists) {
-            $user->fill([
-                'username' => $this->uniqueUsername($googleUser->getName() ?? $googleUser->getEmail()),
-                'password' => Str::password(),
-                'email_verified_at' => now(),
-            ]);
-        }
-
-        $user->google_id = $googleUser->getId();
-
-        $user->save();
-
-        if ($user->wasRecentlyCreated && $googleUser->getAvatar() !== null) {
-            $this->storeGoogleAvatar($user, $googleUser->getAvatar());
-        }
+        $user = $this->googleAuthService->findOrCreateFromGoogle($googleUser);
 
         Auth::login($user);
 
         return redirect()->route('news');
-    }
-
-    private function storeGoogleAvatar(User $user, string $url): void
-    {
-        try {
-            $user->addMediaFromUrl($url)->toMediaCollection('avatar');
-        } catch (Throwable) {
-            return;
-        }
-    }
-
-    private function uniqueUsername(string $name): string
-    {
-        $base = Str::lower(Str::ascii($name));
-        $base = preg_replace('/[^a-z0-9]/', '', $base) ?: 'user';
-        $candidate = $base;
-        $suffix = 1;
-
-        while (User::where('username', $candidate)->exists()) {
-            $candidate = Str::substr($base, 0, 15 - Str::length((string) $suffix)).(string) $suffix;
-            $suffix++;
-        }
-
-        return $candidate;
     }
 }
