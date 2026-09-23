@@ -1,7 +1,6 @@
-import { useTranslation } from '@/hooks/useTranslation';
 import { cn } from '@/lib/utils';
-import { Input } from '../ui/input';
 import SearchDesktop from './components/SearchDesktop';
+import SearchInput from './components/SearchInput';
 import SearchMobile from './components/SearchMobile';
 import { useSearchBar } from './useSearchBar';
 
@@ -10,6 +9,7 @@ type SearchBarProps = {
     setIsExpanded: (value: boolean) => void;
     placeholder?: string;
     variant?: 'default' | 'header';
+    className?: string;
 };
 
 const SearchBar = ({
@@ -17,25 +17,23 @@ const SearchBar = ({
     setIsExpanded,
     placeholder,
     variant = 'default',
+    className,
 }: SearchBarProps) => {
-    const { t } = useTranslation();
     const { search, setSearch } = useSearchBar();
 
     const isHeaderVariant = variant === 'header';
 
     const searchInput = (
-        <Input
-            autoFocus
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder={placeholder ?? t('search_placeholder')}
-            className="mt-[1.6rem] rounded-none border-none !bg-transparent !text-[2rem] placeholder:text-[2rem] focus-visible:ring-0"
+        <SearchInput
+            search={search}
+            setSearch={setSearch}
+            placeholder={placeholder}
         />
     );
 
     return (
         <div
-            className={cn('flex-items-center', {
+            className={cn('flex-items-center', className, {
                 'w-full': isExpanded,
             })}
         >
