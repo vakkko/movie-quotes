@@ -48,7 +48,7 @@ const ProfileRow = ({
                 )}
             </label>
             <div className="flex-items-center gap-[1.6rem]">
-                <div className="relative w-full">
+                <div className="relative min-w-0 flex-1">
                     <input
                         readOnly={!editable}
                         type={inputType}
@@ -82,14 +82,16 @@ const ProfileRow = ({
                         </button>
                     )}
                 </div>
-                {!hideButton && (
+                {!hideButton ? (
                     <button
                         type="button"
                         onClick={onToggle}
-                        className="w-[7rem]"
+                        className="w-[7rem] shrink-0"
                     >
                         {buttonLabel}
                     </button>
+                ) : (
+                    <div className="w-[7rem] shrink-0" aria-hidden="true" />
                 )}
             </div>
             {editable && error && (

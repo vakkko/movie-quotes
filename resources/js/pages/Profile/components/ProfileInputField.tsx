@@ -35,7 +35,7 @@ const ProfileInputField = ({
     const isValid = !error && value.length > 0;
 
     return (
-        <Field className="mr-auto w-[85%]">
+        <Field className="mr-auto w-[calc(100%-8.6rem)]">
             <label htmlFor={htmlFor}>
                 {label}
                 {required && (
