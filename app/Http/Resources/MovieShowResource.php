@@ -13,8 +13,8 @@ use Illuminate\Support\Carbon;
  * @property-read array<int, string> $genre
  * @property-read string|null $description
  * @property-read string $director
+ * @property-read string $image_url
  *
- * @method string getFirstMediaUrl(string $collectionName = 'default', string $conversionName = '')
  * @method mixed getTranslation(string $key, string $locale, bool $useFallbackLocale = true)
  */
 class MovieShowResource extends JsonResource
@@ -31,7 +31,7 @@ class MovieShowResource extends JsonResource
             'title' => $this->title,
             'released_at' => $this->released_at->year,
             'release_date' => $this->released_at?->format('Y-m-d'),
-            'image_url' => $this->getFirstMediaUrl('poster'),
+            'image_url' => $this->image_url,
             'genres' => $this->genre,
             'description' => $this->description,
             'director' => $this->director,

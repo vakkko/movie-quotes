@@ -24,6 +24,7 @@ class MovieController extends Controller
         $movies = Movie::query()
             ->where('user_id', Auth::id())
             ->withCount('quotes')
+            ->with('media')
             ->when($request->filled('search'), fn ($query) => $this->applySearch(
                 $query,
                 $request->string('search')->toString(),
@@ -42,6 +43,7 @@ class MovieController extends Controller
         $this->authorize('view', $movie);
 
         $movie->load([
+            'media',
             'quotes' => fn ($query) => $query->latest()
                 ->withCount('likes', 'comments'),
             'quotes.user',

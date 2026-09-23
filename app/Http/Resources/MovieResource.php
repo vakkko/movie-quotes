@@ -13,8 +13,7 @@ use Illuminate\Support\Carbon;
  * @property-read array<int, string> $genre
  * @property-read string|null $description
  * @property-read string $director
- *
- * @method string getFirstMediaUrl(string $collectionName = 'default', string $conversionName = '')
+ * @property-read string $image_url
  */
 class MovieResource extends JsonResource
 {
@@ -29,7 +28,7 @@ class MovieResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'released_at' => $this->released_at->year,
-            'image_url' => $this->getFirstMediaUrl('poster'),
+            'image_url' => $this->image_url,
             'genres' => $this->genre,
             'description' => $this->description,
             'director' => $this->director,
