@@ -1,5 +1,6 @@
 import { InfiniteScroll } from '@inertiajs/react';
 import DefaultLayout from '@/layouts/DefaultLayout';
+import { cn } from '@/lib/utils';
 import NoSearchResults from './components/NoSearchResults';
 import QuoteCard from './components/Quotes/QuoteCard';
 import SearchBarAndAddQuote from './components/SearchBarAndAddQuote/SearchBarAndAddQuote';
@@ -25,7 +26,11 @@ const News = ({ quotes, movies, user }: NewsProps) => {
         visibleLiveQuotes.length > 0 || visibleServerQuotes.length > 0;
 
     return (
-        <div className="mx-auto">
+        <div
+            className={cn('mx-auto', {
+                'w-356': !hasSearchResults,
+            })}
+        >
             <SearchBarAndAddQuote movies={liveMovies} />
             {visibleLiveQuotes.map((quote) => (
                 <QuoteCard quote={quote} user={user} key={quote.id} />

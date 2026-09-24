@@ -41,7 +41,7 @@ class QuoteCreated implements ShouldBroadcastNow, ShouldDispatchAfterCommit
      */
     public function broadcastWith(): array
     {
-        $quote = $this->quote->loadMissing(['user:id,username,avatar_url', 'movie']);
+        $quote = $this->quote->loadMissing(['user:id,username', 'user.media', 'movie']);
 
         return [
             'quote' => [

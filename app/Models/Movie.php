@@ -32,6 +32,8 @@ class Movie extends Model implements HasMedia
     use HasTranslations;
     use InteractsWithMedia;
 
+    public const string DEFAULT_IMAGE_URL = '/images/defaultMovie.webp';
+
     /** @var array<int, string> */
     public array $translatable = ['title', 'description', 'director'];
 
@@ -55,5 +57,12 @@ class Movie extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('poster')->singleFile();
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        $url = $this->getFirstMediaUrl('poster');
+
+        return $url !== '' ? $url : asset(self::DEFAULT_IMAGE_URL);
     }
 }

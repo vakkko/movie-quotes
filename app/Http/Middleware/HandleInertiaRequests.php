@@ -44,7 +44,7 @@ class HandleInertiaRequests extends Middleware
             'translations' => $this->translations($locale),
             'user' => $request->user(),
             'notifications' => fn () => $request->user()?->notifications()
-                ->with('actor:id,username,avatar_url')
+                ->with(['actor:id,username', 'actor.media'])
                 ->latest()
                 ->get(),
             'verified' => fn () => session('verified', false),

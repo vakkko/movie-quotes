@@ -46,7 +46,7 @@ class MovieCreated implements ShouldBroadcastNow, ShouldDispatchAfterCommit
                 'id' => $this->movie->id,
                 'title' => $this->movie->title,
                 'released_at' => $this->movie->released_at?->year,
-                'image_url' => $this->movie->getFirstMediaUrl('poster'),
+                'image_url' => $this->movie->image_url,
                 'genres' => $this->movie->genre,
                 'description' => $this->movie->description,
                 'director' => $this->movie->director,

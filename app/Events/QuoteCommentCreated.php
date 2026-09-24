@@ -41,6 +41,8 @@ class QuoteCommentCreated implements ShouldBroadcastNow, ShouldDispatchAfterComm
      */
     public function broadcastWith(): array
     {
+        $this->comment->loadMissing(['user.media']);
+
         return [
             'quote_id' => $this->comment->quote_id,
             'comment' => [

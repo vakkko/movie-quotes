@@ -14,7 +14,7 @@ class LandingController extends Controller
     {
 
         $quotes = Quote::query()
-            ->with('movie:id,title,released_at,genre,description,director')
+            ->with(['movie:id,title,released_at,genre,description,director', 'movie.media'])
             ->inRandomOrder()
             ->limit(3)
             ->get(['id', 'quote', 'movie_id']);

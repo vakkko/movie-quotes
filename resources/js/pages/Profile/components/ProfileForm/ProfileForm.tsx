@@ -34,7 +34,7 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="relative flex-column w-full items-center gap-[2.4rem] rounded-[1.2rem] bg-charcoal-navy px-60 pt-64 max-2xl:px-28 max-xl:px-7 max-sm:pb-30"
+            className="relative flex-column w-full items-center gap-[2.4rem] rounded-[1.2rem] bg-charcoal-navy px-60 pt-64 pb-20 max-2xl:px-28 max-xl:px-7 max-sm:pb-30"
         >
             <ProfileAvatarUpload
                 src={user.avatar_url}
@@ -63,7 +63,7 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
                 hideButton={Boolean(user.google_id)}
                 inlineEditing={inlineEditing}
                 edited={editing.email}
-                className={user.google_id ? 'mr-auto w-[85%]' : ''}
+                className={user.google_id ? 'mr-auto' : ''}
             />
             {!user.google_id && (
                 <ProfilePasswordSection

@@ -16,14 +16,15 @@ const MoviesListHeading = ({ total }: MoviesListHeadingProps) => {
 
     return (
         <div className="grid w-full grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[1fr_auto_auto]">
-            <h2 className="col-span-2 font-500-size-24 md:col-span-1">
+            <h2 className="col-span-2 font-500-size-24 min-[1410px]:col-span-1">
                 My list of movies (total {total})
             </h2>
             {!isMobile && (
                 <SearchBar
                     isExpanded={isExpanded}
                     setIsExpanded={setIsExpanded}
-                    placeholder={t('search_placeholder_movies')}
+                    placeholder={t('search_placeholder')}
+                    className={isExpanded ? 'mr-80' : ''}
                 />
             )}
             <MovieForm open={isAddMovieOpen} onOpenChange={setIsAddMovieOpen} />
